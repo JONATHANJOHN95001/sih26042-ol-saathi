@@ -1,0 +1,65 @@
+{
+  "_source": {
+    "book": "NCERT Sarangi, Hindi, Class 2",
+    "unit": "Unit 1 — परिवार (Family)",
+    "pdf": "https://ncert.nic.in/textbook/pdf/bhsr101.pdf",
+    "note": "Text extracted from the official PDF then HAND-CORRECTED. The PDF's font mapping drops conjunct consonants, so extraction yields कयों for क्यों, उनहें for उन्हें, शबद for शब्द. Those forms are not Hindi and Bhashini will translate them into nonsense. Never pipe raw extraction into the API. Every line below has been checked by eye.",
+    "checkedBy": "",
+    "checkedOn": ""
+  },
+
+  "lessons": [
+    {
+      "id": "neema-dadi",
+      "title": "नीमा और दादी",
+      "titleEn": "Neema and her grandmother",
+      "grade": 2,
+      "subject": "Hindi",
+      "unit": "परिवार",
+      "lines": [
+        { "id": "l1", "hi": "नीमा दोपहर में दो बजे स्कूल से लौटती है।", "en": "Neema comes home from school at two in the afternoon.", "image": "school-return" },
+        { "id": "l2", "hi": "इस समय घर पर सिर्फ़ दादी होती हैं।", "en": "At that time only her grandmother is at home.", "image": "grandmother" },
+        { "id": "l3", "hi": "दादी कहीं नहीं आती-जाती हैं।", "en": "Grandmother does not go anywhere.", "image": "sitting" },
+        { "id": "l4", "hi": "उनके घुटनों में दर्द रहता है।", "en": "Her knees hurt.", "image": "knees" },
+        { "id": "l5", "hi": "उन्हें नीमा का बहुत इंतज़ार होता है।", "en": "She waits eagerly for Neema.", "image": "waiting" },
+        { "id": "l6", "hi": "नीमा रोज़ खाना खाते-खाते स्कूल की बातें सुनाती है।", "en": "Every day, while eating, Neema tells her about school.", "image": "eating-talking" },
+        { "id": "l7", "hi": "शाम को नीमा खेलने जाती है।", "en": "In the evening Neema goes out to play.", "image": "playing" },
+        { "id": "l8", "hi": "एक दिन दादी बोलीं, मेरा समय नहीं कटता।", "en": "One day grandmother said, my time does not pass.", "image": "lonely" },
+        { "id": "l9", "hi": "नीमा दौड़कर दादी की चप्पलें ले आई।", "en": "Neema ran and fetched grandmother's slippers.", "image": "slippers" },
+        { "id": "l10", "hi": "फिर वे दोनों खेल के मैदान की ओर चल पड़े।", "en": "Then the two of them set off towards the playground.", "image": "walking-together" }
+      ],
+      "checks": [
+        {
+          "after": "l2",
+          "hi": "इस समय घर पर कौन होता है?",
+          "en": "Who is at home at that time?",
+          "options": [
+            { "hi": "दादी", "en": "Grandmother", "correct": true },
+            { "hi": "माँ", "en": "Mother", "correct": false },
+            { "hi": "भाई", "en": "Brother", "correct": false }
+          ]
+        },
+        {
+          "after": "l5",
+          "hi": "दादी के कहाँ दर्द रहता है?",
+          "en": "Where does grandmother have pain?",
+          "options": [
+            { "hi": "घुटनों में", "en": "In her knees", "correct": true },
+            { "hi": "सिर में", "en": "In her head", "correct": false },
+            { "hi": "हाथ में", "en": "In her hand", "correct": false }
+          ]
+        },
+        {
+          "after": "l10",
+          "hi": "अंत में नीमा और दादी कहाँ गईं?",
+          "en": "Where did Neema and grandmother go at the end?",
+          "options": [
+            { "hi": "खेल के मैदान", "en": "The playground", "correct": true },
+            { "hi": "स्कूल", "en": "School", "correct": false },
+            { "hi": "बाज़ार", "en": "The market", "correct": false }
+          ]
+        }
+      ]
+    }
+  ]
+}

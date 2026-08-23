@@ -1,0 +1,166 @@
+/* ===== SIH Design Tokens ===== */
+/* Single source of truth — import from every stylesheet, deck prompt, component. */
+
+:root {
+  /* ── Colour Palette ────────────────────────────────────── */
+  --c-brand:        #6c5ce7;
+  --c-brand-light:  #a29bfe;
+  --c-brand-dark:   #4a3db5;
+
+  --c-accent:       #00cec9;
+  --c-accent-light: #81ecec;
+  --c-accent-dark:  #00a8a3;
+
+  --c-success:      #00b894;
+  --c-warning:      #fdcb6e;
+  --c-danger:       #e17055;
+  --c-info:         #74b9ff;
+
+  /* ── Surfaces ──────────────────────────────────────────── */
+  --c-bg:           #ffffff;
+  --c-bg-subtle:    #f8f9fa;
+  --c-bg-muted:     #f1f3f5;
+  --c-surface:      #ffffff;
+  --c-surface-alt:  #fafafa;
+  --c-border:       #dee2e6;
+  --c-border-subtle:#e9ecef;
+
+  /* ── Text ──────────────────────────────────────────────── */
+  --c-text:         #212529;
+  --c-text-secondary:#6c757d;
+  --c-text-muted:   #adb5bd;
+  --c-text-inverse: #ffffff;
+  --c-text-brand:   var(--c-brand);
+  --c-text-link:    var(--c-brand);
+
+  /* ── Legacy aliases (App.css / index.css consumers) ────── */
+  --text:           #6b6375;
+  --text-h:         #08060d;
+  --bg:             var(--c-bg);
+  --border:         #e5e4e7;
+  --code-bg:        #f4f3ec;
+  --accent:         #aa3bff;
+  --accent-bg:      rgba(170, 59, 255, 0.1);
+  --accent-border:  rgba(170, 59, 255, 0.5);
+  --social-bg:      rgba(244, 243, 236, 0.5);
+  --shadow:         rgba(0,0,0,.1) 0 10px 15px -3px,
+                    rgba(0,0,0,.05) 0 4px 6px -2px;
+
+  /* ── Spacing Scale (4 px base) ─────────────────────────── */
+  --sp-0:  0;
+  --sp-1:  0.25rem;   /*  4px */
+  --sp-2:  0.5rem;    /*  8px */
+  --sp-3:  0.75rem;   /* 12px */
+  --sp-4:  1rem;      /* 16px */
+  --sp-5:  1.25rem;   /* 20px */
+  --sp-6:  1.5rem;    /* 24px */
+  --sp-8:  2rem;      /* 32px */
+  --sp-10: 2.5rem;    /* 40px */
+  --sp-12: 3rem;      /* 48px */
+  --sp-16: 4rem;      /* 64px */
+  --sp-20: 5rem;      /* 80px */
+  --sp-24: 6rem;      /* 96px */
+
+  /* ── Typography ────────────────────────────────────────── */
+  --font-sans:   'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-heading:'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono:   'JetBrains Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+
+  /* Legacy font aliases */
+  --sans:    var(--font-sans);
+  --heading: var(--font-heading);
+  --mono:    var(--font-mono);
+
+  --text-xs:   0.75rem;   /* 12px */
+  --text-sm:   0.875rem;  /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg:   1.125rem;  /* 18px */
+  --text-xl:   1.25rem;   /* 20px */
+  --text-2xl:  1.5rem;    /* 24px */
+  --text-3xl:  1.875rem;  /* 30px */
+  --text-4xl:  2.25rem;   /* 36px */
+  --text-5xl:  3rem;      /* 48px */
+
+  --leading-tight:  1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed:1.625;
+
+  --weight-normal:  400;
+  --weight-medium:  500;
+  --weight-semibold:600;
+  --weight-bold:    700;
+
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.025em;
+
+  /* ── Radii ─────────────────────────────────────────────── */
+  --radius-sm:   0.25rem;  /*  4px */
+  --radius-md:   0.5rem;   /*  8px */
+  --radius-lg:   0.75rem;  /* 12px */
+  --radius-xl:   1rem;     /* 16px */
+  --radius-2xl:  1.5rem;   /* 24px */
+  --radius-full: 9999px;
+
+  /* ── Elevation ─────────────────────────────────────────── */
+  --shadow-xs:  0 1px 2px rgba(0,0,0,.05);
+  --shadow-sm:  0 1px 3px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.06);
+  --shadow-md:  0 4px 6px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.06);
+  --shadow-lg:  0 10px 15px rgba(0,0,0,.1), 0 4px 6px rgba(0,0,0,.05);
+  --shadow-xl:  0 20px 25px rgba(0,0,0,.1), 0 10px 10px rgba(0,0,0,.04);
+
+  /* ── Motion ────────────────────────────────────────────── */
+  --ease-default: cubic-bezier(.4,0,.2,1);
+  --ease-in:      cubic-bezier(.4,0,1,1);
+  --ease-out:     cubic-bezier(0,0,.2,1);
+  --ease-bounce:  cubic-bezier(.34,1.56,.64,1);
+
+  --duration-fast:  100ms;
+  --duration-normal:200ms;
+  --duration-slow:  350ms;
+
+  /* ── Z-index Scale ─────────────────────────────────────── */
+  --z-base:    0;
+  --z-dropdown:10;
+  --z-sticky:  20;
+  --z-overlay: 30;
+  --z-modal:   40;
+  --z-toast:   50;
+}
+
+/* ── Dark Mode Overrides ───────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-bg:           #1a1b1e;
+    --c-bg-subtle:    #212225;
+    --c-bg-muted:     #2b2d31;
+    --c-surface:      #25262b;
+    --c-surface-alt:  #2c2e33;
+    --c-border:       #373a40;
+    --c-border-subtle:#2f3136;
+
+    --c-text:         #c1c2c5;
+    --c-text-secondary:#909296;
+    --c-text-muted:   #5c5f66;
+    --c-text-inverse: #1a1b1e;
+
+    /* Legacy dark overrides */
+    --text:       #9ca3af;
+    --text-h:     #f3f4f6;
+    --bg:         #16171d;
+    --border:     #2e303a;
+    --code-bg:    #1f2028;
+    --accent:     #c084fc;
+    --accent-bg:  rgba(192, 132, 252, 0.15);
+    --accent-border: rgba(192, 132, 252, 0.5);
+    --social-bg:  rgba(47, 48, 58, 0.5);
+    --shadow:     rgba(0,0,0,.4) 0 10px 15px -3px,
+                  rgba(0,0,0,.25) 0 4px 6px -2px;
+
+    --shadow-xs:  0 1px 2px rgba(0,0,0,.2);
+    --shadow-sm:  0 1px 3px rgba(0,0,0,.3), 0 1px 2px rgba(0,0,0,.2);
+    --shadow-md:  0 4px 6px rgba(0,0,0,.3), 0 2px 4px rgba(0,0,0,.2);
+    --shadow-lg:  0 10px 15px rgba(0,0,0,.4), 0 4px 6px rgba(0,0,0,.25);
+    --shadow-xl:  0 20px 25px rgba(0,0,0,.4), 0 10px 10px rgba(0,0,0,.25);
+  }
+}
