@@ -64,6 +64,19 @@
   background: rgba(255, 255, 255, .14);
 }
 
+.room-more {
+  min-height: 38px;
+  padding: 0 11px;
+  border-radius: 9px;
+  border: 1px solid rgba(255, 255, 255, .12);
+  background: transparent;
+  color: #B9BFDF;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.room-more option { background: #171A32; color: #EEF0FA; }
+
 .room-net {
   display: inline-flex;
   align-items: center;

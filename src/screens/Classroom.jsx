@@ -3,7 +3,7 @@ import {
   ArrowLeft, ArrowRight, Volume2, Mic, Pencil, WifiOff, Wifi, Check, X,
 } from 'lucide-react'
 import lessons from '../../content/lessons.json'
-import { LANGUAGES } from '../lib/bhashini.js'
+import { LANGUAGES, PRIMARY } from '../lib/bhashini.js'
 import './classroom.css'
 
 /*
@@ -118,15 +118,26 @@ export default function Classroom() {
           <span>NCERT Sarangi · Class {lesson.grade} · {lesson.unit}</span>
         </div>
 
+        {/* Six chips for Jharkhand, a picker for the other sixteen. All
+            twenty-two would be a wall of buttons nobody reads. */}
         <div className="room-langs" role="group" aria-label="Language">
-          {LANGUAGES.map((l) => (
+          {LANGUAGES.filter((l) => PRIMARY.includes(l.code)).map((l) => (
             <button key={l.code}
               className={l.code === lang ? 'on' : ''}
               onClick={() => setLang(l.code)}>
               {l.nameEn}
-              {!l.speaks && <i title="No voice for this language yet">text</i>}
+              {!l.speaks && <i title="Translates, but has no voice yet">text</i>}
             </button>
           ))}
+          <select className="room-more"
+            value={PRIMARY.includes(lang) ? '' : lang}
+            onChange={(e) => e.target.value && setLang(e.target.value)}
+            aria-label="More languages">
+            <option value="">+{LANGUAGES.length - PRIMARY.length} more</option>
+            {LANGUAGES.filter((l) => !PRIMARY.includes(l.code)).map((l) => (
+              <option key={l.code} value={l.code}>{l.nameEn}</option>
+            ))}
+          </select>
         </div>
 
         <span className={online ? 'room-net' : 'room-net is-off'}>

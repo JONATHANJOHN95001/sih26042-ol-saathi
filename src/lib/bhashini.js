@@ -145,10 +145,48 @@ export async function deliver(hindi, { to = 'sat' } = {}) {
   return { text, audio, spoken: Boolean(audio) }
 }
 
-/** Which languages we offer, and what each can actually do. */
+/**
+ * Every language the platform actually serves, checked against the live
+ * catalogue rather than assumed.
+ *
+ * 21 of the 22 scheduled languages have the complete pipeline: translate,
+ * speak and listen. Konkani has none of it. Ho translates but cannot
+ * speak, and Mundari, Kurukh, Kharia, Sadri and Kurmali are absent
+ * entirely, because Bhashini covers the Eighth Schedule and those five
+ * Jharkhand tribal languages are not on it. That is a policy gap, not a
+ * bug, and the pitch should say so.
+ *
+ * `speaks` and `listens` drive the interface, so a language that can only
+ * do text says so on its own chip instead of the app quietly doing less.
+ */
+const FULL = (code, name, nameEn) => ({ code, name, nameEn, speaks: true, listens: true })
+
 export const LANGUAGES = [
-  { code: 'sat', name: 'ᱥᱟᱱᱛᱟᱲᱤ', nameEn: 'Santali', script: 'Ol Chiki', speaks: true, listens: true },
-  { code: 'hoc', name: 'Ho', nameEn: 'Ho', script: 'Latin', speaks: false, listens: false },
-  { code: 'bn', name: 'বাংলা', nameEn: 'Bengali', script: 'Bengali', speaks: true, listens: true },
-  { code: 'or', name: 'ଓଡ଼ିଆ', nameEn: 'Odia', script: 'Odia', speaks: true, listens: true },
+  // Jharkhand first. This is who asked.
+  FULL('sat', 'ᱥᱟᱱᱛᱟᱲᱤ', 'Santali'),
+  { code: 'hoc', name: 'Ho', nameEn: 'Ho', speaks: false, listens: false },
+  FULL('bn', 'বাংলা', 'Bengali'),
+  FULL('or', 'ଓଡ଼ିଆ', 'Odia'),
+  FULL('ur', 'اردو', 'Urdu'),
+  FULL('mai', 'मैथिली', 'Maithili'),
+  // and the rest of the Eighth Schedule, which came free
+  FULL('as', 'অসমীয়া', 'Assamese'),
+  FULL('brx', 'बड़ो', 'Bodo'),
+  FULL('doi', 'डोगरी', 'Dogri'),
+  FULL('gu', 'ગુજરાતી', 'Gujarati'),
+  FULL('kn', 'ಕನ್ನಡ', 'Kannada'),
+  FULL('ks', 'کٲشُر', 'Kashmiri'),
+  FULL('ml', 'മലയാളം', 'Malayalam'),
+  FULL('mni', 'ꯃꯤꯇꯩ', 'Manipuri'),
+  FULL('mr', 'मराठी', 'Marathi'),
+  FULL('ne', 'नेपाली', 'Nepali'),
+  FULL('pa', 'ਪੰਜਾਬੀ', 'Punjabi'),
+  FULL('sa', 'संस्कृतम्', 'Sanskrit'),
+  FULL('sd', 'سنڌي', 'Sindhi'),
+  FULL('ta', 'தமிழ்', 'Tamil'),
+  FULL('te', 'తెలుగు', 'Telugu'),
+  FULL('en', 'English', 'English'),
 ]
+
+/** The six we show as chips. The rest live behind the picker. */
+export const PRIMARY = ['sat', 'hoc', 'bn', 'or', 'ur', 'mai']
