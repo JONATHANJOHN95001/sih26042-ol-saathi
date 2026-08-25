@@ -1,5 +1,7 @@
 # Ol Saathi (ओल साथी)
 
+![CI](https://github.com/USER/REPO/actions/workflows/ci.yml/badge.svg)
+
 **SIH26042 · Government of Jharkhand · Team INNOV8, JAIN Deemed-to-be University**
 
 Ol Saathi is an offline-first Android app that lets a Hindi-speaking primary teacher deliver a lesson in Santali (Ol Chiki script) without knowing the language. The teacher speaks Hindi; the app translates, displays, and speaks Santali. Fully offline, on a low-cost tablet. No internet required.
