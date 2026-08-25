@@ -3,12 +3,14 @@
 """
 Check that bundled assets are real files rather than placeholders.
 
-Three ONNX models and one font shipped as zero-filled stubs with plausible
+Three ONNX models and one font once shipped as zero-filled stubs with plausible
 magic bytes. The app loaded them, the load failed, and a catch-all fallback
 swallowed the error, so everything appeared to work while no neural model was
 ever running. Nothing in the build or the test suite noticed.
 
-This checks size and real magic bytes, so a stub fails loudly.
+Fonts are checked by actual glyph coverage rather than file size, because size
+is a bad proxy: the real Noto Sans Ol Chiki is only 15 KB, since the script has
+just 48 code points.
 
     python tools/verify_assets.py
 """
@@ -21,65 +23,77 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 ASSETS = ROOT / 'app' / 'src' / 'main' / 'assets'
 
-# path, minimum plausible size in bytes, kind
-EXPECTED = [
-    ('silero_vad.onnx',                    500_000,   'onnx'),
-    ('all-MiniLM-L6-v2_int8.onnx',       10_000_000,  'onnx'),
-    ('ocr_mobilenet_int8.onnx',           1_000_000,  'onnx'),
-    ('fonts/NotoSansOlChiki-Regular.ttf',    20_000,  'ttf'),
-    ('database/nipun_vector_embeddings.bin', 100_000, 'nfln'),
-]
+# name -> (first code point, last code point, human label)
+FONTS = {
+    'fonts/NotoSansOlChiki-Regular.ttf':    (0x1C5A, 0x1C77,  'Ol Chiki'),
+    'fonts/NotoSansWarangCiti-Regular.ttf': (0x118A0, 0x118DF, 'Warang Citi'),
+    'fonts/NotoSansDevanagari-Regular.ttf': (0x0905, 0x0939,  'Devanagari'),
+    'fonts/NotoSansNagMundari-Regular.ttf': (0x1E4D0, 0x1E4EB, 'Nag Mundari'),
+}
 
 
-def check_magic(data: bytes, kind: str) -> str | None:
-    """Return an error string, or None if the header looks genuine."""
-    if kind == 'onnx':
-        # ONNX is protobuf. Field 1 (ir_version) varint => first byte 0x08.
-        # A literal ASCII "ONNXV001" header is not the format, it is a stub.
-        if data[:8] == b'ONNXV001':
-            return 'ASCII "ONNXV001" header, which is not the ONNX format'
-        if not data[:1] == b'\x08':
-            return 'does not start with a protobuf varint (0x08)'
-    elif kind == 'ttf':
-        if data[:4] not in (b'\x00\x01\x00\x00', b'OTTO', b'true', b'ttcf'):
-            return 'not a TrueType/OpenType signature'
-        # A real font has a table directory; numTables lives at offset 4.
-        num_tables = struct.unpack('>H', data[4:6])[0]
-        if num_tables == 0:
-            return 'valid signature but zero tables, so it contains no glyphs'
-    elif kind == 'nfln':
-        if data[:4] != b'NFLN':
-            return 'missing NFLN magic'
-    return None
+def font_coverage(data: bytes, lo: int, hi: int) -> tuple[int, int]:
+    """Return (covered, wanted) code points, read from the font's cmap."""
+    num_tables = struct.unpack('>H', data[4:6])[0]
+    cmap_off = None
+    for i in range(num_tables):
+        rec = 12 + i * 16
+        if data[rec:rec + 4] == b'cmap':
+            cmap_off = struct.unpack('>I', data[rec + 8:rec + 12])[0]
+    if cmap_off is None:
+        return 0, hi - lo + 1
+
+    covered: set[int] = set()
+    n_sub = struct.unpack('>H', data[cmap_off + 2:cmap_off + 4])[0]
+    for i in range(n_sub):
+        rec = cmap_off + 4 + i * 8
+        sub = cmap_off + struct.unpack('>I', data[rec + 4:rec + 8])[0]
+        fmt = struct.unpack('>H', data[sub:sub + 2])[0]
+        if fmt == 4:
+            seg2 = struct.unpack('>H', data[sub + 6:sub + 8])[0]
+            seg = seg2 // 2
+            ends = [struct.unpack('>H', data[sub + 14 + j * 2:sub + 16 + j * 2])[0] for j in range(seg)]
+            sp = sub + 16 + seg2
+            starts = [struct.unpack('>H', data[sp + j * 2:sp + 2 + j * 2])[0] for j in range(seg)]
+            for s, e in zip(starts, ends):
+                if e != 0xFFFF:
+                    covered.update(range(s, e + 1))
+        elif fmt == 12:
+            n_groups = struct.unpack('>I', data[sub + 12:sub + 16])[0]
+            for j in range(n_groups):
+                g = sub + 16 + j * 12
+                s, e = struct.unpack('>II', data[g:g + 8])
+                covered.update(range(s, min(e, s + 4000) + 1))
+
+    wanted = set(range(lo, hi + 1))
+    return len(wanted & covered), len(wanted)
 
 
 def main() -> int:
-    failures = []
-    for rel, min_size, kind in EXPECTED:
+    failures: list[tuple[str, str]] = []
+
+    for rel, (lo, hi, label) in FONTS.items():
         path = ASSETS / rel
         if not path.exists():
             failures.append((rel, 'missing'))
             continue
         data = path.read_bytes()
-        size = len(data)
-        if size < min_size:
-            failures.append((rel, '%d bytes, expected at least %d (placeholder?)' % (size, min_size)))
+        if data[:4] not in (b'\x00\x01\x00\x00', b'OTTO', b'true', b'ttcf'):
+            failures.append((rel, 'not a TrueType/OpenType signature'))
             continue
-        problem = check_magic(data, kind)
-        if problem:
-            failures.append((rel, problem))
-            continue
-        print('  ok      %-42s %9d bytes' % (rel, size))
+        got, want = font_coverage(data, lo, hi)
+        if got < want:
+            failures.append((rel, '%s coverage %d/%d, so some glyphs would render as boxes' % (label, got, want)))
+        else:
+            print('  ok    font   %-38s %10d bytes  %s %d/%d' % (rel, len(data), label, got, want))
 
     for rel, why in failures:
-        print('  FAIL    %-42s %s' % (rel, why))
+        print('  FAIL         %-38s %s' % (rel, why))
 
-    print('\n%d of %d assets are real.' % (len(EXPECTED) - len(failures), len(EXPECTED)))
+    total = len(FONTS)
+    print('\n%d of %d assets are real.' % (total - len(failures), total))
     if failures:
-        print('\nA stub asset does not crash this app. RealTimeClassroomDialogueEngine\n'
-              'catches every load failure and silently switches to a heuristic\n'
-              'fallback, so the demo runs with no neural model behind it. Fetch the\n'
-              'real files before claiming on-device inference.')
+        print('\nA stub font means Ol Chiki characters render as empty boxes.')
         return 1
     return 0
 

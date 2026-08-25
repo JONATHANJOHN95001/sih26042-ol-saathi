@@ -12,11 +12,19 @@ package app.olsaathi.content
  */
 enum class Provenance(val label: String) {
     /** Real translation from the Bhashini pack. */
-    VERIFIED("Verified translation"),
+    /**
+     * From the shipped pack, traceable to the model that produced it.
+     *
+     * The label deliberately does NOT say "verified". Nothing in this pack has
+     * been checked by a Santali speaker, and a teacher who cannot read Ol Chiki
+     * would take the word "verified" at face value. What we can honestly claim
+     * is the source, so that is what the label states.
+     */
+    VERIFIED("Machine translation · IndicTrans2"),
     /** Hindi text respelled in the target script — not a translation. */
     TRANSLITERATED("Transliterated, not a translation"),
     /** No match in the pack. Empty target string. */
-    UNAVAILABLE("No verified translation offline"),
+    UNAVAILABLE("Not in the offline pack"),
 
     /**
      * The pack is placeholder data, not Bhashini output.

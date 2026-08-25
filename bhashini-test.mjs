@@ -13,12 +13,20 @@
  *   4. Run:  node bhashini-test.mjs
  */
 
-// ─────────────────────────────────────────────────────────────
-const USER_ID       = 'PASTE_YOUR_USER_ID';
-const ULCA_API_KEY  = 'PASTE_YOUR_ULCA_API_KEY';
-const INFERENCE_KEY = 'PASTE_YOUR_INFERENCE_API_KEY';
-// ─────────────────────────────────────────────────────────────
-
+// Read from the environment, never from this file. The repository has to be
+// public for the submission, and a pasted key would go public with it.
+//
+//   PowerShell:
+//     $env:BHASHINI_USER_ID="..."; $env:BHASHINI_ULCA_KEY="..."; $env:BHASHINI_INFERENCE_KEY="..."
+//     node bhashini-test.mjs
+//
+//   Git Bash:
+//     BHASHINI_USER_ID=... BHASHINI_ULCA_KEY=... BHASHINI_INFERENCE_KEY=... node bhashini-test.mjs
+//
+// Same three variables as tools/build_pack.mjs, so set them once per shell.
+const USER_ID       = process.env.BHASHINI_USER_ID       || '';
+const ULCA_API_KEY  = process.env.BHASHINI_ULCA_KEY      || '';
+const INFERENCE_KEY = process.env.BHASHINI_INFERENCE_KEY || '';
 const CONFIG_URL = 'https://meity-auth.ulcacontrib.org/ulca/apis/v0/model/getModelsPipeline';
 const PIPELINE_ID = '64392f96daac500b55c543cd'; // MeitY pipeline
 
@@ -31,8 +39,13 @@ const bad  = (m) => console.log('\x1b[31m  FAIL \x1b[0m ' + m);
 const warn = (m) => console.log('\x1b[33m  WARN \x1b[0m ' + m);
 const head = (m) => console.log('\n\x1b[36m' + m + '\x1b[0m\n' + '-'.repeat(58));
 
-if (USER_ID.startsWith('PASTE')) {
-  console.log('\n  Fill in your three Bhashini keys at the top of this file first.\n');
+if (!USER_ID || !ULCA_API_KEY || !INFERENCE_KEY) {
+  console.log('');
+  console.log('  Set these three environment variables first:');
+  console.log('    BHASHINI_USER_ID, BHASHINI_ULCA_KEY, BHASHINI_INFERENCE_KEY');
+  console.log('');
+  console.log('  All three come from bhashini.gov.in, log in, My Profile, Generate.');
+  console.log('');
   process.exit(1);
 }
 

@@ -69,3 +69,11 @@ reconstruct_stubs.sh
 # Debug dumps and build output
 EMULATOR_UI_*.xml
 generated_materials/
+
+# Office lock files
+~$*
+
+# Placeholder media. A silent wav that nothing references is indistinguishable
+# from working audio to anyone who does not open it.
+app/src/main/assets/pack/audio/*.wav
+!app/src/main/assets/pack/audio/README.md
