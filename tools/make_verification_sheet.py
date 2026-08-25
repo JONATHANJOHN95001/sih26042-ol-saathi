@@ -39,16 +39,38 @@ def main():
     pack = json.loads(PACK.read_text(encoding='utf-8'))
     prov = pack.get('provenance', {})
 
-    order = {'phrase': 0, 'lesson': 1, 'check': 2}
-    rows = sorted(pack['entries'].items(),
-                  key=lambda kv: (order.get(kv[1].get('kind'), 9), kv[0]))
+    # Sort by back-translation suspicion when we have it, worst first, so a
+    # reviewer's limited time lands on the entries most likely to be broken
+    # rather than being spent alphabetically. Falls back to grouping by kind.
+    report = OUT.parent / 'back-translation-report.json'
+    suspicion = {}
+    if report.exists():
+        data = json.loads(report.read_text(encoding='utf-8'))
+        suspicion = {r['id']: r['score'] for r in data.get('rows', [])}
+
+    if suspicion:
+        rows = sorted(pack['entries'].items(),
+                      key=lambda kv: suspicion.get(kv[0], 1.0))
+        print('sorted worst-first using back-translation scores')
+    else:
+        order = {'phrase': 0, 'lesson': 1, 'check': 2}
+        rows = sorted(pack['entries'].items(),
+                      key=lambda kv: (order.get(kv[1].get('kind'), 9), kv[0]))
+        print('no back-translation report, sorting by kind')
+
+    backs = {}
+    if report.exists():
+        backs = {r['id']: r.get('back_en', '')
+                 for r in json.loads(report.read_text(encoding='utf-8')).get('rows', [])}
 
     olck = b64(FONTS / 'NotoSansOlChiki-Regular.ttf')
     deva = b64(FONTS / 'NotoSansDevanagari-Regular.ttf')
 
     items_json = json.dumps(
         [{'id': k, 'hi': v['source'], 'en': v.get('en', ''),
-          'sat': v['target'], 'kind': v.get('kind', '')} for k, v in rows],
+          'sat': v['target'], 'kind': v.get('kind', ''),
+          'score': suspicion.get(k),
+          'back': backs.get(k, '')} for k, v in rows],
         ensure_ascii=False)
 
     html = HTML % {
@@ -106,6 +128,10 @@ HTML = r'''<!doctype html>
   .sat { font-family:"OlChiki",serif; font-size:23px; color:var(--forest);
          margin-bottom:10px; line-height:1.7; }
 
+  .flag { background:#fdf5f4; border:1px solid #e8c4bf; border-radius:8px;
+          padding:8px 10px; margin-bottom:10px; font-size:12.5px; color:#8a4038; }
+  .flag i { font-style:normal; font-weight:600; }
+
   .marks { display:flex; gap:8px; flex-wrap:wrap; }
   .marks button { flex:0 0 auto; padding:8px 14px; border-radius:20px; cursor:pointer;
                   border:1px solid var(--line); background:#fff; font-size:14px;
@@ -150,6 +176,10 @@ HTML = r'''<!doctype html>
     <p style="margin:0 0 8px"><b>What we need.</b> A machine translated these. Nobody who reads
     Santali has checked them. For each one, tap <b>Correct</b> or <b>Wrong</b>. If it is wrong
     and you can write the right version, please do. If you are unsure, skip it.</p>
+    <p style="margin:0 0 8px"><b>The order matters.</b> These are sorted with the most
+    doubtful first. We translated each one back into English by machine and compared it to
+    what we meant; where it came back different, we have shown you. If you only have time
+    for twenty, do the first twenty.</p>
     <p style="margin:0" class="hi"><b>हमें क्या चाहिए:</b> ये अनुवाद मशीन ने किए हैं। कृपया हर वाक्य
     देखकर बताइए कि संताली सही है या नहीं। गलत हो तो सही रूप लिख दीजिए।</p>
   </div>
@@ -193,6 +223,8 @@ function render() {
     div.innerHTML =
       '<div class="n">' + (i + 1) + " of " + ITEMS.length + " · " + (KIND[it.kind] || it.kind) + '</div>' +
       '<div class="en"></div><div class="hi"></div><div class="sat"></div>' +
+      (it.score !== null && it.score < 0.5
+        ? '<div class="flag">Machine round-trip came back as: <i></i></div>' : '') +
       '<div class="marks">' +
         '<button class="' + (st.verdict === "ok" ? "sel-ok" : "") + '" data-v="ok">Correct</button>' +
         '<button class="' + (st.verdict === "bad" ? "sel-bad" : "") + '" data-v="bad">Wrong</button>' +
@@ -201,6 +233,8 @@ function render() {
     div.querySelector(".en").textContent = it.en;
     div.querySelector(".hi").textContent = it.hi;
     div.querySelector(".sat").textContent = it.sat;
+    const flag = div.querySelector(".flag i");
+    if (flag) flag.textContent = it.back;
     const fix = div.querySelector(".fix");
     fix.value = st.fix || "";
     fix.addEventListener("input", () => { mark(it.id, state[it.id].verdict, fix.value); });

@@ -112,6 +112,14 @@ class HindiSpeechInput(
                 SpeechRecognizer.ERROR_NETWORK_TIMEOUT -> "Network timeout"
                 SpeechRecognizer.ERROR_SERVER -> "Server error"
                 SpeechRecognizer.ERROR_RECOGNIZER_BUSY -> "Recognition service busy"
+                // Observed on a real device: requesting offline hi-IN when the
+                // Hindi language pack has not been downloaded returns 12, and
+                // "Speech error: 12" tells the teacher nothing they can act on.
+                // These two constants need API 33, so compare by value.
+                12 -> "Hindi offline speech is not installed on this tablet. " +
+                      "Settings, then System, then Languages and input, then " +
+                      "On-device speech recognition, and add Hindi."
+                13 -> "This device does not support Hindi speech recognition."
                 else -> "Speech error: $error"
             }
             // N2: Surface the error, never swallow it.
