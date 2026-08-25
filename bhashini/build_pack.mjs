@@ -39,7 +39,10 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PACK_DIR = path.join(ROOT, 'bhashini', 'out');
 const AUDIO_DIR = path.join(PACK_DIR, 'audio');
 
-const CONFIG_URL = 'https://meity-auth.ulcacontrib.org/ulca/apis/v0/model/getModelsPipeline';
+// Overridable so selftest.mjs can point the whole pipeline at a local mock
+// and prove the plumbing without spending a real API call or needing keys.
+const CONFIG_URL = process.env.BHASHINI_CONFIG_URL ||
+  'https://meity-auth.ulcacontrib.org/ulca/apis/v0/model/getModelsPipeline';
 const PIPELINE_ID = '64392f96daac500b55c543cd';
 const SOURCE = 'hi';
 
@@ -55,6 +58,10 @@ const COMPARE = has('--compare');
 const WITH_AUDIO = !has('--no-audio');
 const TARGET = val('--lang', 'sat');
 const LIMIT = Number(val('--limit', '0')) || 0;
+// Copy the finished pack into the app after a successful run. Off by
+// default: replacing content that currently works should be a decision,
+// not a side effect.
+const INSTALL = has('--install');
 
 const USER_ID = process.env.BHASHINI_USER_ID || '';
 const ULCA_KEY = process.env.BHASHINI_ULCA_KEY || '';
@@ -347,9 +354,57 @@ async function main() {
   head('Result');
   ok(`${done} translated, ${withAudio} with audio, ${failed} failed`);
   ok(`pack: ${path.relative(ROOT, packPath)}`);
-  console.log(`\n  Read a few of these out loud to someone who speaks ${TARGET} before the demo.`);
-  console.log(`  The pack records the Bhashini service that produced each line, so the`);
-  console.log(`  provenance is in the data if anyone asks.\n`);
+  console.log('');
+  console.log(`  Read a few of these out loud to someone who speaks ${TARGET} before the demo.`);
+  console.log('  The pack records the Bhashini service that produced each line, so the');
+  console.log('  provenance is in the data if anyone asks.');
+  console.log('');
+
+  if (!INSTALL) {
+    console.log('  Nothing was copied into the app. Rerun with --install to do that,');
+    console.log('  or compare first:  node bhashini/build_pack.mjs --compare');
+    console.log('');
+    return;
+  }
+
+  // ── install, with a backup, because this replaces working content ────
+  head('Installing into the app');
+
+  const appPackDir = path.join(ROOT, 'app', 'src', 'main', 'assets', 'pack');
+  const appPack = path.join(appPackDir, `pack.${TARGET}.json`);
+  const appAudio = path.join(appPackDir, 'audio');
+
+  if (fs.existsSync(appPack)) {
+    const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const backup = path.join(appPackDir, `pack.${TARGET}.json.before-${stamp}`);
+    fs.copyFileSync(appPack, backup);
+    ok(`previous pack backed up as ${path.basename(backup)}`);
+  }
+
+  fs.mkdirSync(appPackDir, { recursive: true });
+  fs.copyFileSync(packPath, appPack);
+  ok(`pack installed at ${path.relative(ROOT, appPack)}`);
+
+  if (fs.existsSync(AUDIO_DIR)) {
+    fs.mkdirSync(appAudio, { recursive: true });
+    let n = 0;
+    for (const f of fs.readdirSync(AUDIO_DIR)) {
+      fs.copyFileSync(path.join(AUDIO_DIR, f), path.join(appAudio, f));
+      n += 1;
+    }
+    ok(`${n} audio files installed`);
+  }
+
+  console.log('');
+  console.log('  Now rebuild and run the tests. They check whatever is shipped, so');
+  console.log('  they will catch contamination or collisions in the new content.');
+  console.log('');
+  console.log('    ./gradlew :app:testDebugUnitTest');
+  console.log('    ./gradlew :app:assembleRelease');
+  console.log('');
+  console.log('  The provenance chip updates itself from the pack. If a Santali');
+  console.log('  speaker has not read these strings, it should not say verified.');
+  console.log('');
 }
 
 main().catch((e) => { bad('Unexpected: ' + e.message); process.exit(1); });

@@ -43,6 +43,24 @@ what `--compare` is for.
 Lesson content is read from `../content/lessons.json`, which stays the single
 source of truth so the two pipelines cannot drift apart.
 
+## Prove it works before you have keys
+
+```bash
+node bhashini/selftest.mjs
+```
+
+Stands up a local server that answers like Bhashini, runs the real generator
+against it, and checks what comes out: entries written, provenance recorded,
+ids distinct, no foreign-script contamination, and audio that decodes to a
+genuine RIFF/WAVE file.
+
+Everything is exercised except the remote service. When real keys arrive the
+only untested link is whether the live API returns the shape the mock imitates.
+
+This exists because handing someone a "just paste your keys" button that has
+never executed is precisely the kind of confident, untested thing this project
+has had to remove more than once.
+
 ## Running it
 
 Set the keys once per shell. Never put them in a file; this repository is public.
@@ -58,11 +76,11 @@ node bhashini/build_pack.mjs --compare
 node bhashini/build_pack.mjs
 ```
 
-Then, only if you are satisfied with what `--compare` showed you:
+Then, only if you are satisfied with what `--compare` showed you, one command
+does the copy and keeps a timestamped backup of what it replaced:
 
 ```bash
-cp bhashini/out/pack.sat.json app/src/main/assets/pack/pack.sat.json
-cp -r bhashini/out/audio      app/src/main/assets/pack/
+node bhashini/build_pack.mjs --install
 ```
 
 Then `./gradlew :app:testDebugUnitTest`. The pack tests run against whatever is
