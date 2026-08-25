@@ -11,30 +11,31 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/md_theme_primary"
-        app:title="@string/classroom_title"
+        app:title="Ol Saathi"
         app:titleTextColor="@color/md_theme_onPrimary"
-        app:navigationIconTint="@color/md_theme_onPrimary" />
+        app:navigationIconTint="@color/md_theme_onPrimary"
+        app:menu="@menu/overflow_menu" />
 
-    <!-- Translation display area -->
-    <com.google.android.material.card.MaterialCardView
+    <!-- Main content area -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="2dp">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="12dp">
 
-            <!-- Hindi source -->
+            <!-- Hindi source — smaller -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/source_label"
                 android:textSize="12sp"
+                android:textStyle="bold"
                 android:textColor="@color/md_theme_onSurfaceVariant" />
 
             <TextView
@@ -47,18 +48,18 @@
                 android:paddingBottom="12dp"
                 android:text="" />
 
-            <!-- Divider -->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/md_theme_outlineVariant" />
 
-            <!-- Santali target -->
+            <!-- Santali target — LARGEST element on screen -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/target_label"
                 android:textSize="12sp"
+                android:textStyle="bold"
                 android:textColor="@color/md_theme_onSurfaceVariant"
                 android:paddingTop="12dp" />
 
@@ -66,9 +67,10 @@
                 android:id="@+id/textTarget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:textColor="@color/md_theme_primary"
+                android:textSize="30sp"
+                android:textColor="@color/md_theme_secondary"
                 android:paddingTop="4dp"
+                android:paddingBottom="4dp"
                 android:text="" />
 
             <!-- Provenance label -->
@@ -81,20 +83,10 @@
                 android:paddingTop="4dp"
                 android:text="" />
 
-            <!-- Latency -->
-            <TextView
-                android:id="@+id/textLatency"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="11sp"
-                android:textColor="@color/md_theme_outline"
-                android:paddingTop="2dp"
-                android:text="" />
-
         </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+    </ScrollView>
 
-    <!-- Play audio button (pack WAV) -->
+    <!-- Action buttons -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnPlayAudio"
         android:layout_width="match_parent"
@@ -106,7 +98,6 @@
         android:enabled="false"
         style="@style/Widget.Material3.Button.TonalButton" />
 
-    <!-- Audio status message (shown when no Santali voice) -->
     <TextView
         android:id="@+id/textAudioStatus"
         android:layout_width="match_parent"
@@ -125,22 +116,12 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginHorizontal="12dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         android:text="🎤 Hold to Speak Hindi"
         android:textSize="16sp"
         style="@style/Widget.Material3.Button" />
 
-    <!-- OR divider -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="— OR type Hindi below —"
-        android:textAlignment="center"
-        android:textSize="12sp"
-        android:textColor="@color/md_theme_outline"
-        android:paddingVertical="4dp" />
-
-    <!-- Manual text input -->
+    <!-- Type input -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -168,36 +149,15 @@
             android:layout_marginStart="8dp"
             android:text="@string/btn_translate"
             style="@style/Widget.Material3.Button.TonalButton" />
-
     </LinearLayout>
 
-    <!-- Worksheet button -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnWorksheet"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginHorizontal="12dp"
-        android:layout_marginBottom="12dp"
-        android:text="@string/btn_worksheet"
-        android:textSize="14sp"
-        style="@style/Widget.Material3.Button.OutlinedButton" />
-
-    <!-- Phrase list for browsing -->
-    <TextView
+    <!-- Bottom navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tap a phrase or speak"
-        android:textSize="12sp"
-        android:textColor="@color/md_theme_onSurfaceVariant"
-        android:paddingHorizontal="16dp"
-        android:paddingBottom="4dp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerPhrases"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="8dp"
-        android:clipToPadding="false" />
+        android:background="@color/md_theme_surface"
+        app:menu="@menu/bottom_nav_menu"
+        app:labelVisibilityMode="labeled" />
 
 </LinearLayout>

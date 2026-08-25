@@ -15,8 +15,11 @@ import app.olsaathi.content.VerifiedContentPack
 import app.olsaathi.databinding.ActivityLessonListBinding
 
 /**
- * Entry point of the app. Shows a list of available lessons.
- * Tapping a lesson opens the [ClassroomActivity].
+ * Lessons hub — the entry screen. Shows lessons and a "Classroom Phrases"
+ * section. Tapping a lesson launches [LessonPlayerActivity].
+ * Tapping phrases launches [ClassroomActivity] for lookup.
+ *
+ * Overflow menu: Check & Proof (merged preflight + proof).
  */
 class LessonListActivity : AppCompatActivity() {
 
@@ -30,16 +33,22 @@ class LessonListActivity : AppCompatActivity() {
 
         pack = (application as OlSaathiApplication).pack
 
-        binding.toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
-        binding.toolbar.setNavigationOnClickListener { finish() }
+        // Overflow menu → Check & Proof
+        binding.toolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.action_check_proof -> {
+                    startActivity(Intent(this, CheckAndProofActivity::class.java))
+                    true
+                }
+                else -> false
+            }
+        }
 
-        // Build lesson list from pack entries
+        // Build lesson list from pack
         val lessonIds = pack.lessonIds()
         val phraseEntries = pack.entries(null).filter { it.kind == "phrase" }
-
         val items = mutableListOf<LessonItem>()
 
-        // Add "All Phrases" section
         if (phraseEntries.isNotEmpty()) {
             items.add(LessonItem(
                 id = "__phrases__",
@@ -49,33 +58,45 @@ class LessonListActivity : AppCompatActivity() {
             ))
         }
 
-        // Add each lesson
         for (lessonId in lessonIds) {
             val entries = pack.entries(lessonId).filter { it.kind == "lesson" }
+            val checkEntries = pack.entries(lessonId).filter { it.kind == "check" }
             items.add(LessonItem(
                 id = lessonId,
                 title = lessonId.replace("-", " ").replaceFirstChar { it.uppercase() },
-                subtitle = "${entries.size} sentences",
+                subtitle = "${entries.size} sentences, ${checkEntries.size} questions",
                 count = entries.size
             ))
         }
 
         binding.recyclerLessons.layoutManager = LinearLayoutManager(this)
         binding.recyclerLessons.adapter = LessonAdapter(items) { item ->
-            val intent = Intent(this, ClassroomActivity::class.java).apply {
-                putExtra(EXTRA_LESSON_ID, item.id)
+            if (item.id == "__phrases__") {
+                startActivity(Intent(this, ClassroomActivity::class.java))
+            } else {
+                val intent = Intent(this, LessonPlayerActivity::class.java).apply {
+                    putExtra(LessonPlayerActivity.EXTRA_LESSON_ID, item.id)
+                    putExtra(LessonPlayerActivity.EXTRA_LESSON_TITLE, item.title)
+                }
+                startActivity(intent)
             }
-            startActivity(intent)
         }
 
-        // Pre-flight button
-        binding.btnPreflight.setOnClickListener {
-            startActivity(Intent(this, PreFlightActivity::class.java))
-        }
-
-        // Proof button — opens the live-proof screen
-        binding.btnProof.setOnClickListener {
-            startActivity(Intent(this, ProofActivity::class.java))
+        // ── Bottom nav ────────────────────────────────────────────
+        binding.bottomNav.selectedItemId = R.id.nav_lessons
+        binding.bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_teach -> {
+                    startActivity(Intent(this, ClassroomActivity::class.java))
+                    finish(); true
+                }
+                R.id.nav_lessons -> true
+                R.id.nav_worksheet -> {
+                    startActivity(Intent(this, WorksheetActivity::class.java))
+                    finish(); true
+                }
+                else -> false
+            }
         }
     }
 

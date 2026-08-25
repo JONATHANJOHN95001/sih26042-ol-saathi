@@ -22,18 +22,15 @@ import app.olsaathi.worksheet.WorksheetPdf
 import java.io.File
 
 /**
- * Worksheet generation screen.
- *
- * Phase 5 requirement: Select a lesson, generate a bilingual A4
- * worksheet with Hindi + Ol Chiki, and offer share/print.
- * N5: Uses PdfDocument, never hand-assembles PDF.
+ * Worksheet generation screen with bottom navigation.
+ * Select a lesson, generate a bilingual A4 worksheet, and offer share/print.
+ * Overflow menu: Check & Proof.
  */
 class WorksheetActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityWorksheetBinding
     private lateinit var pack: VerifiedContentPack
     private lateinit var worksheetPdf: WorksheetPdf
-
     private var currentPdf: File? = null
     private var lessonIds = listOf<String>()
 
@@ -48,6 +45,17 @@ class WorksheetActivity : AppCompatActivity() {
         binding.toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
         binding.toolbar.setNavigationOnClickListener { finish() }
 
+        // Overflow menu → Check & Proof
+        binding.toolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.action_check_proof -> {
+                    startActivity(Intent(this, CheckAndProofActivity::class.java))
+                    true
+                }
+                else -> false
+            }
+        }
+
         // Build lesson list
         lessonIds = pack.lessonIds()
         if (lessonIds.isEmpty()) {
@@ -56,59 +64,57 @@ class WorksheetActivity : AppCompatActivity() {
             return
         }
 
-        val displayNames = lessonIds.map { id ->
-            id.replace("-", " ").replaceFirstChar { it.uppercase() }
-        }
-
+        val displayNames = lessonIds.map { it.replace("-", " ").replaceFirstChar { c -> c.uppercase() } }
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, displayNames)
         binding.spinnerLesson.adapter = adapter
 
-        // Generate button
         binding.btnGenerate.setOnClickListener {
             val idx = binding.spinnerLesson.selectedItemPosition
             if (idx < 0 || idx >= lessonIds.size) return@setOnClickListener
-
             val lessonId = lessonIds[idx]
             binding.textStatus.text = "Generating worksheet..."
             binding.btnGenerate.isEnabled = false
-
             try {
                 val pdf = worksheetPdf.generate(lessonId, pack)
                 if (pdf != null && pdf.exists()) {
                     currentPdf = pdf
-                    binding.textStatus.text = "Worksheet generated: ${pdf.name} (${pdf.length() / 1024} KB)"
+                    binding.textStatus.text = "Worksheet: ${pdf.name} (${pdf.length() / 1024} KB)"
                     binding.btnShare.visibility = View.VISIBLE
                     binding.btnPrint.visibility = View.VISIBLE
                 } else {
                     binding.textStatus.text = "No lesson content found for this lesson."
                 }
             } catch (e: Exception) {
-                binding.textStatus.text = "Error generating worksheet: ${e.message}"
+                binding.textStatus.text = "Error: ${e.message}"
             } finally {
                 binding.btnGenerate.isEnabled = true
             }
         }
 
-        // Share button
-        binding.btnShare.setOnClickListener {
-            val pdf = currentPdf ?: return@setOnClickListener
-            sharePdf(pdf)
-        }
+        binding.btnShare.setOnClickListener { currentPdf?.let { sharePdf(it) } }
+        binding.btnPrint.setOnClickListener { currentPdf?.let { printPdf(it) } }
 
-        // Print button
-        binding.btnPrint.setOnClickListener {
-            val pdf = currentPdf ?: return@setOnClickListener
-            printPdf(pdf)
+        // ── Bottom nav ────────────────────────────────────────────
+        binding.bottomNav.selectedItemId = R.id.nav_worksheet
+        binding.bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_teach -> {
+                    startActivity(Intent(this, ClassroomActivity::class.java))
+                    finish(); true
+                }
+                R.id.nav_lessons -> {
+                    startActivity(Intent(this, LessonListActivity::class.java))
+                    finish(); true
+                }
+                R.id.nav_worksheet -> true
+                else -> false
+            }
         }
     }
 
     private fun sharePdf(file: File) {
         try {
-            val uri = FileProvider.getUriForFile(
-                this,
-                "${packageName}.fileprovider",
-                file
-            )
+            val uri = FileProvider.getUriForFile(this, "${packageName}.fileprovider", file)
             val intent = Intent(Intent.ACTION_SEND).apply {
                 type = "application/pdf"
                 putExtra(Intent.EXTRA_STREAM, uri)
@@ -123,46 +129,29 @@ class WorksheetActivity : AppCompatActivity() {
     private fun printPdf(file: File) {
         try {
             val printManager = getSystemService(PRINT_SERVICE) as PrintManager
-            val documentName = "Worksheet: ${file.name}"
-
             val printAdapter = object : PrintDocumentAdapter() {
                 override fun onLayout(
-                    oldAttributes: PrintAttributes?,
-                    newAttributes: PrintAttributes,
-                    cancellationSignal: CancellationSignal?,
-                    callback: LayoutResultCallback,
-                    extras: Bundle?
+                    oldAttributes: PrintAttributes?, newAttributes: PrintAttributes,
+                    cancellationSignal: CancellationSignal?, callback: LayoutResultCallback, extras: Bundle?
                 ) {
-                    if (cancellationSignal?.isCanceled == true) {
-                        callback.onLayoutCancelled()
-                        return
-                    }
+                    if (cancellationSignal?.isCanceled == true) { callback.onLayoutCancelled(); return }
                     val info = PrintDocumentInfo.Builder(file.name)
-                        .setContentType(PrintDocumentInfo.CONTENT_TYPE_DOCUMENT)
-                        .setPageCount(1)
-                        .build()
+                        .setContentType(PrintDocumentInfo.CONTENT_TYPE_DOCUMENT).setPageCount(1).build()
                     callback.onLayoutFinished(info, false)
                 }
-
                 override fun onWrite(
-                    pages: Array<PageRange>,
-                    destination: ParcelFileDescriptor,
-                    cancellationSignal: CancellationSignal?,
-                    callback: WriteResultCallback
+                    pages: Array<PageRange>, destination: ParcelFileDescriptor,
+                    cancellationSignal: CancellationSignal?, callback: WriteResultCallback
                 ) {
                     try {
                         file.inputStream().use { input ->
-                            java.io.FileOutputStream(destination.fileDescriptor).use { output ->
-                                input.copyTo(output)
-                            }
+                            java.io.FileOutputStream(destination.fileDescriptor).use { output -> input.copyTo(output) }
                         }
                         callback.onWriteFinished(arrayOf(PageRange.ALL_PAGES))
-                    } catch (e: Exception) {
-                        callback.onWriteFailed(e.message)
-                    }
+                    } catch (e: Exception) { callback.onWriteFailed(e.message) }
                 }
             }
-            printManager.print(documentName, printAdapter, null)
+            printManager.print("Worksheet: ${file.name}", printAdapter, null)
         } catch (e: Exception) {
             Toast.makeText(this, "Could not print: ${e.message}", Toast.LENGTH_SHORT).show()
         }

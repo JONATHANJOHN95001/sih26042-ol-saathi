@@ -22,6 +22,13 @@ class OlSaathiApplication : Application() {
     var preflightSummary: String? = null
         set(value) { field = value }
 
+    /**
+     * Cold start timestamp: System.currentTimeMillis() at process start.
+     * Used to measure cold start duration on the Check & Proof screen.
+     * Measured as Application.onCreate to first Activity.onResume.
+     */
+    val coldStartTimestampMs: Long = System.currentTimeMillis()
+
     override fun onCreate() {
         super.onCreate()
 

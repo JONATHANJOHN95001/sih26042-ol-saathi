@@ -4,11 +4,11 @@
 
     <!-- Lesson List -->
     <string name="lessons_title">Hindi Lessons</string>
-    <string name="tap_lesson">Tap a lesson to open the classroom</string>
+    <string name="tap_lesson">Pick a lesson to walk through line by line</string>
     <string name="lesson_format">%1$s</string>
 
-    <!-- Classroom -->
-    <string name="classroom_title">Classroom</string>
+    <!-- Classroom (Teach screen) -->
+    <string name="classroom_title">Teach</string>
     <string name="hold_to_speak">Hold to Speak Hindi</string>
     <string name="listening">Listening…</string>
     <string name="ready">Ready</string>
@@ -24,6 +24,15 @@
     <string name="latency_format">Lookup: %1$d ms</string>
     <string name="error_speech_not_available">Speech recognition not available on this device</string>
     <string name="error_no_match">No match found in the phrase pack</string>
+
+    <!-- Lesson Player -->
+    <string name="player_title">Lesson Player</string>
+    <string name="next_line">Next →</string>
+    <string name="next_question">Next question →</string>
+    <string name="go_to_questions">Questions →</string>
+    <string name="finish">Finish ✓</string>
+    <string name="back">← Back</string>
+    <string name="not_in_pack">Not in the offline pack</string>
 
     <!-- Worksheet -->
     <string name="worksheet_title">Bilingual Worksheet</string>

@@ -6,9 +6,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <!-- Read-only. The Proof screen reports whether the device has a
-         network so a judge can see the app is genuinely offline. This
-         grants no ability to USE a network, only to observe its state,
-         and NetworkGuard still counts every call at zero. -->
+         network so a judge can see the app is genuinely offline. -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-feature android:name="android.hardware.microphone" android:required="true" />
@@ -23,6 +21,7 @@
         android:theme="@style/Theme.OlSaathi"
         tools:targetApi="34">
 
+        <!-- Launcher: Lessons hub -->
         <activity
             android:name=".ui.LessonListActivity"
             android:exported="true"
@@ -33,23 +32,27 @@
             </intent-filter>
         </activity>
 
+        <!-- Teach screen (phrase lookup) -->
         <activity
             android:name=".ui.ClassroomActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 
+        <!-- Lesson player (line-by-line walker) -->
+        <activity
+            android:name=".ui.LessonPlayerActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- Worksheet -->
         <activity
             android:name=".ui.WorksheetActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 
+        <!-- Merged Check & Proof screen (replaces PreFlight + Proof) -->
         <activity
-            android:name=".ui.ProofActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".ui.PreFlightActivity"
+            android:name=".ui.CheckAndProofActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 

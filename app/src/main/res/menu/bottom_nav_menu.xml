@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_teach"
+        android:icon="@android:drawable/ic_btn_speak_now"
+        android:title="Teach" />
+    <item
+        android:id="@+id/nav_lessons"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:title="Lessons" />
+    <item
+        android:id="@+id/nav_worksheet"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="Worksheet" />
+</menu>

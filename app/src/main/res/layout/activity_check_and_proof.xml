@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/md_theme_background">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/md_theme_primary"
+        app:title="Check &amp; Proof"
+        app:titleTextColor="@color/md_theme_onPrimary"
+        app:navigationIconTint="@color/md_theme_onPrimary" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="8dp">
+
+            <!-- ── PRE-FLIGHT ─────────────────────────────────── -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pre-Flight Checks"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/md_theme_onSurface"
+                android:paddingStart="16dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Run before every demo. Fix any red items."
+                android:textColor="@color/md_theme_onSurfaceVariant"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="8dp"
+                android:textSize="13sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRunChecks"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="▶ Run Checks"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/textSummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="4dp"
+                android:text="" />
+
+            <LinearLayout
+                android:id="@+id/checkContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="8dp" />
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/md_theme_outlineVariant"
+                android:layout_marginVertical="8dp"
+                android:layout_marginHorizontal="16dp" />
+
+            <!-- ── PROOF SECTION ──────────────────────────────── -->
+            <LinearLayout
+                android:id="@+id/proofSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!-- Content Pack -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Content Pack"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_onSurface"
+                    android:paddingStart="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/textPackInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="@color/md_theme_onSurface"
+                    android:fontFamily="monospace"
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/chipStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:paddingHorizontal="24dp"
+                    android:paddingVertical="8dp"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Script Rendering -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Script Rendering"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_onSurface"
+                    android:paddingStart="16dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/textScriptInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="@color/md_theme_onSurface"
+                    android:fontFamily="monospace"
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/textScriptSample"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="28sp"
+                    android:paddingVertical="8dp"
+                    android:textColor="@color/md_theme_primary" />
+
+                <!-- Audio -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Audio"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_onSurface"
+                    android:paddingStart="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/textAudioInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="@color/md_theme_onSurface"
+                    android:fontFamily="monospace"
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="8dp" />
+
+                <!-- Offline -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Offline"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_onSurface"
+                    android:paddingStart="16dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/textNetworkInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="@color/md_theme_onSurface"
+                    android:fontFamily="monospace"
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="8dp" />
+
+                <!-- Latency -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Latency"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_onSurface"
+                    android:paddingStart="16dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/textLatencyInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="@color/md_theme_onSurface"
+                    android:fontFamily="monospace"
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="8dp" />
+
+                <!-- Pre-flight -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pre-flight"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_onSurface"
+                    android:paddingStart="16dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/textPreflightInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="@color/md_theme_onSurface"
+                    android:fontFamily="monospace"
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="8dp" />
+
+                <!-- Build -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Build"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_onSurface"
+                    android:paddingStart="16dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/textBuildInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="@color/md_theme_onSurface"
+                    android:fontFamily="monospace"
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="8dp" />
+
+                <!-- Performance (live measured values) -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Performance"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_onSurface"
+                    android:paddingStart="16dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/textPerfInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="@color/md_theme_onSurface"
+                    android:fontFamily="monospace"
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="32dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_theme_surface"
+        app:menu="@menu/bottom_nav_menu"
+        app:labelVisibilityMode="labeled" />
+
+</LinearLayout>

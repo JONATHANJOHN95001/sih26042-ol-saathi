@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/md_theme_background">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/md_theme_primary"
+        app:titleTextColor="@color/md_theme_onPrimary"
+        app:navigationIconTint="@color/md_theme_onPrimary" />
+
+    <!-- Counter at top-right -->
+    <TextView
+        android:id="@+id/textCounter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="textEnd"
+        android:textSize="14sp"
+        android:textColor="@color/md_theme_onSurfaceVariant"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="8dp" />
+
+    <!-- Progress dots -->
+    <LinearLayout
+        android:id="@+id/progressDots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingVertical="8dp"
+        android:paddingHorizontal="16dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp">
+
+            <!-- Section label (HINDI or ASK THE CLASS) -->
+            <TextView
+                android:id="@+id/textSectionLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="HINDI"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.1"
+                android:textColor="@color/md_theme_onSurfaceVariant"
+                android:paddingBottom="6dp" />
+
+            <!-- Hindi card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
+                <TextView
+                    android:id="@+id/textHindi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:textColor="@color/md_theme_onSurface"
+                    android:padding="16dp"
+                    android:text="" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Santali label -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SANTALI · OL CHIKI"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.1"
+                android:textColor="@color/md_theme_onSurfaceVariant"
+                android:paddingBottom="6dp" />
+
+            <!-- Santali card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/md_theme_surfaceContainerLow">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/textTarget"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="26sp"
+                        android:textColor="@color/md_theme_secondary"
+                        android:text="" />
+
+                    <!-- Provenance pill -->
+                    <TextView
+                        android:id="@+id/textProvenance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="11sp"
+                        android:paddingTop="8dp"
+                        android:text="" />
+
+                    <!-- Reviewer info (shown for HUMAN_VERIFIED) -->
+                    <TextView
+                        android:id="@+id/textReviewer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="11sp"
+                        android:textColor="@color/human_verified_blue"
+                        android:paddingTop="2dp"
+                        android:visibility="gone"
+                        android:text="" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Play button (large circular) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPlay"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="center"
+                android:layout_marginVertical="12dp"
+                android:text="▶"
+                android:textSize="20sp"
+                android:enabled="false"
+                style="@style/Widget.Material3.Button.TonalButton" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Navigation buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBack"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="← Back"
+            android:textSize="14sp"
+            android:visibility="invisible"
+            style="@style/Widget.Material3.Button.OutlinedButton" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnNext"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="Next →"
+            android:textSize="14sp"
+            style="@style/Widget.Material3.Button" />
+    </LinearLayout>
+
+</LinearLayout>

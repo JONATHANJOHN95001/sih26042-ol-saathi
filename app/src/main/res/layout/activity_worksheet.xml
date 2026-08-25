@@ -11,9 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/md_theme_primary"
-        app:title="@string/worksheet_title"
+        app:title="Worksheet"
         app:titleTextColor="@color/md_theme_onPrimary"
-        app:navigationIconTint="@color/md_theme_onPrimary" />
+        app:navigationIconTint="@color/md_theme_onPrimary"
+        app:menu="@menu/overflow_menu" />
 
     <TextView
         android:layout_width="match_parent"
@@ -65,5 +66,14 @@
         android:text="@string/btn_print"
         android:visibility="gone"
         style="@style/Widget.Material3.Button.OutlinedButton" />
+
+    <!-- Bottom navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_theme_surface"
+        app:menu="@menu/bottom_nav_menu"
+        app:labelVisibilityMode="labeled" />
 
 </LinearLayout>
