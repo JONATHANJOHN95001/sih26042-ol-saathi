@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_theme_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/md_theme_primary"
+            app:title="Live Proof"
+            app:titleTextColor="@color/md_theme_onPrimary"
+            app:navigationIconTint="@color/md_theme_onPrimary" />
+
+        <!-- Content Pack -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Content Pack"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/md_theme_onSurface"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="4dp" />
+
+        <TextView
+            android:id="@+id/textPackInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/md_theme_onSurface"
+            android:fontFamily="monospace"
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="8dp" />
+
+        <TextView
+            android:id="@+id/chipStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="8dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Script Rendering -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Script Rendering"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/md_theme_onSurface"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="4dp" />
+
+        <TextView
+            android:id="@+id/textScriptInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/md_theme_onSurface"
+            android:fontFamily="monospace"
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="4dp" />
+
+        <TextView
+            android:id="@+id/textScriptSample"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="28sp"
+            android:paddingVertical="12dp"
+            android:textColor="@color/md_theme_primary" />
+
+        <!-- Audio -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Audio"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/md_theme_onSurface"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="4dp" />
+
+        <TextView
+            android:id="@+id/textAudioInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/md_theme_onSurface"
+            android:fontFamily="monospace"
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="16dp" />
+
+        <!-- Offline -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Offline"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/md_theme_onSurface"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="4dp" />
+
+        <TextView
+            android:id="@+id/textNetworkInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/md_theme_onSurface"
+            android:fontFamily="monospace"
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="16dp" />
+
+        <!-- Latency -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Latency"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/md_theme_onSurface"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="4dp" />
+
+        <TextView
+            android:id="@+id/textLatencyInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/md_theme_onSurface"
+            android:fontFamily="monospace"
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="16dp" />
+
+        <!-- Build -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Build"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/md_theme_onSurface"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="4dp" />
+
+        <TextView
+            android:id="@+id/textBuildInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/md_theme_onSurface"
+            android:fontFamily="monospace"
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="32dp" />
+
+    </LinearLayout>
+</ScrollView>

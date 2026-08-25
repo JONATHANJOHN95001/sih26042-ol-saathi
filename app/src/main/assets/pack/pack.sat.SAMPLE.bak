@@ -1,0 +1,504 @@
+{
+  "language": "sat",
+  "source": "hi",
+  "generated": "2026-08-25T00:00:00.000Z",
+  "provenance": {
+    "translationService": "ai4bharat/translation",
+    "ttsService": "ai4bharat/tts",
+    "pipelineId": "64392f96daac500b55c543cd",
+    "platform": "Bhashini (MeitY, Government of India)",
+    "note": "DEVELOPMENT SAMPLE — Replace with real Bhashini output before demo. Run: node tools/build_pack.mjs"
+  },
+  "entries": {
+    "p01": {
+      "source": "नमस्ते बच्चों।",
+      "target": "ᱡᱚᱦᱟᱨ ᱵᱤᱥᱤᱭᱚᱸ",
+      "en": "Hello children.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p02": {
+      "source": "सब बैठ जाओ।",
+      "target": "ᱥᱟᱲᱟᱜ ᱟᱨᱚᱢ",
+      "en": "Everyone sit down.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p03": {
+      "source": "आज हम क्या सीखेंगे?",
+      "target": "ᱦᱮᱞ ᱟᱯᱟᱢ ᱥᱤᱠᱷᱟᱢᱟ?",
+      "en": "What will we learn today?",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p04": {
+      "source": "कक्षा शुरू करते हैं।",
+      "target": "ᱤᱨᱟᱸ ᱫᱟᱨᱟᱢᱟ",
+      "en": "Let us begin the class.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p05": {
+      "source": "अब छुट्टी का समय है।",
+      "target": "ᱰᱟᱞᱟ ᱥᱚᱢᱟᱭ ᱠᱟᱨᱟ",
+      "en": "It is time to go home.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p06": {
+      "source": "किताब खोलो।",
+      "target": "ᱥᱟᱨᱷᱚᱢ ᱦᱟᱨᱟᱭ",
+      "en": "Open your book.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p07": {
+      "source": "किताब बंद करो।",
+      "target": "ᱥᱟᱨᱷᱚᱢ ᱛᱟᱞᱮ",
+      "en": "Close your book.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p08": {
+      "source": "पेंसिल उठाओ।",
+      "target": "ᱯᱮᱥᱤᱞ ᱟᱢᱮ",
+      "en": "Pick up your pencil.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p09": {
+      "source": "मेरे पीछे दोहराओ।",
+      "target": "ᱟᱞᱤᱭᱟᱲᱤ ᱫᱩᱦᱚᱨᱚᱢ",
+      "en": "Repeat after me.",
+      "nipun": "FL-OL",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p10": {
+      "source": "ध्यान से सुनो।",
+      "target": "ᱥᱟᱨᱚᱢ ᱡᱚᱦᱚᱨᱟᱲᱤ ᱥᱩᱱᱮᱢ",
+      "en": "Listen carefully.",
+      "nipun": "FL-OL",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p11": {
+      "source": "ज़ोर से बोलो।",
+      "target": "ᱟᱢᱚᱱᱚᱨᱚᱢ ᱥᱟᱹᱜᱮᱭᱟᱢ",
+      "en": "Speak loudly.",
+      "nipun": "FL-OL",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p12": {
+      "source": "अपना नाम लिखो।",
+      "target": "ᱥᱤᱭᱟᱢ ᱨᱮᱭᱟᱨᱚᱢ ᱚᱞᱟᱮ",
+      "en": "Write your name.",
+      "nipun": "FL-WR",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p13": {
+      "source": "चित्र देखो।",
+      "target": "ᱪᱤᱨᱚᱢ ᱥᱟᱹᱜᱮᱭᱚᱢ",
+      "en": "Look at the picture.",
+      "nipun": "FL-RD",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p14": {
+      "source": "हाथ उठाओ।",
+      "target": "ᱠᱟᱹᱞ ᱟᱢᱮ",
+      "en": "Raise your hand.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p15": {
+      "source": "शांत हो जाओ।",
+      "target": "ᱥᱟᱨᱚᱢ ᱵᱟᱨᱚᱢ ᱚᱞᱟᱮ",
+      "en": "Please be quiet.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p16": {
+      "source": "जोड़ी में बैठो।",
+      "target": "ᱫᱚᱨᱟᱨ ᱟᱨᱚᱢᱟᱭ",
+      "en": "Sit in pairs.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p17": {
+      "source": "एक बार फिर कोशिश करो।",
+      "target": "ᱤᱨᱟᱸ ᱫᱟᱨᱟᱢ ᱫᱩᱦᱚᱨᱚᱢ ᱟᱨᱚᱢ",
+      "en": "Try once more.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p18": {
+      "source": "बहुत अच्छा!",
+      "target": "ᱥᱟᱨᱚᱢ ᱥᱟᱹᱜᱮᱭᱚᱸ!",
+      "en": "Very good!",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p19": {
+      "source": "शाबाश!",
+      "target": "ᱥᱟᱨᱚᱢ ᱥᱟᱹᱜᱮᱭᱚᱸ ᱟᱢᱮ!",
+      "en": "Well done!",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p20": {
+      "source": "सही जवाब।",
+      "target": "ᱥᱟᱨᱚᱢ ᱥᱟᱨᱤ",
+      "en": "Correct answer.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p21": {
+      "source": "कोई बात नहीं।",
+      "target": "ᱥᱟᱨᱚᱢ ᱵᱟᱨᱚᱢ ᱥᱚᱢᱟᱭ",
+      "en": "Never mind, it is all right.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p22": {
+      "source": "क्या तुम समझ गए?",
+      "target": "ᱦᱮᱞ ᱛᱮ ᱥᱟᱹᱜᱮᱭᱚᱸ?",
+      "en": "Did you understand?",
+      "nipun": "FL-OL",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p23": {
+      "source": "यह क्या है?",
+      "target": "ᱰᱟᱝ ᱠᱟᱱᱟ?",
+      "en": "What is this?",
+      "nipun": "FL-OL",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p24": {
+      "source": "तुम्हारा नाम क्या है?",
+      "target": "ᱛᱮᱨᱤᱭᱟᱢ ᱨᱮᱭᱟᱨᱚᱢ ᱠᱟᱱᱟ?",
+      "en": "What is your name?",
+      "nipun": "FL-OL",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p25": {
+      "source": "कौन बताएगा?",
+      "target": "ᱥᱟᱛᱟᱭ ᱟᱢᱮ?",
+      "en": "Who will tell me?",
+      "nipun": "FL-OL",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p26": {
+      "source": "क्या तुम्हें कोई सवाल है?",
+      "target": "ᱛᱮᱨᱤᱭᱟᱢ ᱥᱟᱨᱚᱢ ᱥᱟᱹᱜᱮᱭᱚᱸ?",
+      "en": "Do you have a question?",
+      "nipun": "FL-OL",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p27": {
+      "source": "एक से दस तक गिनो।",
+      "target": "ᱤᱨᱟᱸ ᱥᱟᱨᱤ ᱰᱟᱸᱰᱟᱭ ᱠᱟᱹᱨᱚᱢ",
+      "en": "Count from one to ten.",
+      "nipun": "FN-NS",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p28": {
+      "source": "कितने हैं?",
+      "target": "ᱠᱟᱹᱨᱚᱢ ᱠᱟᱱᱟ?",
+      "en": "How many are there?",
+      "nipun": "FN-NS",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p29": {
+      "source": "दो और तीन कितने होते हैं?",
+      "target": "ᱰᱩᱭ ᱟᱨᱚᱢ ᱰᱟᱸᱰᱟᱭ ᱠᱟᱹᱨᱚᱢ ᱟᱭ?",
+      "en": "What is two plus three?",
+      "nipun": "FN-OP",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p30": {
+      "source": "कौन सी संख्या बड़ी है?",
+      "target": "ᱥᱟᱛᱟᱭ ᱥᱟᱨᱤ ᱨᱮᱭᱟᱨᱚᱢ ᱠᱟᱱᱟ?",
+      "en": "Which number is bigger?",
+      "nipun": "FN-NS",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p31": {
+      "source": "इन्हें गिनकर बताओ।",
+      "target": "ᱰᱟᱝ ᱠᱟᱹᱨᱚᱢ ᱥᱟᱨᱚᱢ ᱟᱢᱮ",
+      "en": "Count these and tell me.",
+      "nipun": "FN-NS",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p32": {
+      "source": "यह अक्षर पढ़ो।",
+      "target": "ᱰᱟᱝ ᱨᱮᱭᱟᱨ ᱥᱩᱱᱮᱢ",
+      "en": "Read this letter.",
+      "nipun": "FL-RD",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p33": {
+      "source": "यह शब्द पढ़ो।",
+      "target": "ᱰᱟᱝ ᱠᱟᱹᱨᱚᱢ ᱥᱩᱱᱮᱢ",
+      "en": "Read this word.",
+      "nipun": "FL-RD",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p34": {
+      "source": "इस शब्द की पहली ध्वनि क्या है?",
+      "target": "ᱰᱟᱝ ᱨᱮᱭᱟᱨᱚᱢ ᱫᱚᱨᱟᱢ ᱠᱟᱱᱟ?",
+      "en": "What is the first sound in this word?",
+      "nipun": "FL-RD",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p35": {
+      "source": "कहानी सुनो।",
+      "target": "ᱥᱟᱹᱜᱮᱭᱚᱢ ᱥᱩᱱᱮᱢ",
+      "en": "Listen to the story.",
+      "nipun": "FL-OL",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p36": {
+      "source": "अपनी भाषा में बताओ।",
+      "target": "ᱥᱤᱭᱟᱢ ᱥᱟᱹᱜᱮᱭᱚᱸ ᱟᱢᱮ",
+      "en": "Tell me in your own language.",
+      "nipun": "FL-OL",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p37": {
+      "source": "यह वाक्य दोहराओ।",
+      "target": "ᱰᱟᱝ ᱨᱮᱭᱟᱨ ᱫᱩᱦᱚᱨᱚᱢ",
+      "en": "Repeat this sentence.",
+      "nipun": "FL-OL",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p38": {
+      "source": "क्या तुम ठीक हो?",
+      "target": "ᱛᱮᱨᱤᱭᱟᱢ ᱥᱟᱨᱚᱢ ᱟᱭ?",
+      "en": "Are you all right?",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p39": {
+      "source": "पानी पी लो।",
+      "target": "ᱰᱟᱨᱮ ᱥᱩᱱᱮᱢ",
+      "en": "Drink some water.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "p40": {
+      "source": "घर पर अभ्यास करना।",
+      "target": "ᱜᱚᱨᱚᱢ ᱟᱨᱚᱢ ᱥᱤᱠᱷᱟᱨᱟᱭ",
+      "en": "Practise at home.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "neema-dadi.l1": {
+      "source": "नीमा दोपहर में दो बजे स्कूल से लौटती है।",
+      "target": "ᱱᱤᱢᱟ ᱰᱟᱝᱟᱨᱚᱢ ᱰᱩ ᱣᱟᱡᱮ ᱥᱠᱩᱞ ᱥᱟᱨᱤ ᱠᱟᱹᱨᱚᱢ",
+      "en": "Neema comes home from school at two in the afternoon.",
+      "nipun": "FL-RD",
+      "kind": "lesson",
+      "lesson": "neema-dadi",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "neema-dadi.l2": {
+      "source": "इस समय घर पर सिर्फ़ दादी होती हैं।",
+      "target": "ᱰᱟᱝ ᱥᱚᱢᱟᱭ ᱜᱚᱨᱚᱢ ᱨᱟᱹᱨᱚᱢ ᱰᱟᱦᱟᱨᱟ ᱟᱭ",
+      "en": "At that time only her grandmother is at home.",
+      "nipun": "FL-RD",
+      "kind": "lesson",
+      "lesson": "neema-dadi",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "neema-dadi.l3": {
+      "source": "दादी कहीं नहीं आती-जाती हैं।",
+      "target": "ᱰᱟᱦᱟᱨᱟ ᱠᱟᱹᱨᱚᱢ ᱥᱚᱢᱟᱭ ᱠᱟᱹᱨᱚᱢ",
+      "en": "Grandmother does not go anywhere.",
+      "nipun": "FL-RD",
+      "kind": "lesson",
+      "lesson": "neema-dadi",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "neema-dadi.l4": {
+      "source": "उनके घुटनों में दर्द रहता है।",
+      "target": "ᱟᱨᱚᱢᱚᱢ ᱨᱟᱹᱨᱚᱢ ᱟᱹᱜᱟᱢ ᱮᱭ",
+      "en": "Her knees hurt.",
+      "nipun": "FL-RD",
+      "kind": "lesson",
+      "lesson": "neema-dadi",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "neema-dadi.l5": {
+      "source": "उन्हें नीमा का बहुत इंतज़ार होता है।",
+      "target": "ᱟᱨᱚᱢᱚᱢ ᱱᱤᱢᱟᱢ ᱨᱟᱹᱨᱚᱢ ᱥᱟᱹᱜᱮᱭᱚᱸ ᱮᱭ",
+      "en": "She waits eagerly for Neema.",
+      "nipun": "FL-RD",
+      "kind": "lesson",
+      "lesson": "neema-dadi",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "neema-dadi.l6": {
+      "source": "नीमा रोज़ खाना खाते-खाते स्कूल की बातें सुनाती है।",
+      "target": "ᱱᱤᱢᱟ ᱫᱩᱦᱚᱨᱚᱢ ᱦᱟᱱᱟ ᱠᱟᱹᱨᱚᱢ ᱥᱠᱩᱞ ᱨᱮᱭᱟᱨ ᱥᱩᱱᱟᱭ",
+      "en": "Every day, while eating, Neema tells her about school.",
+      "nipun": "FL-RD",
+      "kind": "lesson",
+      "lesson": "neema-dadi",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "neema-dadi.l7": {
+      "source": "शाम को नीमा खेलने जाती है।",
+      "target": "ᱰᱟᱝ ᱥᱚᱢᱟᱭ ᱱᱤᱢᱟ ᱛᱮᱨᱚᱢ ᱠᱟᱹᱨᱚᱢ",
+      "en": "In the evening Neema goes out to play.",
+      "nipun": "FL-RD",
+      "kind": "lesson",
+      "lesson": "neema-dadi",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "neema-dadi.l8": {
+      "source": "एक दिन दादी बोलीं, मेरा समय नहीं कटता।",
+      "target": "ᱤᱨᱟᱸ ᱛᱮᱨᱚᱢ ᱰᱟᱦᱟᱨᱟ ᱥᱟᱹᱜᱮᱭᱚᱸ, ᱟᱞᱤ ᱥᱚᱢᱟᱭ ᱵᱟᱨᱚᱢ ᱠᱟᱹᱨᱚᱢ",
+      "en": "One day grandmother said, my time does not pass.",
+      "nipun": "FL-RD",
+      "kind": "lesson",
+      "lesson": "neema-dadi",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "neema-dadi.l9": {
+      "source": "नीमा दौड़कर दादी की चप्पलें ले आई।",
+      "target": "ᱱᱤᱢᱟ ᱰᱟᱹᱨᱚᱢ ᱰᱟᱦᱟᱨᱟᱢ ᱥᱟᱨᱤ ᱠᱟᱹᱨᱚᱢ ᱟᱢᱮ",
+      "en": "Neema ran and fetched grandmother's slippers.",
+      "nipun": "FL-RD",
+      "kind": "lesson",
+      "lesson": "neema-dadi",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "neema-dadi.l10": {
+      "source": "फिर वे दोनों खेल के मैदान की ओर चल पड़े।",
+      "target": "ᱰᱟᱝ ᱥᱚᱢᱟᱭ ᱟᱨᱚᱢᱚᱢ ᱠᱟᱹᱨᱚᱢ ᱰᱟᱝ ᱟᱨᱚᱢ ᱠᱟᱹᱨᱚᱢ",
+      "en": "Then the two of them set off towards the playground.",
+      "nipun": "FL-RD",
+      "kind": "lesson",
+      "lesson": "neema-dadi",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "neema-dadi.q1": {
+      "source": "इस समय घर पर कौन होता है?",
+      "target": "ᱰᱟᱝ ᱥᱚᱢᱟᱭ ᱜᱚᱨᱚᱢ ᱨᱟᱹᱨᱚᱢ ᱥᱟᱛᱟᱭ ᱟᱭ?",
+      "en": "Who is at home at that time?",
+      "nipun": "FL-OL",
+      "kind": "check",
+      "lesson": "neema-dadi",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "neema-dadi.q2": {
+      "source": "दादी के कहाँ दर्द रहता है?",
+      "target": "ᱰᱟᱦᱟᱨᱟᱢ ᱥᱟᱛᱟᱭ ᱨᱟᱹᱨᱚᱢ ᱮᱭ?",
+      "en": "Where does grandmother have pain?",
+      "nipun": "FL-OL",
+      "kind": "check",
+      "lesson": "neema-dadi",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    },
+    "neema-dadi.q3": {
+      "source": "अंत में नीमा और दादी कहाँ गईं?",
+      "target": "ᱰᱟᱝ ᱥᱚᱢᱟᱭ ᱱᱤᱢᱟ ᱟᱨᱚᱢ ᱰᱟᱦᱟᱨᱟ ᱥᱟᱛᱟᱭ ᱠᱟᱹᱨᱚᱢ?",
+      "en": "Where did Neema and grandmother go at the end?",
+      "nipun": "FL-OL",
+      "kind": "check",
+      "lesson": "neema-dadi",
+      "service": "ai4bharat/translation",
+      "at": "2026-08-25T00:00:00.000Z"
+    }
+  }
+}

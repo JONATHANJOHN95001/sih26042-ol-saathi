@@ -1,71 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="in.gov.tribalfln">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Speech recognition input -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
+
     <uses-feature android:name="android.hardware.microphone" android:required="true" />
-    <uses-feature android:name="android.hardware.bluetooth_le" android:required="false" />
-    <uses-feature android:name="android.hardware.wifi.direct" android:required="false" />
+
     <application
-        android:name=".TribalFLNApplication"
+        android:name=".OlSaathiApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TribalFLN"
-        android:largeHeap="true"
+        android:theme="@style/Theme.OlSaathi"
         tools:targetApi="34">
-        <activity android:name=".NipunEducatorDashboardActivity" android:exported="true" android:screenOrientation="portrait" android:launchMode="singleTop">
+
+        <activity
+            android:name=".ui.LessonListActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".ui.VoiceGuidedNavOverlay"
+
+        <activity
+            android:name=".ui.ClassroomActivity"
             android:exported="false"
-            android:foregroundServiceType="microphone" />
-        <service android:name=".ui.SihTelemetryOverlayService"
-            android:exported="false" />
-        <service android:name=".ime.TribalKeyboardService" android:label="@string/ol_chiki_keyboard_label" android:permission="android.permission.BIND_INPUT_METHOD" android:exported="true">
-            <intent-filter><action android:name="android.view.InputMethod" /></intent-filter>
-            <meta-data android:name="android.view.im" android:resource="@xml/method" />
-        </service>
-        <receiver android:name=".WorksheetBroadcastReceiver" android:exported="true">
-            <intent-filter>
-                <action android:name="in.gov.tribalfln.ACTION_GENERATE_BILINGUAL_WORKSHEET" />
-            </intent-filter>
-        </receiver>
-        <provider android:name="androidx.core.content.FileProvider" android:authorities="${applicationId}.fileprovider" android:exported="false" android:grantUriPermissions="true">
-            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths" />
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.WorksheetActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.ProofActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
         </provider>
 
-        <!-- App Startup — async AI engine initialization for sub-500ms cold start -->
-        <provider
-            android:name="androidx.startup.InitializationProvider"
-            android:authorities="${applicationId}.androidx-startup"
-            android:exported="false"
-            tools:node="merge">
-            <meta-data
-                android:name="in.gov.tribalfln.startup.AiEngineInitializer"
-                android:value="androidx.startup" />
-        </provider>
     </application>
 </manifest>

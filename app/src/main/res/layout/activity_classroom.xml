@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/md_theme_background">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/md_theme_primary"
+        app:title="@string/classroom_title"
+        app:titleTextColor="@color/md_theme_onPrimary"
+        app:navigationIconTint="@color/md_theme_onPrimary" />
+
+    <!-- Translation display area -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Hindi source -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/source_label"
+                android:textSize="12sp"
+                android:textColor="@color/md_theme_onSurfaceVariant" />
+
+            <TextView
+                android:id="@+id/textSource"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/md_theme_onSurface"
+                android:paddingTop="4dp"
+                android:paddingBottom="12dp"
+                android:text="" />
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/md_theme_outlineVariant" />
+
+            <!-- Santali target -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/target_label"
+                android:textSize="12sp"
+                android:textColor="@color/md_theme_onSurfaceVariant"
+                android:paddingTop="12dp" />
+
+            <TextView
+                android:id="@+id/textTarget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textColor="@color/md_theme_primary"
+                android:paddingTop="4dp"
+                android:text="" />
+
+            <!-- Provenance label -->
+            <TextView
+                android:id="@+id/textProvenance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/md_theme_onSurfaceVariant"
+                android:paddingTop="4dp"
+                android:text="" />
+
+            <!-- Latency -->
+            <TextView
+                android:id="@+id/textLatency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="11sp"
+                android:textColor="@color/md_theme_outline"
+                android:paddingTop="2dp"
+                android:text="" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Play audio button (pack WAV) -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnPlayAudio"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/btn_play"
+        android:textSize="16sp"
+        android:enabled="false"
+        style="@style/Widget.Material3.Button.TonalButton" />
+
+    <!-- Audio status message (shown when no Santali voice) -->
+    <TextView
+        android:id="@+id/textAudioStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no_santali_voice"
+        android:textSize="12sp"
+        android:textColor="@color/md_theme_onSurfaceVariant"
+        android:textAlignment="center"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="4dp"
+        android:visibility="gone" />
+
+    <!-- Voice input button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnVoiceInput"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginBottom="8dp"
+        android:text="🎤 Hold to Speak Hindi"
+        android:textSize="16sp"
+        style="@style/Widget.Material3.Button" />
+
+    <!-- OR divider -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="— OR type Hindi below —"
+        android:textAlignment="center"
+        android:textSize="12sp"
+        android:textColor="@color/md_theme_outline"
+        android:paddingVertical="4dp" />
+
+    <!-- Manual text input -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp"
+        android:paddingBottom="8dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editHindiInput"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:hint="@string/type_hint"
+            android:textSize="16sp"
+            android:inputType="text"
+            android:singleLine="true"
+            android:imeOptions="actionSend"
+            android:background="@android:color/transparent"
+            android:paddingHorizontal="12dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnManualTranslate"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/btn_translate"
+            style="@style/Widget.Material3.Button.TonalButton" />
+
+    </LinearLayout>
+
+    <!-- Worksheet button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnWorksheet"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginBottom="12dp"
+        android:text="@string/btn_worksheet"
+        android:textSize="14sp"
+        style="@style/Widget.Material3.Button.OutlinedButton" />
+
+    <!-- Phrase list for browsing -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tap a phrase or speak"
+        android:textSize="12sp"
+        android:textColor="@color/md_theme_onSurfaceVariant"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="4dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerPhrases"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:clipToPadding="false" />
+
+</LinearLayout>

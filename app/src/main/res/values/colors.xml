@@ -84,4 +84,7 @@
     <!-- ── Tribal Pattern Decorative ─────────────────────────────── -->
     <color name="tribal_pattern_stroke">#4C56AF</color>
     <color name="tribal_pattern_fill">#000666</color>
+    <!-- Sample data warning. Deliberately alarming: this label means the
+         Santali on screen was not produced by Bhashini. -->
+    <color name="sample_red">#C62828</color>
 </resources>

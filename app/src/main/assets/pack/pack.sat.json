@@ -1,0 +1,515 @@
+{
+  "language": "sat",
+  "source": "hi",
+  "generated": "2026-08-25T13:36:28.568800Z",
+  "provenance": {
+    "translationService": "prajdabre/rotary-indictrans2-en-indic-1B",
+    "ttsService": null,
+    "platform": "AI4Bharat IndicTrans2, ungated MIT mirror. Same model family Bhashini serves for this language pair.",
+    "pivot": "Human-authored English, machine translated to Santali",
+    "note": "Machine translation. Not checked by a Santali speaker. Entries whose output contained non-Ol-Chiki characters were dropped rather than shipped.",
+    "dropped": []
+  },
+  "entries": {
+    "p01": {
+      "source": "नमस्ते बच्चों।",
+      "target": "ᱦᱚᱞᱳ ᱜᱤᱫᱽᱨᱟᱹᱠᱚ ᱾",
+      "en": "Hello children.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p02": {
+      "source": "सब बैठ जाओ।",
+      "target": "ᱡᱚᱛᱚ ᱦᱚᱲ ᱠᱚ ᱫᱩᱲᱩᱵ ᱮᱱᱟ ᱾",
+      "en": "Everyone sit down.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p03": {
+      "source": "आज हम क्या सीखेंगे?",
+      "target": "ᱛᱮᱦᱮᱧ ᱟᱞᱮ ᱪᱮᱫᱢ ᱥᱮᱲᱟᱭᱟ",
+      "en": "What will we learn today?",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p04": {
+      "source": "कक्षा शुरू करते हैं।",
+      "target": "ᱟᱞᱮ ᱠᱞᱟᱥ ᱮᱛᱚᱦᱚᱵ ᱢᱮ ᱾",
+      "en": "Let us begin the class.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p05": {
+      "source": "अब छुट्टी का समय है।",
+      "target": "ᱚᱲᱟᱜ ᱪᱟᱞᱟᱜ ᱚᱠᱛᱚ ᱦᱩᱭ ᱟᱠᱟᱱᱟ ᱾",
+      "en": "It is time to go home.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p06": {
+      "source": "किताब खोलो।",
+      "target": "ᱟᱢᱟᱜ ᱯᱚᱛᱚᱵ ᱡᱷᱤᱡ ᱢᱮ ᱾",
+      "en": "Open your book.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p07": {
+      "source": "किताब बंद करो।",
+      "target": "ᱟᱢᱟᱜ ᱯᱚᱛᱚᱵ ᱵᱚᱱᱫᱚ ᱢᱮ ᱾",
+      "en": "Close your book.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p08": {
+      "source": "पेंसिल उठाओ।",
+      "target": "ᱟᱢᱟᱜ ᱯᱮᱱᱥᱤᱞ ᱨᱟᱠᱟᱵ ᱢᱮ ᱾",
+      "en": "Pick up your pencil.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p09": {
+      "source": "मेरे पीछे दोहराओ।",
+      "target": "ᱤᱧ ᱛᱟᱭᱚᱢ ᱵᱟᱨ ᱫᱷᱟᱣ ᱢᱮ ᱾",
+      "en": "Repeat after me.",
+      "nipun": "FL-OL",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p10": {
+      "source": "ध्यान से सुनो।",
+      "target": "ᱥᱚᱱᱛᱚᱨ ᱠᱟᱛᱮ ᱟᱸᱡᱚᱢ ᱢᱮ ᱾",
+      "en": "Listen carefully.",
+      "nipun": "FL-OL",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p11": {
+      "source": "ज़ोर से बोलो।",
+      "target": "ᱡᱳᱨᱛᱮ ᱨᱚᱲ ᱢᱮ ᱾",
+      "en": "Speak loudly.",
+      "nipun": "FL-OL",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p12": {
+      "source": "अपना नाम लिखो।",
+      "target": "ᱟᱢᱟᱜ ᱧᱩᱛᱩᱢ ᱚᱞ ᱢᱮ ᱾",
+      "en": "Write your name.",
+      "nipun": "FL-WR",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p13": {
+      "source": "चित्र देखो।",
+      "target": "ᱪᱤᱛᱟᱹᱨ ᱫᱚ ᱧᱮᱞ ᱢᱮ ᱾",
+      "en": "Look at the picture.",
+      "nipun": "FL-RD",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p14": {
+      "source": "हाथ उठाओ।",
+      "target": "ᱛᱤ ᱨᱟᱠᱟᱵ ᱢᱮ ᱾",
+      "en": "Raise your hand.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p15": {
+      "source": "शांत हो जाओ।",
+      "target": "ᱫᱟᱭᱟ ᱠᱟᱛᱮ ᱛᱷᱤᱨ ᱛᱟᱦᱮᱱ ᱢᱮ ᱾",
+      "en": "Please be quiet.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p16": {
+      "source": "जोड़ी में बैठो।",
+      "target": "ᱡᱩᱴᱤ ᱠᱟᱛᱮ ᱫᱩᱲᱩᱵ ᱢᱮ ᱾",
+      "en": "Sit in pairs.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p17": {
+      "source": "एक बार फिर कोशिश करो।",
+      "target": "ᱟᱨᱦᱚᱸ ᱢᱤᱫ ᱫᱷᱟᱣ ᱨᱤᱠᱟᱹᱭ ᱢᱮ ᱾",
+      "en": "Try once more.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p18": {
+      "source": "बहुत अच्छा!",
+      "target": "ᱟᱹᱰᱤ ᱱᱟᱯᱟᱭ ᱾",
+      "en": "Very good!",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p19": {
+      "source": "शाबाश!",
+      "target": "ᱟᱹᱰᱤ ᱱᱟᱯᱟᱭ ᱠᱚᱨᱟᱣ ᱦᱩᱭ ᱟᱠᱟᱱᱟ ᱾",
+      "en": "Well done!",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p20": {
+      "source": "सही जवाब।",
+      "target": "ᱡᱚᱛᱷᱟᱛ ᱛᱮᱞᱟ ᱮᱢ ᱢᱮ ᱾",
+      "en": "Correct answer.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p21": {
+      "source": "कोई बात नहीं।",
+      "target": "ᱛᱤᱥᱦᱚᱸ ᱟᱞᱚᱢ ᱩᱭᱦᱟᱹᱨᱟ ᱡᱮ ᱥᱟᱱᱟᱢᱟᱜ ᱜᱮ ᱴᱷᱤᱠ ᱜᱮᱭᱟ ᱾",
+      "en": "Never mind, it is all right.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p22": {
+      "source": "क्या तुम समझ गए?",
+      "target": "ᱟᱢ ᱪᱮᱫ ᱮᱢ ᱵᱩᱡᱷᱟᱹᱣ ᱟᱠᱟᱫᱟ",
+      "en": "Did you understand?",
+      "nipun": "FL-OL",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p23": {
+      "source": "यह क्या है?",
+      "target": "ᱱᱚᱶᱟ ᱫᱚ ᱪᱮᱫ ᱠᱟᱱᱟ",
+      "en": "What is this?",
+      "nipun": "FL-OL",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p24": {
+      "source": "तुम्हारा नाम क्या है?",
+      "target": "ᱟᱢᱟᱜ ᱧᱩᱛᱩᱢ ᱫᱚ ᱪᱮᱫ",
+      "en": "What is your name?",
+      "nipun": "FL-OL",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p25": {
+      "source": "कौन बताएगा?",
+      "target": "ᱚᱠᱚᱭ ᱠᱚ ᱞᱟᱹᱭᱼᱟ ᱢᱮᱹ",
+      "en": "Who will tell me?",
+      "nipun": "FL-OL",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p26": {
+      "source": "क्या तुम्हें कोई सवाल है?",
+      "target": "ᱟᱢᱟᱜ ᱠᱤ ᱡᱟᱦᱟᱱ ᱠᱩᱠᱞᱤ ᱢᱮᱱᱟᱜᱼᱟ",
+      "en": "Do you have a question?",
+      "nipun": "FL-OL",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p27": {
+      "source": "एक से दस तक गिनो।",
+      "target": "ᱢᱤᱫ ᱠᱷᱚᱱ ᱜᱮᱞ ᱫᱷᱟᱹᱵᱤᱡ ᱞᱮᱠᱷᱟ ᱢᱮ ᱾",
+      "en": "Count from one to ten.",
+      "nipun": "FN-NS",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p28": {
+      "source": "कितने हैं?",
+      "target": "ᱛᱤᱱᱟᱹᱜ ᱜᱟᱱ ᱢᱮᱱᱟᱜ - ᱟ",
+      "en": "How many are there?",
+      "nipun": "FN-NS",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p29": {
+      "source": "दो और तीन कितने होते हैं?",
+      "target": "ᱵᱟᱨ ᱥᱮᱞᱮᱫ ᱯᱮ ᱫᱚ ᱪᱮᱫ",
+      "en": "What is two plus three?",
+      "nipun": "FN-OP",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p30": {
+      "source": "कौन सी संख्या बड़ी है?",
+      "target": "ᱚᱠᱟ ᱮᱞ ᱫᱚ ᱢᱟᱨᱟᱝ ᱠᱟᱱᱟ",
+      "en": "Which number is bigger?",
+      "nipun": "FN-NS",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p31": {
+      "source": "इन्हें गिनकर बताओ।",
+      "target": "ᱱᱚᱶᱟ ᱠᱚ ᱞᱮᱠᱷᱟ ᱢᱮ ᱟᱨ ᱤᱧ ᱞᱟᱹᱭ ᱤᱧᱢᱮ ᱾",
+      "en": "Count these and tell me.",
+      "nipun": "FN-NS",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p32": {
+      "source": "यह अक्षर पढ़ो।",
+      "target": "ᱱᱚᱶᱟ ᱪᱤᱴᱷᱤ ᱫᱚ ᱯᱟᱲᱦᱟᱣ ᱢᱮ ᱾",
+      "en": "Read this letter.",
+      "nipun": "FL-RD",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p33": {
+      "source": "यह शब्द पढ़ो।",
+      "target": "ᱱᱚᱣᱟ ᱟᱹᱲᱟᱹ ᱫᱚ ᱯᱟᱲᱦᱟᱣ ᱢᱮ ᱾",
+      "en": "Read this word.",
+      "nipun": "FL-RD",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p34": {
+      "source": "इस शब्द की पहली ध्वनि क्या है?",
+      "target": "ᱱᱚᱶᱟ ᱟᱹᱲᱟᱹ ᱨᱮ ᱯᱩᱭᱞᱩ ᱟᱲᱟᱝ ᱫᱚ ᱪᱮᱫ ᱠᱟᱱᱟ",
+      "en": "What is the first sound in this word?",
+      "nipun": "FL-RD",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p35": {
+      "source": "कहानी सुनो।",
+      "target": "ᱠᱟᱹᱦᱱᱤ ᱫᱚ ᱟᱸᱡᱚᱢ ᱢᱮ ᱾",
+      "en": "Listen to the story.",
+      "nipun": "FL-OL",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p36": {
+      "source": "अपनी भाषा में बताओ।",
+      "target": "ᱟᱢᱟᱜ ᱯᱟᱹᱨᱥᱤ ᱛᱮ ᱞᱟᱹᱭ ᱤᱧᱢᱮ ᱾",
+      "en": "Tell me in your own language.",
+      "nipun": "FL-OL",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p37": {
+      "source": "यह वाक्य दोहराओ।",
+      "target": "ᱱᱚᱣᱟ ᱵᱷᱟᱥᱚᱱ ᱫᱚ ᱫᱚᱲᱦᱟᱛᱮ ᱞᱟᱹᱭ ᱢᱮ ᱾",
+      "en": "Repeat this sentence.",
+      "nipun": "FL-OL",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p38": {
+      "source": "क्या तुम ठीक हो?",
+      "target": "ᱟᱢ ᱪᱮᱫ ᱴᱷᱤᱠ ᱟᱢ?",
+      "en": "Are you all right?",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p39": {
+      "source": "पानी पी लो।",
+      "target": "ᱱᱟᱥᱮ ᱫᱟᱜ ᱧᱩᱭ ᱢᱮ ᱾",
+      "en": "Drink some water.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "p40": {
+      "source": "घर पर अभ्यास करना।",
+      "target": "ᱚᱲᱟᱜ ᱨᱮ ᱥᱚᱲᱠᱚ ᱢᱮ ᱾",
+      "en": "Practise at home.",
+      "nipun": "ROUTINE",
+      "kind": "phrase",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z"
+    },
+    "neema-dadi.l1": {
+      "source": "नीमा दोपहर में दो बजे स्कूल से लौटती है।",
+      "target": "ᱱᱤᱢᱟ ᱫᱚ ᱛᱤᱠᱤᱱ ᱵᱟᱨ ᱴᱟᱲᱟᱝ ᱨᱮ ᱵᱤᱨᱫᱟᱹᱜᱟᱲ ᱠᱷᱚᱱ ᱚᱲᱟᱜ ᱮ ᱦᱤᱡᱩᱜᱼᱟ ᱾",
+      "en": "Neema comes home from school at two in the afternoon.",
+      "nipun": "FL-RD",
+      "kind": "lesson",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z",
+      "lesson": "neema-dadi",
+      "image": "school-return"
+    },
+    "neema-dadi.l2": {
+      "source": "इस समय घर पर सिर्फ़ दादी होती हैं।",
+      "target": "ᱚᱱᱟ ᱚᱠᱛᱚ ᱥᱩᱢᱩᱝ ᱟᱡ ᱜᱚᱲᱚᱢ ᱟᱭᱳ ᱚᱲᱟᱜ ᱨᱮ ᱛᱟᱦᱮᱱᱟ ᱾",
+      "en": "At that time only her grandmother is at home.",
+      "nipun": "FL-RD",
+      "kind": "lesson",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z",
+      "lesson": "neema-dadi",
+      "image": "grandmother"
+    },
+    "neema-dadi.l3": {
+      "source": "दादी कहीं नहीं आती-जाती हैं।",
+      "target": "ᱜᱚᱲᱚᱢ ᱟᱭᱳ ᱫᱚ ᱚᱠᱟᱨᱮᱦᱚᱸ ᱵᱟᱭ ᱪᱟᱞᱟᱜᱼᱟ ᱾",
+      "en": "Grandmother does not go anywhere.",
+      "nipun": "FL-RD",
+      "kind": "lesson",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z",
+      "lesson": "neema-dadi",
+      "image": "sitting"
+    },
+    "neema-dadi.l4": {
+      "source": "उनके घुटनों में दर्द रहता है।",
+      "target": "ᱩᱱᱤᱭᱟᱜ ᱜᱩᱱᱴᱷᱮ ᱨᱮ ᱦᱟᱥᱩ ᱞᱮᱱᱟ ᱾",
+      "en": "Her knees hurt.",
+      "nipun": "FL-RD",
+      "kind": "lesson",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z",
+      "lesson": "neema-dadi",
+      "image": "knees"
+    },
+    "neema-dadi.l5": {
+      "source": "उन्हें नीमा का बहुत इंतज़ार होता है।",
+      "target": "ᱩᱱᱤ ᱫᱚ ᱩᱫᱜᱟᱹᱣ ᱥᱟᱞᱟᱜ ᱱᱤᱢᱟ ᱞᱟᱹᱜᱤᱫᱼᱮ ᱛᱟᱸᱜᱤ ᱞᱮᱱᱟ ᱾",
+      "en": "She waits eagerly for Neema.",
+      "nipun": "FL-RD",
+      "kind": "lesson",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z",
+      "lesson": "neema-dadi",
+      "image": "waiting"
+    },
+    "neema-dadi.l6": {
+      "source": "नीमा रोज़ खाना खाते-खाते स्कूल की बातें सुनाती है।",
+      "target": "ᱫᱤᱱᱟᱹᱢ ᱡᱚᱢ ᱚᱠᱛᱚ ᱱᱤᱢᱟ ᱩᱱᱤ ᱵᱤᱨᱫᱟᱹᱜᱟᱲ ᱵᱟᱨᱮᱛᱮᱭ ᱞᱟᱹᱭᱟ ᱾",
+      "en": "Every day, while eating, Neema tells her about school.",
+      "nipun": "FL-RD",
+      "kind": "lesson",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z",
+      "lesson": "neema-dadi",
+      "image": "eating-talking"
+    },
+    "neema-dadi.l7": {
+      "source": "शाम को नीमा खेलने जाती है।",
+      "target": "ᱥᱤᱸᱜᱟᱹᱲ ᱨᱮ ᱱᱤᱢᱟ ᱠᱷᱮᱞᱳᱰ ᱞᱟᱹᱜᱤᱫ ᱮ ᱪᱟᱞᱟᱜᱼᱟ ᱾",
+      "en": "In the evening Neema goes out to play.",
+      "nipun": "FL-RD",
+      "kind": "lesson",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z",
+      "lesson": "neema-dadi",
+      "image": "playing"
+    },
+    "neema-dadi.l8": {
+      "source": "एक दिन दादी बोलीं, मेरा समय नहीं कटता।",
+      "target": "ᱢᱤᱫ ᱫᱤᱱ ᱜᱚᱲᱚᱢ ᱟᱭᱳᱭ ᱞᱟᱹᱭ ᱠᱮᱫᱟ, ᱤᱧᱟᱹᱜ ᱚᱠᱛᱚ ᱫᱚ ᱵᱟᱝ ᱯᱟᱨᱚᱢᱚᱜᱼᱟ ᱾",
+      "en": "One day grandmother said, my time does not pass.",
+      "nipun": "FL-RD",
+      "kind": "lesson",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z",
+      "lesson": "neema-dadi",
+      "image": "lonely"
+    },
+    "neema-dadi.l9": {
+      "source": "नीमा दौड़कर दादी की चप्पलें ले आई।",
+      "target": "ᱱᱤᱢᱟ ᱫᱟᱹᱲ ᱠᱟᱛᱮ ᱜᱚᱲᱚᱢ ᱜᱚᱲᱚᱢ ᱠᱩᱲᱤᱭᱟᱜ ᱪᱟᱯᱚᱞᱮ ᱟᱹᱜᱩ ᱠᱮᱫᱟ ᱾",
+      "en": "Neema ran and fetched grandmother's slippers.",
+      "nipun": "FL-RD",
+      "kind": "lesson",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z",
+      "lesson": "neema-dadi",
+      "image": "slippers"
+    },
+    "neema-dadi.l10": {
+      "source": "फिर वे दोनों खेल के मैदान की ओर चल पड़े।",
+      "target": "ᱚᱱᱟ ᱛᱟᱭᱚᱢ ᱩᱱᱠᱤᱱ ᱵᱟᱱᱟ ᱦᱚᱲ ᱠᱷᱮᱞᱳᱰ ᱴᱷᱟᱶ ᱥᱮᱫ ᱠᱚ ᱞᱟᱦᱟ ᱞᱮᱱᱟ ᱾",
+      "en": "Then the two of them set off towards the playground.",
+      "nipun": "FL-RD",
+      "kind": "lesson",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z",
+      "lesson": "neema-dadi",
+      "image": "walking-together"
+    },
+    "neema-dadi.c1": {
+      "source": "इस समय घर पर कौन होता है?",
+      "target": "ᱚᱱᱟ ᱚᱠᱛᱚ ᱚᱲᱟᱜ ᱨᱮ ᱚᱠᱚᱭ ᱢᱮᱱᱟᱜ - ᱟ",
+      "en": "Who is at home at that time?",
+      "nipun": "FL-OL",
+      "kind": "check",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z",
+      "lesson": "neema-dadi"
+    },
+    "neema-dadi.c2": {
+      "source": "दादी के कहाँ दर्द रहता है?",
+      "target": "ᱜᱚᱲᱚᱢ ᱟᱭᱳᱣᱟᱜ ᱫᱚ ᱚᱠᱟ ᱨᱮ ᱦᱟᱹᱥᱩ ᱢᱮᱱᱟᱜ - ᱟ ᱾",
+      "en": "Where does grandmother have pain?",
+      "nipun": "FL-OL",
+      "kind": "check",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z",
+      "lesson": "neema-dadi"
+    },
+    "neema-dadi.c3": {
+      "source": "अंत में नीमा और दादी कहाँ गईं?",
+      "target": "ᱢᱩᱪᱟᱹᱫ ᱨᱮ ᱱᱮᱢᱟ ᱟᱨ ᱜᱚᱲᱚᱢ ᱟᱭᱳ ᱫᱚ ᱚᱠᱟᱨᱮ ᱪᱟᱞᱟᱣ ᱮᱱᱟ",
+      "en": "Where did Neema and grandmother go at the end?",
+      "nipun": "FL-OL",
+      "kind": "check",
+      "service": "prajdabre/rotary-indictrans2-en-indic-1B",
+      "at": "2026-08-25T13:36:28.568800Z",
+      "lesson": "neema-dadi"
+    }
+  }
+}
