@@ -5,6 +5,12 @@
     <!-- Speech recognition input -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
+    <!-- Read-only. The Proof screen reports whether the device has a
+         network so a judge can see the app is genuinely offline. This
+         grants no ability to USE a network, only to observe its state,
+         and NetworkGuard still counts every call at zero. -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <uses-feature android:name="android.hardware.microphone" android:required="true" />
 
     <application

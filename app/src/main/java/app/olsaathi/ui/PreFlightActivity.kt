@@ -92,7 +92,7 @@ class PreFlightActivity : AppCompatActivity() {
     private fun checkFont(assetPath: String, label: String) {
         try {
             val tf = Typeface.createFromAsset(assets, assetPath)
-            val testText = "\u1C1A\u1C3E \u1C2A\u1C20\u1C32\u1C2B\u1C18"
+            val testText = "\u1C5A\u1C5E \u1C6A\u1C64\u1C60\u1C64"
             addResult(true, "$label: loaded — $testText renders as glyphs")
         } catch (e: Exception) {
             addResult(false, "$label: FAILED TO LOAD — ${e.message}")
@@ -173,13 +173,21 @@ class PreFlightActivity : AppCompatActivity() {
 
     private fun checkWorksheetGenerates() {
         try {
-            val pdf = WorksheetPdf(this).generate("__phrases__", app.pack)
+            // "__phrases__" is the synthetic id the lesson list uses for the
+            // phrase collection. No entry belongs to it, so asking for a
+            // worksheet of it can only fail. Use a lesson that really exists.
+            val lessonId = app.pack.lessonIds().firstOrNull { it != "__phrases__" }
+            if (lessonId == null) {
+                addResult(false, "Worksheet generates: the pack has no lesson to render")
+                return
+            }
+            val pdf = WorksheetPdf(this).generate(lessonId, app.pack)
             if (pdf != null && pdf.exists()) {
                 val sizeKb = pdf.length() / 1024
-                addResult(true, "Worksheet generates: ${pdf.name} (${sizeKb} KB)")
+                addResult(true, "Worksheet generates: $lessonId, ${sizeKb} KB")
                 pdf.delete()
             } else {
-                addResult(false, "Worksheet generates: no content for __phrases__")
+                addResult(false, "Worksheet generates: nothing produced for $lessonId")
             }
         } catch (e: Exception) {
             addResult(false, "Worksheet generates: FAILED — ${e.message}")

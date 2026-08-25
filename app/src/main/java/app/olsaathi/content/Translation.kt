@@ -11,7 +11,14 @@ package app.olsaathi.content
  * "close enough" match.
  */
 enum class Provenance(val label: String) {
-    /** Real translation from the Bhashini pack. */
+    /**
+     * Checked by a Santali speaker. The strongest claim we make.
+     *
+     * Per-entry only: one reviewer checking forty entries does not verify
+     * the other thirteen. The reviewer's name and date appear on screen.
+     */
+    HUMAN_VERIFIED("Checked by a Santali speaker"),
+
     /**
      * From the shipped pack, traceable to the model that produced it.
      *
@@ -21,8 +28,10 @@ enum class Provenance(val label: String) {
      * is the source, so that is what the label states.
      */
     VERIFIED("Machine translation · IndicTrans2"),
+
     /** Hindi text respelled in the target script — not a translation. */
     TRANSLITERATED("Transliterated, not a translation"),
+
     /** No match in the pack. Empty target string. */
     UNAVAILABLE("Not in the offline pack"),
 
@@ -46,11 +55,18 @@ data class Translation(
     val entryId: String = "",
     val nipun: String = "",
     val kind: String = "",
+    /** Reviewer name, set only when provenance is HUMAN_VERIFIED. */
+    val reviewerName: String = "",
+    /** Review date (ISO), set only when provenance is HUMAN_VERIFIED. */
+    val reviewedOn: String = "",
 ) {
     /** True when the pack had an entry for this source. */
     val isAvailable: Boolean get() =
-        provenance == Provenance.VERIFIED || provenance == Provenance.SAMPLE
+        provenance == Provenance.VERIFIED ||
+            provenance == Provenance.SAMPLE ||
+            provenance == Provenance.HUMAN_VERIFIED
 
-    /** True only for real Bhashini output. Gate any claim on this, not on isAvailable. */
-    val isTrustworthy: Boolean get() = provenance == Provenance.VERIFIED
+    /** True for real Bhashini output or human-reviewed content. */
+    val isTrustworthy: Boolean get() =
+        provenance == Provenance.VERIFIED || provenance == Provenance.HUMAN_VERIFIED
 }

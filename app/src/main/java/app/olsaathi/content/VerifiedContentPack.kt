@@ -31,6 +31,10 @@ class VerifiedContentPack private constructor() {
         val service: String,
         val audio: String?,
         val lesson: String?,
+        /** Set by apply_review.py when a Santali speaker reviews this entry. */
+        val reviewedBy: String = "",
+        val reviewedOn: String = "",
+        val reviewVerdict: String = "",
     )
 
     // Visible for testing
@@ -57,8 +61,26 @@ class VerifiedContentPack private constructor() {
     var generated: String = ""
         private set
 
+    /** Human review metadata from the pack header. Null when no review has happened. */
+    var humanReview: HumanReview? = null
+        private set
+
+    data class HumanReview(
+        val reviewer: String,
+        val background: String,
+        val date: String,
+        val confirmed: Int,
+        val corrected: Int,
+        val removed: Int,
+        val unreviewed: Int,
+    )
+
     /** Number of entries loaded. */
     val size: Int get() = entries.size
+
+    /** Number of entries that have been human-reviewed. */
+    val reviewedCount: Int get() =
+        entries.values.count { it.reviewedBy.isNotEmpty() && it.reviewVerdict in listOf("confirmed", "corrected") }
 
     /**
      * Look up by Hindi source text.
@@ -77,31 +99,13 @@ class VerifiedContentPack private constructor() {
 
         // 1. Exact match
         entries[normaliseKey(trimmed)]?.let { entry ->
-            return Translation(
-                source = entry.source,
-                target = entry.target,
-                en = entry.en,
-                provenance = if (isSample) Provenance.SAMPLE else Provenance.VERIFIED,
-                serviceId = entry.service,
-                entryId = entry.id,
-                nipun = entry.nipun,
-                kind = entry.kind,
-            )
+            return entryToTranslation(entry, hindi)
         }
 
         // 2. Normalised match
         val norm = normalise(trimmed)
         normalisedIndex[norm]?.let { entry ->
-            return Translation(
-                source = entry.source,
-                target = entry.target,
-                en = entry.en,
-                provenance = if (isSample) Provenance.SAMPLE else Provenance.VERIFIED,
-                serviceId = entry.service,
-                entryId = entry.id,
-                nipun = entry.nipun,
-                kind = entry.kind,
-            )
+            return entryToTranslation(entry, hindi)
         }
 
         // 3. UNAVAILABLE — N1: no fallback, no guess
@@ -110,6 +114,35 @@ class VerifiedContentPack private constructor() {
             target = "",
             en = "",
             provenance = Provenance.UNAVAILABLE
+        )
+    }
+
+    /**
+     * Convert a PackEntry to a Translation, choosing the right provenance.
+     *
+     * HUMAN_VERIFIED takes precedence over VERIFIED/SAMPLE — if someone
+     * reviewed it, that is the strongest claim we make for that entry.
+     */
+    private fun entryToTranslation(entry: PackEntry, fallbackSource: String): Translation {
+        // Determine provenance: HUMAN_VERIFIED > SAMPLE > VERIFIED
+        val provenance = when {
+            entry.reviewedBy.isNotEmpty() && entry.reviewVerdict in listOf("confirmed", "corrected") ->
+                Provenance.HUMAN_VERIFIED
+            isSample -> Provenance.SAMPLE
+            else -> Provenance.VERIFIED
+        }
+
+        return Translation(
+            source = entry.source.ifEmpty { fallbackSource },
+            target = entry.target,
+            en = entry.en,
+            provenance = provenance,
+            serviceId = entry.service,
+            entryId = entry.id,
+            nipun = entry.nipun,
+            kind = entry.kind,
+            reviewerName = entry.reviewedBy,
+            reviewedOn = entry.reviewedOn,
         )
     }
 
@@ -159,22 +192,26 @@ class VerifiedContentPack private constructor() {
             pack.platform = prov?.optString("platform", "") ?: ""
             pack.pivot = prov?.optString("pivot", "") ?: ""
 
+            // Human review metadata (optional — absent when no review has happened)
+            val hr = prov?.optJSONObject("humanReview")
+            if (hr != null) {
+                pack.humanReview = HumanReview(
+                    reviewer = hr.optString("reviewer", ""),
+                    background = hr.optString("background", ""),
+                    date = hr.optString("date", ""),
+                    confirmed = hr.optInt("confirmed", 0),
+                    corrected = hr.optInt("corrected", 0),
+                    removed = hr.optInt("removed", 0),
+                    unreviewed = hr.optInt("unreviewed", 0),
+                )
+            }
+
             val entriesObj = root.optJSONObject("entries") ?: JSONObject()
             val keys = entriesObj.keys()
             while (keys.hasNext()) {
                 val id = keys.next()
                 val e = entriesObj.getJSONObject(id)
-                val entry = PackEntry(
-                    id = id,
-                    source = e.optString("source", ""),
-                    target = e.optString("target", ""),
-                    en = e.optString("en", ""),
-                    nipun = e.optString("nipun", ""),
-                    kind = e.optString("kind", ""),
-                    service = e.optString("service", ""),
-                    audio = e.optString("audio", "").ifEmpty { null },
-                    lesson = e.optString("lesson", "").ifEmpty { null },
-                )
+                val entry = parseEntry(id, e)
                 pack.entries[normaliseKey(entry.source)] = entry
                 // Build normalised index for fuzzy lookup
                 val norm = normalise(entry.source)
@@ -193,8 +230,6 @@ class VerifiedContentPack private constructor() {
             val root = JSONObject(json)
             pack.generated = root.optString("generated", "")
             val prov = root.optJSONObject("provenance")
-            // Any of these means the pack was not produced by a real Bhashini
-            // run, so nothing in it may claim to be verified.
             pack.isSample = (prov?.optString("note") ?: "").contains("SAMPLE", ignoreCase = true) ||
                 (prov?.optBoolean("sample") ?: false) ||
                 (prov?.optString("translationService") ?: "").let { it.isEmpty() || !it.contains("/") || it == "ai4bharat/translation" }
@@ -203,22 +238,25 @@ class VerifiedContentPack private constructor() {
             pack.platform = prov?.optString("platform", "") ?: ""
             pack.pivot = prov?.optString("pivot", "") ?: ""
 
+            val hr = prov?.optJSONObject("humanReview")
+            if (hr != null) {
+                pack.humanReview = HumanReview(
+                    reviewer = hr.optString("reviewer", ""),
+                    background = hr.optString("background", ""),
+                    date = hr.optString("date", ""),
+                    confirmed = hr.optInt("confirmed", 0),
+                    corrected = hr.optInt("corrected", 0),
+                    removed = hr.optInt("removed", 0),
+                    unreviewed = hr.optInt("unreviewed", 0),
+                )
+            }
+
             val entriesObj = root.optJSONObject("entries") ?: JSONObject()
             val keys = entriesObj.keys()
             while (keys.hasNext()) {
                 val id = keys.next()
                 val e = entriesObj.getJSONObject(id)
-                val entry = PackEntry(
-                    id = id,
-                    source = e.optString("source", ""),
-                    target = e.optString("target", ""),
-                    en = e.optString("en", ""),
-                    nipun = e.optString("nipun", ""),
-                    kind = e.optString("kind", ""),
-                    service = e.optString("service", ""),
-                    audio = e.optString("audio", "").ifEmpty { null },
-                    lesson = e.optString("lesson", "").ifEmpty { null },
-                )
+                val entry = parseEntry(id, e)
                 pack.entries[normaliseKey(entry.source)] = entry
                 val norm = normalise(entry.source)
                 if (norm.isNotEmpty()) {
@@ -226,6 +264,23 @@ class VerifiedContentPack private constructor() {
                 }
             }
             return pack
+        }
+
+        private fun parseEntry(id: String, e: JSONObject): PackEntry {
+            return PackEntry(
+                id = id,
+                source = e.optString("source", ""),
+                target = e.optString("target", ""),
+                en = e.optString("en", ""),
+                nipun = e.optString("nipun", ""),
+                kind = e.optString("kind", ""),
+                service = e.optString("service", ""),
+                audio = e.optString("audio", "").ifEmpty { null },
+                lesson = e.optString("lesson", "").ifEmpty { null },
+                reviewedBy = e.optString("reviewedBy", ""),
+                reviewedOn = e.optString("reviewedOn", ""),
+                reviewVerdict = e.optString("reviewVerdict", ""),
+            )
         }
 
         /**

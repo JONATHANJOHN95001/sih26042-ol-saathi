@@ -64,6 +64,21 @@ class ProofActivity : AppCompatActivity() {
             sb.append("  pivot: ${app.pack.pivot}\n")
         }
 
+        // Human review status
+        val reviewed = app.pack.reviewedCount
+        val total = app.pack.size
+        val hr = app.pack.humanReview
+        if (hr != null) {
+            sb.append("Human-reviewed: $reviewed of $total entries\n")
+            sb.append("  Reviewer: ${hr.reviewer}\n")
+            sb.append("  Background: ${hr.background}\n")
+            sb.append("  Date: ${hr.date}\n")
+            sb.append("  Confirmed: ${hr.confirmed}, Corrected: ${hr.corrected}, " +
+                "Removed: ${hr.removed}, Unreviewed: ${hr.unreviewed}\n")
+        } else {
+            sb.append("Human review: not yet\n")
+        }
+
         binding.textPackInfo.text = sb
 
         // Status chip
@@ -72,14 +87,17 @@ class ProofActivity : AppCompatActivity() {
             binding.chipStatus.setTextColor(Color.WHITE)
             binding.chipStatus.setBackgroundColor(Color.parseColor("#C62828"))
         } else {
-            binding.chipStatus.text = "VERIFIED CONTENT"
+            // Not "VERIFIED". Nobody who reads Santali has checked this pack, and
+            // a green chip saying verified is exactly the overclaim this screen
+            // exists to prevent. State what is true: it came from a named model.
+            binding.chipStatus.text = "MACHINE TRANSLATED"
             binding.chipStatus.setTextColor(Color.WHITE)
             binding.chipStatus.setBackgroundColor(Color.parseColor("#1B6D24"))
         }
 
         // ── Script Rendering ──────────────────────────────────────────
         if (olChikiFont != null) {
-            val testText = "\u1C1A\u1C3E \u1C2A\u1C20\u1C32\u1C2B\u1C18"  // ᱚᱞ ᱪᱤᱠᱤ
+            val testText = "\u1C5A\u1C5E \u1C6A\u1C64\u1C60\u1C64"  // ᱚᱞ ᱪᱤᱠᱤ
             val rendered = SpannableString(testText)
             rendered.setSpan(
                 OlChikiTypefaceSpan(olChikiFont),
@@ -139,7 +157,7 @@ class ProofActivity : AppCompatActivity() {
 
         // Audio source from provenance
         val ttsService = app.pack.ttsService
-        if (ttsService.isNotEmpty()) {
+        if (ttsService.isNotEmpty() && ttsService != "null") {
             packAudioSb.append("Audio source: $ttsService\n")
         } else {
             packAudioSb.append("Audio source: none yet\n")

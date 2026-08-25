@@ -87,4 +87,6 @@
     <!-- Sample data warning. Deliberately alarming: this label means the
          Santali on screen was not produced by Bhashini. -->
     <color name="sample_red">#C62828</color>
+    <!-- Human-verified: a blue that stands apart from the machine-translation green -->
+    <color name="human_verified_blue">#1565C0</color>
 </resources>

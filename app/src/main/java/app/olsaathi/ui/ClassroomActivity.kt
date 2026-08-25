@@ -209,6 +209,7 @@ class ClassroomActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
             // Colour the provenance label
             val colour = when (translation.provenance) {
+                Provenance.HUMAN_VERIFIED -> ContextCompat.getColor(this, R.color.human_verified_blue)
                 Provenance.VERIFIED -> ContextCompat.getColor(this, R.color.success_green)
                 Provenance.TRANSLITERATED -> ContextCompat.getColor(this, R.color.warning_orange)
                 Provenance.UNAVAILABLE -> ContextCompat.getColor(this, R.color.md_theme_outline)
@@ -216,9 +217,21 @@ class ClassroomActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             }
             binding.textProvenance.setTextColor(colour)
 
-            // A coloured label is easy to overlook while presenting. If the
-            // pack is placeholder content, say so where nobody can miss it.
-            if (pack.isSample) {
+            // Show reviewer name and date for human-verified entries
+            if (translation.provenance == Provenance.HUMAN_VERIFIED &&
+                translation.reviewerName.isNotEmpty()) {
+                val date = if (translation.reviewedOn.isNotEmpty()) {
+                    try {
+                        val parts = translation.reviewedOn.split("-")
+                        if (parts.size == 3) "${parts[2].toInt()} ${monthName(parts[1].toInt())} ${parts[0]}"
+                        else translation.reviewedOn
+                    } catch (e: Exception) { translation.reviewedOn }
+                } else ""
+                val suffix = if (date.isNotEmpty()) ", $date" else ""
+                binding.textProvenance.text = "${translation.provenance.label}\nChecked by ${translation.reviewerName}$suffix"
+            } else if (pack.isSample) {
+                // A coloured label is easy to overlook while presenting. If the
+                // pack is placeholder content, say so where nobody can miss it.
                 binding.textProvenance.text = getString(R.string.sample_pack_warning)
             }
 
@@ -298,6 +311,13 @@ class ClassroomActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         audioPlayer.release()
         tts?.stop()
         tts?.shutdown()
+    }
+
+    private fun monthName(m: Int): String = when (m) {
+        1 -> "Jan"; 2 -> "Feb"; 3 -> "Mar"; 4 -> "Apr"
+        5 -> "May"; 6 -> "Jun"; 7 -> "Jul"; 8 -> "Aug"
+        9 -> "Sep"; 10 -> "Oct"; 11 -> "Nov"; 12 -> "Dec"
+        else -> ""
     }
 
     companion object {
