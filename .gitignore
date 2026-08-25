@@ -22,3 +22,50 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Android / Gradle
+.gradle/
+build/
+app/build/
+local.properties
+*.apk
+*.ap_
+*.aab
+*.dex
+*.class
+*.hprof
+
+# Generated files
+generated_sheets/
+screenshots/
+stitch_export/
+stitch_screens/
+*.regtrans-ms
+*.blf
+*.log
+*.tmp.*
+desktop.ini
+NTUSER.DAT*
+
+# Keystore (never commit release keys)
+app/release-key.jks
+
+# OS files
+Thumbs.db
+Desktop.ini
+.aider*
+
+# Dead scaffold. settings.gradle includes only :app; android/ is an earlier
+# unrelated project under com.example.* and should be deleted, not reviewed.
+/android/
+
+# Agent working directories and one-off repair scripts
+.freebuff/
+fix_encodings.js
+fix_imports.mjs
+fix_packages.mjs
+reconstruct_stubs.sh
+
+# Debug dumps and build output
+EMULATOR_UI_*.xml
+generated_materials/

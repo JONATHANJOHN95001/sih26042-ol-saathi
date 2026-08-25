@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_theme_background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/sync_root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sync"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_onBackground" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/manage_offline_network"
+                    android:textSize="16sp"
+                    android:textColor="@color/md_theme_onSurfaceVariant" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_go_online"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:text="@string/go_online"
+                android:textColor="@color/md_theme_onPrimary"
+                android:backgroundTint="@color/md_theme_primary"
+                app:icon="@android:drawable/ic_popup_sync"
+                app:iconTint="@color/md_theme_onPrimary"
+                app:cornerRadius="12dp" />
+        </LinearLayout>
+
+        <!-- Mesh Network Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card_surface"
+            android:padding="20dp"
+            android:layout_marginBottom="16dp">
+
+            <!-- Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingBottom="12dp"
+                android:layout_marginBottom="12dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/ic_menu_share"
+                    android:tint="@color/md_theme_secondary"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="Mesh" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/local_mesh_network"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_primary" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_chip_secondary"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="4dp"
+                    android:gravity="center_vertical">
+
+                    <View
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:background="@drawable/bg_circle_green" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/active"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_theme_onSecondaryContainer"
+                        android:layout_marginStart="6dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Mesh Topology Visualization -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:background="@drawable/bg_card_surface_variant"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <!-- This Tablet -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <FrameLayout
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/bg_circle_primary">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:src="@android:drawable/ic_menu_crop"
+                                android:tint="@color/md_theme_onPrimary"
+                                android:contentDescription="Tablet" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/this_tablet"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/md_theme_onSurface"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+
+                    <!-- Connection Line -->
+                    <View
+                        android:layout_width="60dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/bg_dashed_line_green" />
+
+                    <!-- Tablet B -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <FrameLayout
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/bg_circle_outline">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:src="@android:drawable/ic_menu_crop"
+                                android:tint="@color/md_theme_onSurfaceVariant"
+                                android:contentDescription="Tablet B" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tablet B"
+                            android:textSize="12sp"
+                            android:textColor="@color/md_theme_onSurfaceVariant"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="12dp"
+                    android:text="@string/peers_found"
+                    android:textSize="14sp"
+                    android:textColor="@color/md_theme_onSurfaceVariant" />
+            </FrameLayout>
+
+            <!-- Nearby Devices List -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nearby_devices"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/md_theme_onBackground"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Device 1 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card_surface_bright"
+                android:padding="12dp"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@android:drawable/ic_menu_crop"
+                    android:tint="@color/md_theme_outline"
+                    android:layout_marginEnd="12dp"
+                    android:contentDescription="Tablet" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/teacher_tablet_b"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_theme_onBackground" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/last_synced_2h"
+                        android:textSize="12sp"
+                        android:textColor="@color/md_theme_onSurfaceVariant" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:text="@string/sync_data"
+                    android:textSize="12sp"
+                    android:backgroundTint="@color/md_theme_secondaryContainer"
+                    android:textColor="@color/md_theme_onSecondaryContainer"
+                    app:cornerRadius="8dp" />
+            </LinearLayout>
+
+            <!-- Device 2 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card_surface_bright"
+                android:padding="12dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@android:drawable/ic_menu_crop"
+                    android:tint="@color/md_theme_outline"
+                    android:layout_marginEnd="12dp"
+                    android:contentDescription="Tablet" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/library_tablet"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_theme_onBackground" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/last_synced_1d"
+                        android:textSize="12sp"
+                        android:textColor="@color/md_theme_onSurfaceVariant" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:text="@string/sync_data"
+                    android:textSize="12sp"
+                    android:textColor="@color/md_theme_primary"
+                    app:strokeColor="@color/md_theme_primary"
+                    app:cornerRadius="8dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Storage Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card_surface"
+            android:padding="20dp"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingBottom="12dp"
+                android:layout_marginBottom="12dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/ic_menu_save"
+                    android:tint="@color/md_theme_primary"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="Storage" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/storage"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_primary" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/usage_optimized"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_onBackground" />
+
+                <TextView
+                    android:id="@+id/tv_storage_usage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1.4 GB / 2.0 GB"
+                    android:textSize="12sp"
+                    android:textColor="@color/md_theme_onSurfaceVariant" />
+            </LinearLayout>
+
+            <!-- Segmented Progress Bar -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:background="@drawable/bg_progress_track"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="45"
+                    android:background="@color/md_theme_primary" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="15"
+                    android:background="@color/md_theme_secondary" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10"
+                    android:background="@color/md_theme_tertiaryContainer" />
+            </LinearLayout>
+
+            <!-- Legend -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <View android:layout_width="12dp" android:layout_height="12dp"
+                        android:background="@color/md_theme_primary" android:layout_marginEnd="4dp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/core_app" android:textSize="11sp"
+                        android:textColor="@color/md_theme_onSurfaceVariant" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <View android:layout_width="12dp" android:layout_height="12dp"
+                        android:background="@color/md_theme_secondary" android:layout_marginEnd="4dp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/language_packs" android:textSize="11sp"
+                        android:textColor="@color/md_theme_onSurfaceVariant" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <View android:layout_width="12dp" android:layout_height="12dp"
+                        android:background="@color/md_theme_tertiaryContainer" android:layout_marginEnd="4dp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/media" android:textSize="11sp"
+                        android:textColor="@color/md_theme_onSurfaceVariant" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="@string/free_up_space"
+                android:textColor="@color/md_theme_onSurface"
+                app:strokeColor="@color/md_theme_outline"
+                app:cornerRadius="12dp"
+                app:icon="@android:drawable/ic_menu_delete" />
+        </LinearLayout>
+
+        <!-- Language Packs Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card_surface"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingBottom="12dp"
+                android:layout_marginBottom="12dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/ic_menu_mapmode"
+                    android:tint="@color/md_theme_primary"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="Language" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/language_packs_title"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_primary" />
+            </LinearLayout>
+
+            <!-- Pack 1: Ho (Complete) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="4dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/ho_language_base"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_theme_onBackground" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@android:drawable/ic_dialog_info"
+                        android:tint="@color/md_theme_secondary"
+                        android:contentDescription="Complete" />
+                </LinearLayout>
+
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:max="100"
+                    android:progress="100"
+                    android:progressDrawable="@drawable/bg_progress_bar_green"
+                    android:layout_marginBottom="2dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/up_to_date"
+                    android:textSize="12sp"
+                    android:textColor="@color/md_theme_onSurfaceVariant"
+                    android:gravity="end" />
+            </LinearLayout>
+
+            <!-- Pack 2: Santhali OCR (Downloading) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="4dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/santhali_ocr_models"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_theme_onBackground" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="60%"
+                        android:textSize="12sp"
+                        android:textColor="@color/md_theme_primary" />
+                </LinearLayout>
+
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:max="100"
+                    android:progress="60"
+                    android:progressDrawable="@drawable/bg_progress_bar_blue"
+                    android:layout_marginBottom="2dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/downloading_via_mesh"
+                    android:textSize="12sp"
+                    android:textColor="@color/md_theme_onSurfaceVariant"
+                    android:gravity="end" />
+            </LinearLayout>
+
+            <!-- Pack 3: Mundari (Available) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="4dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/mundari_audio_pack"
+                        android:textSize="14sp"
+                        android:textColor="@color/md_theme_onBackground"
+                        android:alpha="0.6" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@android:drawable/stat_sys_download"
+                        android:tint="@color/md_theme_primary"
+                        android:contentDescription="Download" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/available_150mb"
+                    android:textSize="12sp"
+                    android:textColor="@color/md_theme_onSurfaceVariant"
+                    android:gravity="end" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

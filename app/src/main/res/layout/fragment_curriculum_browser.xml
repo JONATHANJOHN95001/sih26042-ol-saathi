@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/md_theme_surface">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/md_theme_surfaceContainer"
+        android:padding="16dp"
+        android:paddingBottom="12dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/curriculum_browser"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/md_theme_primary"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fln_lessons_desc"
+            android:textSize="14sp"
+            android:textColor="@color/md_theme_onSurfaceVariant"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Language Toggle -->
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggle_language"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="12dp"
+            app:singleSelection="true"
+            app:selectionRequired="true"
+            app:checkedButton="@id/btn_hindi">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_hindi"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Hindi"
+                android:textSize="14sp"
+                android:backgroundTint="@color/md_theme_primary"
+                android:textColor="@color/md_theme_onPrimary"
+                app:cornerRadius="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_ho"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Ho"
+                android:textSize="14sp"
+                app:cornerRadius="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_mundari"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Mundari"
+                android:textSize="14sp"
+                app:cornerRadius="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_santhali"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Santhali"
+                android:textSize="14sp"
+                app:cornerRadius="8dp" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <!-- NIPUN Filter Chips -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nipun_filter"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_onSurfaceVariant"
+                    android:layout_marginEnd="8dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_all"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:text="@string/all_outcomes"
+                    android:textSize="12sp"
+                    android:checked="true"
+                    android:layout_marginEnd="6dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_numeracy"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:text="@string/numeracy_l1"
+                    android:textSize="12sp"
+                    android:layout_marginEnd="6dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_literacy"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:text="@string/literacy_l2"
+                    android:textSize="12sp"
+                    android:layout_marginEnd="6dp" />
+
+                <!-- Content Type Filters -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Type:"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_onSurfaceVariant"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="8dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_lesson_script"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:text="Lessons"
+                    android:textSize="11sp"
+                    android:layout_marginEnd="4dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_activity_instruction"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:text="Activities"
+                    android:textSize="11sp"
+                    android:layout_marginEnd="4dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_assessment_prompt"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:text="Assessments"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <!-- Search Bar -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_search"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="12dp"
+        android:hint="Search competencies…"
+        app:startIconDrawable="@android:drawable/ic_menu_search"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Curriculum Competency List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_curriculum"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="16dp" />
+
+</LinearLayout>

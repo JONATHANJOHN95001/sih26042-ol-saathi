@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_theme_background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/auto_generated_worksheet"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/md_theme_onSurface"
+            android:layout_marginBottom="4dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/bilingual_santhali_hindi"
+                android:textSize="14sp"
+                android:textColor="@color/md_theme_onSurfaceVariant" />
+        </LinearLayout>
+
+        <!-- Material Mode Toggle: Worksheets vs Flashcards -->
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggle_material_mode"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="12dp"
+            app:singleSelection="true"
+            app:selectionRequired="true"
+            app:checkedButton="@id/btn_worksheet">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_worksheet"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Worksheets (A4)"
+                android:textSize="13sp"
+                app:cornerRadius="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_flashcards"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Flashcards (Grid)"
+                android:textSize="13sp"
+                app:cornerRadius="8dp" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <!-- NIPUN Level Selector -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NIPUN Level:"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="@color/md_theme_onSurfaceVariant"
+                android:layout_marginEnd="8dp" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_level_1"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="L1"
+                    android:checked="true" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_level_2"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="L2" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_level_3"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="L3" />
+            </com.google.android.material.chip.ChipGroup>
+        </LinearLayout>
+
+        <!-- Flashcard Type Selector (hidden by default) -->
+        <LinearLayout
+            android:id="@+id/flashcard_type_selector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Type:"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="@color/md_theme_onSurfaceVariant"
+                android:layout_marginEnd="8dp" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_flashcard_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_type_all"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="All"
+                    android:checked="true" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_type_literacy"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Literacy" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_type_numeracy"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Numeracy" />
+            </com.google.android.material.chip.ChipGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_chip_surface"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@android:drawable/ic_menu_edit"
+                    android:tint="@color/md_theme_outline"
+                    android:layout_marginEnd="4dp"
+                    android:contentDescription="Ink" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ink_saver_active"
+                    android:textSize="12sp"
+                    android:textColor="@color/md_theme_onSurfaceVariant" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- A4 Worksheet Paper -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_worksheet_paper"
+            android:padding="24dp"
+            android:layout_marginBottom="20dp">
+
+            <!-- Worksheet Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="bottom"
+                android:paddingBottom="12dp"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/name_label"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_theme_onSurface"
+                        android:layout_marginBottom="8dp"
+                        android:paddingBottom="4dp"
+                        android:background="@drawable/bg_underline_dashed" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/date_label"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_theme_onSurface"
+                        android:paddingBottom="4dp"
+                        android:background="@drawable/bg_underline_dashed" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="end">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/class2_literacy"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_theme_onSurface" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/unit4_nature"
+                        android:textSize="14sp"
+                        android:textColor="@color/md_theme_onSurfaceVariant" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Activity 1: Match Picture to Word -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1.  Match the picture to the correct word."
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/md_theme_onSurface"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Matching Grid -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:layout_marginBottom="20dp">
+
+                <!-- Pair 1: Tree -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <FrameLayout
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/bg_border_outline"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="🌳"
+                            android:textSize="36sp"
+                            android:gravity="center" />
+                    </FrameLayout>
+
+                    <View
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginHorizontal="12dp"
+                        android:background="@drawable/bg_circle_outline_small" />
+
+                    <View
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="12dp"
+                        android:background="@drawable/bg_circle_outline_small" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_border_outline"
+                        android:padding="12dp"
+                        android:gravity="center"
+                        android:layout_marginStart="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="दारु"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/md_theme_onSurface" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Pair 2: River -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <FrameLayout
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/bg_border_outline"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="🏞"
+                            android:textSize="36sp"
+                            android:gravity="center" />
+                    </FrameLayout>
+
+                    <View
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginHorizontal="12dp"
+                        android:background="@drawable/bg_circle_outline_small" />
+
+                    <View
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="12dp"
+                        android:background="@drawable/bg_circle_outline_small" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_border_outline"
+                        android:padding="12dp"
+                        android:gravity="center"
+                        android:layout_marginStart="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="गाडा"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/md_theme_onSurface" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Activity 2: Trace the Letters -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2.  Trace the letters."
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/md_theme_onSurface"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Tracing Lines -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="16dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_underline_dashed"
+                    android:layout_marginBottom="4dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|start"
+                        android:layout_marginBottom="2dp"
+                        android:text="दारु दारु"
+                        android:textSize="24sp"
+                        android:textColor="@color/md_theme_outline"
+                        android:alpha="0.4"
+                        android:letterSpacing="0.5" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_underline_dashed" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Customization Panel -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card_surface_variant"
+            android:padding="20dp"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingBottom="12dp"
+                android:layout_marginBottom="12dp">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@android:drawable/ic_menu_manage"
+                    android:tint="@color/md_theme_primary"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="Customize" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/customise_content"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_onSurface" />
+            </LinearLayout>
+
+            <!-- Data Source Toggle -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_source"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/md_theme_onSurfaceVariant"
+                android:layout_marginBottom="8dp" />
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggle_data_source"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginBottom="16dp"
+                app:singleSelection="true"
+                app:selectionRequired="true"
+                app:checkedButton="@id/btn_class_avg">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_class_avg"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/class_average"
+                    android:textSize="13sp"
+                    app:cornerRadius="8dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_weakest"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/weakest_20"
+                    android:textSize="13sp"
+                    app:cornerRadius="8dp" />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <!-- Focus Area Spinner -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/focus_area"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/md_theme_onSurfaceVariant"
+                android:layout_marginBottom="8dp" />
+
+            <Spinner
+                android:id="@+id/spinner_focus_area"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/bg_spinner_outline"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Toggles -->
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switch_flashcards"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/include_visual_flashcards"
+                android:textSize="16sp"
+                android:checked="true"
+                android:minHeight="56dp"
+                android:layout_marginBottom="4dp" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switch_tracing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/include_tracing_section"
+                android:textSize="16sp"
+                android:checked="true"
+                android:minHeight="56dp" />
+        </LinearLayout>
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card_surface_variant"
+            android:padding="20dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_export_print"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:text="@string/export_offline_print"
+                android:textColor="@color/md_theme_onPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:backgroundTint="@color/md_theme_primary"
+                app:cornerRadius="12dp"
+                app:icon="@android:drawable/ic_menu_send"
+                app:iconTint="@color/md_theme_onPrimary"
+                android:layout_marginBottom="12dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_share_p2p"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:text="@string/share_via_p2p"
+                android:textColor="@color/md_theme_onSecondaryContainer"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:backgroundTint="@color/md_theme_secondaryContainer"
+                app:cornerRadius="12dp"
+                app:icon="@android:drawable/ic_menu_share"
+                app:iconTint="@color/md_theme_onSecondaryContainer"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/p2p_requires_nearby"
+                android:textSize="12sp"
+                android:textColor="@color/md_theme_onSurfaceVariant"
+                android:gravity="center" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- Stitch Design Token Palette — "Earth & Script" Theme          -->
+    <!-- Rugged Modernism: tribal heritage + professional SaaS         -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+
+    <!-- ── Primary (Deep Indigo) ─────────────────────────────────── -->
+    <color name="md_theme_primary">#000666</color>
+    <color name="md_theme_onPrimary">#FFFFFF</color>
+    <color name="md_theme_primaryContainer">#1A237E</color>
+    <color name="md_theme_onPrimaryContainer">#8690EE</color>
+    <color name="md_theme_inversePrimary">#BDC2FF</color>
+
+    <!-- ── Secondary (Forest Green) ──────────────────────────────── -->
+    <color name="md_theme_secondary">#1B6D24</color>
+    <color name="md_theme_onSecondary">#FFFFFF</color>
+    <color name="md_theme_secondaryContainer">#A0F399</color>
+    <color name="md_theme_onSecondaryContainer">#217128</color>
+
+    <!-- ── Tertiary (Terracotta/Ochre) ───────────────────────────── -->
+    <color name="md_theme_tertiary">#3A0800</color>
+    <color name="md_theme_onTertiary">#FFFFFF</color>
+    <color name="md_theme_tertiaryContainer">#5F1300</color>
+    <color name="md_theme_onTertiaryContainer">#FF663C</color>
+
+    <!-- ── Error ─────────────────────────────────────────────────── -->
+    <color name="md_theme_error">#BA1A1A</color>
+    <color name="md_theme_onError">#FFFFFF</color>
+    <color name="md_theme_errorContainer">#FFDAD6</color>
+    <color name="md_theme_onErrorContainer">#93000A</color>
+
+    <!-- ── Background & Surface (Parchment) ──────────────────────── -->
+    <color name="md_theme_background">#FAFAF5</color>
+    <color name="md_theme_onBackground">#1A1C19</color>
+    <color name="md_theme_surface">#FAFAF5</color>
+    <color name="md_theme_onSurface">#1A1C19</color>
+    <color name="md_theme_surfaceVariant">#E3E3DE</color>
+    <color name="md_theme_onSurfaceVariant">#454652</color>
+    <color name="md_theme_surfaceDim">#DADAD5</color>
+    <color name="md_theme_surfaceBright">#FAFAF5</color>
+    <color name="md_theme_surfaceTint">#4C56AF</color>
+
+    <!-- ── Surface Containers (Tonal Depth) ──────────────────────── -->
+    <color name="md_theme_surfaceContainerLowest">#FFFFFF</color>
+    <color name="md_theme_surfaceContainerLow">#F4F4EF</color>
+    <color name="md_theme_surfaceContainer">#EEEEE9</color>
+    <color name="md_theme_surfaceContainerHigh">#E8E8E3</color>
+    <color name="md_theme_surfaceContainerHighest">#E3E3DE</color>
+
+    <!-- ── Inverse ───────────────────────────────────────────────── -->
+    <color name="md_theme_inverseSurface">#2F312E</color>
+    <color name="md_theme_inverseOnSurface">#F1F1EC</color>
+
+    <!-- ── Outline ───────────────────────────────────────────────── -->
+    <color name="md_theme_outline">#767683</color>
+    <color name="md_theme_outlineVariant">#C6C5D4</color>
+
+    <!-- ── Fixed Palettes ────────────────────────────────────────── -->
+    <color name="md_theme_primaryFixed">#E0E0FF</color>
+    <color name="md_theme_primaryFixedDim">#BDC2FF</color>
+    <color name="md_theme_onPrimaryFixed">#000767</color>
+    <color name="md_theme_onPrimaryFixedVariant">#343D96</color>
+    <color name="md_theme_secondaryFixed">#A3F69C</color>
+    <color name="md_theme_secondaryFixedDim">#88D982</color>
+    <color name="md_theme_onSecondaryFixed">#002204</color>
+    <color name="md_theme_onSecondaryFixedVariant">#005312</color>
+    <color name="md_theme_tertiaryFixed">#FFDBD1</color>
+    <color name="md_theme_tertiaryFixedDim">#FFB5A1</color>
+    <color name="md_theme_onTertiaryFixed">#3B0800</color>
+    <color name="md_theme_onTertiaryFixedVariant">#881F00</color>
+
+    <!-- ── Semantic Colors ───────────────────────────────────────── -->
+    <color name="voice_active">#007ACC</color>
+    <color name="mesh_connected">#4CAF50</color>
+    <color name="mesh_disconnected">#9E9E9E</color>
+    <color name="success_green">#1B6D24</color>
+    <color name="warning_orange">#FF6F00</color>
+
+    <!-- ── Ol Chiki Accent ───────────────────────────────────────── -->
+    <color name="ol_chiki_accent">#FF6F00</color>
+    <color name="ic_launcher_background">#1A237E</color>
+
+    <!-- ── Tribal Pattern Decorative ─────────────────────────────── -->
+    <color name="tribal_pattern_stroke">#4C56AF</color>
+    <color name="tribal_pattern_fill">#000666</color>
+</resources>

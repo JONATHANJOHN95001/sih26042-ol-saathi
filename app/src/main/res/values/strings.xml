@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TribalFLN - NIPUN Bharat Edition</string>
+    <string name="ol_chiki_keyboard_label">Ol Chiki Keyboard</string>
+
+    <!-- ── Common ────────────────────────────────────────────────── -->
+    <string name="offline_sync">Offline Sync</string>
+    <string name="cloud_off">Offline Mode Active</string>
+    <string name="menu">Menu</string>
+    <string name="home">Home</string>
+    <string name="classroom">Classroom</string>
+    <string name="lessons">Lessons</string>
+    <string name="tools">Tools</string>
+    <string name="sync_tab">Sync</string>
+    <string name="santhali_primary">Santhali Primary</string>
+    <string name="district_mayurbhanj">District: Mayurbhanj</string>
+    <string name="version_offline">v2.4 Offline Mode</string>
+    <string name="student_profiles">Student Profiles</string>
+    <string name="weekly_planner">Weekly Planner</string>
+    <string name="resource_library">Resource Library</string>
+    <string name="support">Support</string>
+    <string name="app_settings">App Settings</string>
+
+    <!-- ── Screen 1: Dashboard ───────────────────────────────────── -->
+    <string name="johar_educator">Johar, Educator!</string>
+    <string name="class3_nipun_goals">Class 3 NIPUN Bharat goals are tracking well. You have 4 items awaiting sync.</string>
+    <string name="voice_assistant">Voice Assistant</string>
+    <string name="nipun_bharat_outcomes">NIPUN Bharat Outcomes</string>
+    <string name="active_students">Active Students</string>
+    <string name="math_mastery_l2">Math Mastery (L2)</string>
+    <string name="literacy_santhali">Literacy (Santhali)</string>
+    <string name="present_today">3 present today</string>
+    <string name="learning_gap_analysis">Learning Gap Analysis</string>
+    <string name="view_details">View Details</string>
+    <string name="chart_pending">Chart visualization rendering pending data sync.</string>
+    <string name="quick_actions">Quick Actions</string>
+    <string name="generate_worksheet">Generate Worksheet</string>
+    <string name="ocr_grade">OCR Grade</string>
+    <string name="p2p_mesh_sync">P2P Mesh Sync</string>
+    <string name="share_data">Share Data</string>
+    <string name="class_progress_review">Class Progress Review</string>
+    <string name="class_progress_desc">Review weekly milestones for the NIPUN Bharat curriculum before the weekend.</string>
+    <string name="view_progress">View Progress</string>
+
+    <!-- ── Screen 2: Live Translation ────────────────────────────── -->
+    <string name="live_translation">Live Classroom Dialogue</string>
+    <string name="speak_hindi_output_ho">Speak in Hindi, hear it in Ho, Mundari or Santhali</string>
+    <string name="audio_output">Audio Output</string>
+    <string name="source_hindi">Source (Hindi)</string>
+    <string name="translation_ho">Output</string>
+
+    <!-- Provenance. Every piece of tribal-language output says where it came
+         from, because the two are not the same thing and a teacher relying on
+         the wrong one would be misled. Verified means a real translation from
+         a checked source. Script conversion means the Hindi words respelled in
+         the tribal script, which is readable aloud but is NOT the language. -->
+    <string name="provenance_verified">Verified translation</string>
+    <string name="provenance_translit">Script conversion, not a translation</string>
+    <string name="provenance_unavailable">No verified translation offline</string>
+    <string name="press_hold_speak">Press and hold the button to speak…</string>
+    <string name="hold_to_speak_hindi">Hold to Speak Hindi</string>
+    <string name="ready">Ready</string>
+    <string name="listening">Listening…</string>
+    <string name="translating">Translating…</string>
+    <string name="processing">Processing…</string>
+    <string name="visual_aid">Visual Aid</string>
+    <string name="keywords_appear_here">Keywords will appear here as images.</string>
+    <string name="previous_words">Previous Words</string>
+
+    <!-- ── Screen 3: Sync Manager ────────────────────────────────── -->
+    <string name="sync">Sync</string>
+    <string name="manage_offline_network">Manage offline network and local storage.</string>
+    <string name="go_online">Go Online</string>
+    <string name="local_mesh_network">Local Mesh Network</string>
+    <string name="active">Active</string>
+    <string name="this_tablet">This Tablet</string>
+    <string name="peers_found">2 peers found in proximity.</string>
+    <string name="nearby_devices">Nearby Devices</string>
+    <string name="teacher_tablet_b">Teacher Tablet B (Mr. Singh)</string>
+    <string name="library_tablet">Library Tablet (Ms. Devi)</string>
+    <string name="last_synced_2h">Last synced: 2 hours ago</string>
+    <string name="last_synced_1d">Last synced: 1 day ago</string>
+    <string name="sync_data">Sync Data</string>
+    <string name="storage">Storage</string>
+    <string name="usage_optimized">Usage (Optimized for 2GB RAM)</string>
+    <string name="core_app">Core App</string>
+    <string name="language_packs">Language</string>
+    <string name="media">Media</string>
+    <string name="free_up_space">Free Up Space</string>
+    <string name="language_packs_title">Language Packs</string>
+    <string name="ho_language_base">Ho Language Base</string>
+    <string name="up_to_date">Up to date</string>
+    <string name="santhali_ocr_models">Santhali OCR Models</string>
+    <string name="downloading_via_mesh">Downloading via Mesh…</string>
+    <string name="mundari_audio_pack">Mundari Audio Pack</string>
+    <string name="available_150mb">Available (150 MB)</string>
+
+    <!-- ── Screen 4: Worksheet Preview ───────────────────────────── -->
+    <string name="auto_generated_worksheet">Auto-Generated Worksheet</string>
+    <string name="bilingual_santhali_hindi">Bilingual: Santhali &amp; Hindi • Focus: Nouns</string>
+    <string name="ink_saver_active">Ink Saver Active</string>
+    <string name="name_label">Name:</string>
+    <string name="date_label">Date:</string>
+    <string name="class2_literacy">Class 2 Literacy</string>
+    <string name="unit4_nature">Unit 4: Nature</string>
+    <string name="match_picture_word">Match the picture to the correct word.</string>
+    <string name="trace_letters">Trace the letters.</string>
+    <string name="customise_content">Customize Content</string>
+    <string name="data_source">Data Source</string>
+    <string name="class_average">Class Average</string>
+    <string name="weakest_20">Weakest 20%</string>
+    <string name="focus_area">Focus Area</string>
+    <string name="unit4_nature_option">Unit 4: Nature (Ho/Mundari)</string>
+    <string name="unit3_family">Unit 3: Family</string>
+    <string name="unit5_numbers">Unit 5: Numbers 1–10</string>
+    <string name="include_visual_flashcards">Include Visual Flashcards</string>
+    <string name="include_tracing_section">Include Tracing Section</string>
+    <string name="export_offline_print">Export for Offline Print</string>
+    <string name="share_via_p2p">Share via P2P</string>
+    <string name="p2p_requires_nearby">P2P sharing requires nearby active tablets.</string>
+
+    <!-- ── Screen 5: Curriculum Browser ──────────────────────────── -->
+    <string name="curriculum_browser">Curriculum Browser</string>
+    <string name="fln_lessons_desc">Access all your Foundational Literacy and Numeracy (FLN) lesson scripts and activities. Content is available offline once downloaded.</string>
+    <string name="nipun_filter">NIPUN Filter:</string>
+    <string name="all_outcomes">All Outcomes</string>
+    <string name="numeracy_l1">Numeracy L1</string>
+    <string name="literacy_l2">Literacy L2</string>
+
+    <!-- ── Permissions ───────────────────────────────────────────── -->
+    <string name="perm_audio_rationale">Microphone access is needed for voice recognition and speech-to-text in the classroom.</string>
+    <string name="perm_camera_rationale">Camera access is needed to scan and grade physical worksheets using OCR.</string>
+    <string name="perm_location_rationale">Location access is needed for Wi-Fi Direct peer discovery during offline mesh sync.</string>
+</resources>
