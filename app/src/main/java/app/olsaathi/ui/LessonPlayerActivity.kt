@@ -80,8 +80,12 @@ class LessonPlayerActivity : AppCompatActivity() {
 
         lessonItemCount = lessonEntries.size
 
+        val app = application as OlSaathiApplication
         items = (lessonEntries + checkEntries).map { entry ->
+            val startMs = System.currentTimeMillis()
             val translation = pack.lookup(entry.source)
+            val elapsed = System.currentTimeMillis() - startMs
+            app.recordLatency(elapsed)
             val audioPath = pack.audioPath(translation)
             PlayerItem(
                 source = translation.source.ifEmpty { entry.source },

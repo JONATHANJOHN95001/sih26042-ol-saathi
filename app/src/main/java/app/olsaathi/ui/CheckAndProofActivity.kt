@@ -42,7 +42,6 @@ class CheckAndProofActivity : AppCompatActivity() {
     private lateinit var app: OlSaathiApplication
     private var passed = 0
     private var total = 0
-    private var activityResumedMs: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +49,6 @@ class CheckAndProofActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         app = application as OlSaathiApplication
-        activityResumedMs = System.currentTimeMillis()
 
         binding.toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
         binding.toolbar.setNavigationOnClickListener { finish() }
@@ -326,13 +324,12 @@ class CheckAndProofActivity : AppCompatActivity() {
     private fun showPerformanceMetrics() {
         val perfSb = SpannableStringBuilder()
 
-        // 1. Peak memory — read live from ActivityManager
+        // 1. Peak memory — read live from Debug.MemoryInfo
         val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         val memInfo = ActivityManager.MemoryInfo()
         activityManager.getMemoryInfo(memInfo)
         val totalMemMB = memInfo.totalMem / (1024 * 1024)
 
-        // Get this process's PSS
         val debugMemInfo = android.os.Debug.MemoryInfo()
         android.os.Debug.getMemoryInfo(debugMemInfo)
         val pssKB = debugMemInfo.totalPss
@@ -342,9 +339,9 @@ class CheckAndProofActivity : AppCompatActivity() {
         perfSb.append("  No neural model is loaded at run time,\n")
         perfSb.append("  so there is nothing to page in or out.\n\n")
 
-        // 2. Cold start — Application.onCreate to first Activity.onResume
-        val coldStartMs = activityResumedMs - app.coldStartTimestampMs
-        perfSb.append("Cold start: ${coldStartMs} ms\n")
+        // 2. Cold start — read from OlSaathiApplication (recorded once
+        //    by ActivityLifecycleCallbacks, never updated after that)
+        perfSb.append("Cold start: ${app.coldStartMs} ms\n")
         perfSb.append("  (Application.onCreate → first Activity.onResume)\n\n")
 
         // 3. Stress test — static text (we ran this)

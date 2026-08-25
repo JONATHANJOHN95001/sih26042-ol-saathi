@@ -1,6 +1,8 @@
 package app.olsaathi
 
+import android.app.Activity
 import android.app.Application
+import android.os.Bundle
 import android.util.Log
 import app.olsaathi.content.VerifiedContentPack
 
@@ -23,14 +25,40 @@ class OlSaathiApplication : Application() {
         set(value) { field = value }
 
     /**
-     * Cold start timestamp: System.currentTimeMillis() at process start.
-     * Used to measure cold start duration on the Check & Proof screen.
-     * Measured as Application.onCreate to first Activity.onResume.
+     * Timestamp when this process was created (Application class init).
+     * Used as the start point for cold-start measurement.
      */
-    val coldStartTimestampMs: Long = System.currentTimeMillis()
+    private val processStartMs: Long = System.currentTimeMillis()
+
+    /**
+     * Cold start duration in milliseconds: Application.onCreate to
+     * first Activity.onResume. Recorded once by the lifecycle callback
+     * and never updated after that.
+     *
+     * Read this from Check & Proof. Do not compute it there.
+     */
+    var coldStartMs: Long = 0L
+        private set
 
     override fun onCreate() {
         super.onCreate()
+
+        // Register lifecycle callback to capture cold start exactly once.
+        // The first Activity.onResume marks the end of cold start.
+        registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
+            override fun onActivityResumed(activity: Activity) {
+                if (coldStartMs == 0L) {
+                    coldStartMs = System.currentTimeMillis() - processStartMs
+                    Log.i(TAG, "Cold start: ${coldStartMs}ms (${activity.javaClass.simpleName})")
+                }
+            }
+            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
+            override fun onActivityStarted(activity: Activity) {}
+            override fun onActivityPaused(activity: Activity) {}
+            override fun onActivityStopped(activity: Activity) {}
+            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
+            override fun onActivityDestroyed(activity: Activity) {}
+        })
 
         // N2: Never swallow a failure. If the pack is missing or
         // malformed, the app cannot function. Surface it immediately.
