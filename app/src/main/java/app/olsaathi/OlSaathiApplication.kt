@@ -18,6 +18,10 @@ class OlSaathiApplication : Application() {
     /** Last few round-trip latency measurements (ms), most recent last. */
     val latencyHistory = mutableListOf<Long>()
 
+    /** Pre-flight summary from the last run, or null if never run. */
+    var preflightSummary: String? = null
+        set(value) { field = value }
+
     override fun onCreate() {
         super.onCreate()
 

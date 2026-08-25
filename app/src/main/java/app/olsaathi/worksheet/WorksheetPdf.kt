@@ -129,7 +129,9 @@ class WorksheetPdf(private val context: Context) {
      * @return The generated PDF file, or null if no lesson entries found
      */
     fun generate(lessonId: String, pack: VerifiedContentPack): File? {
-        val entries = pack.entries(lessonId).filter { it.kind == "lesson" }
+        val lessonEntries = pack.entries(lessonId).filter { it.kind == "lesson" }
+        val checkEntries = pack.entries(lessonId).filter { it.kind == "check" }
+        val entries = lessonEntries
         if (entries.isEmpty()) return null
 
         val document = PdfDocument()
@@ -205,6 +207,59 @@ class WorksheetPdf(private val context: Context) {
             y += LINE_HEIGHT_WRITE
             canvas.drawLine(MARGIN_LEFT, y, PAGE_WIDTH - MARGIN_RIGHT, y, linePaint)
             y += 15f
+        }
+
+        // ── Assessment questions ─────────────────────────────────
+        if (checkEntries.isNotEmpty()) {
+            // Check if we need a new page for the assessment header
+            val assessNeeded = 24f + 14f + 18f + 14f + 20f + LINE_HEIGHT_WRITE + 20f
+            if (y + assessNeeded > PAGE_HEIGHT - MARGIN_BOTTOM) {
+                drawFooter(canvas, pageNum, nipunFooter)
+                if (isSample) drawSampleStamp(canvas)
+                document.finishPage(page)
+
+                pageNum++
+                pageInfo = PdfDocument.PageInfo.Builder(PAGE_WIDTH, PAGE_HEIGHT, pageNum).create()
+                page = document.startPage(pageInfo)
+                canvas = page.canvas
+                y = MARGIN_TOP
+            }
+
+            // Assessment heading
+            canvas.drawText("Assessment Questions", MARGIN_LEFT, y, lessonTitlePaint)
+            y += 20f
+            canvas.drawLine(MARGIN_LEFT, y, PAGE_WIDTH - MARGIN_RIGHT, y, linePaint)
+            y += 14f
+
+            for (entry in checkEntries) {
+                val needed = 14f + 18f + 14f + 20f + LINE_HEIGHT_WRITE + 20f
+                if (y + needed > PAGE_HEIGHT - MARGIN_BOTTOM) {
+                    drawFooter(canvas, pageNum, nipunFooter)
+                    if (isSample) drawSampleStamp(canvas)
+                    document.finishPage(page)
+
+                    pageNum++
+                    pageInfo = PdfDocument.PageInfo.Builder(PAGE_WIDTH, PAGE_HEIGHT, pageNum).create()
+                    page = document.startPage(pageInfo)
+                    canvas = page.canvas
+                    y = MARGIN_TOP
+                }
+
+                canvas.drawText("Question:", MARGIN_LEFT, y, labelPaint)
+                y += 14f
+                canvas.drawText(entry.source, MARGIN_LEFT, y, hindiPaint)
+                y += 20f
+
+                canvas.drawText("Santali (Ol Chiki):", MARGIN_LEFT, y, labelPaint)
+                y += 14f
+                canvas.drawText(entry.target, MARGIN_LEFT, y, olChikiPaint)
+                y += 22f
+
+                canvas.drawLine(MARGIN_LEFT, y, PAGE_WIDTH - MARGIN_RIGHT, y, linePaint)
+                y += LINE_HEIGHT_WRITE
+                canvas.drawLine(MARGIN_LEFT, y, PAGE_WIDTH - MARGIN_RIGHT, y, linePaint)
+                y += 15f
+            }
         }
 
         // ── Footer on last page ──────────────────────────────────

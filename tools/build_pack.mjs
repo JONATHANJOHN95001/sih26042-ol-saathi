@@ -45,6 +45,10 @@ const has = (f) => argv.includes(f);
 const val = (f, d) => { const i = argv.indexOf(f); return i >= 0 ? argv[i + 1] : d; };
 
 const DRY = has('--dry-run');
+// Translate everything through Bhashini and diff it against the pack that is
+// already shipped, writing nothing. Lets you judge Bhashini against
+// IndicTrans2 before replacing content that currently works.
+const COMPARE = has('--compare');
 const WITH_AUDIO = !has('--no-audio');
 const TARGET = val('--lang', 'sat');
 const LIMIT = Number(val('--limit', '0')) || 0;
@@ -87,11 +91,15 @@ function collectSource() {
           image: line.image ?? '',
         });
       }
+      // Checks carry no id of their own, so number them. Falling back to a
+      // constant 'q' collapsed all three onto one key and silently lost two.
+      let checkNo = 0;
       for (const q of lesson.checks ?? lesson.questions ?? []) {
         const hi = q.hi ?? q.question ?? '';
         if (!hi) continue;
+        checkNo += 1;
         items.push({
-          id: `${lesson.id}.${q.id ?? 'q'}`,
+          id: `${lesson.id}.${q.id ?? 'c' + checkNo}`,
           hi,
           en: q.en ?? '',
           nipun: 'FL-OL',
@@ -167,18 +175,18 @@ async function main() {
     ok(`existing pack loaded, ${Object.keys(pack.entries).length} entries kept`);
   }
 
-  const todo = items.filter((i) => !pack.entries[i.id]?.target);
+  const shipped = { ...pack.entries };   // snapshot before we touch anything
+  const todo = COMPARE ? items : items.filter((i) => !pack.entries[i.id]?.target);
   ok(`${todo.length} still to translate, ${items.length - todo.length} already done`);
 
   if (DRY) {
     head('Dry run, nothing sent');
     for (const i of todo.slice(0, 8)) console.log(`  ${c.d}${i.id.padEnd(16)}${c.x} ${i.hi}`);
     if (todo.length > 8) console.log(`  ${c.d}... and ${todo.length - 8} more${c.x}`);
-    console.log(`\n  Would call Bhashini ${todo.length}x for translation` +
-      (WITH_AUDIO ? ` and ${todo.length}x for audio` : ', audio skipped'));
-    console.log(`  Would write ${path.relative(ROOT, packPath)}`);
-    if (WITH_AUDIO) console.log(`  Would write ${todo.length} wav files to ${path.relative(ROOT, AUDIO_DIR)}`);
-    console.log(`\n  Set the three BHASHINI_* environment variables and rerun without --dry-run.\n`);
+    console.log('');
+    console.log('  Set the three BHASHINI_* environment variables, then --compare');
+    console.log('  to diff against the shipped pack, or no flag to replace it.');
+    console.log('');
     return;
   }
 
@@ -284,6 +292,50 @@ async function main() {
       failed++;
       console.log(`\n  ${c.r}skip${c.x} ${item.id}: ${e.message.slice(0, 90)}`);
     }
+  }
+
+  if (COMPARE) {
+    head('Bhashini vs the shipped pack');
+
+    const priorService = (shipped && Object.keys(shipped).length)
+      ? (JSON.parse(fs.readFileSync(packPath, 'utf8')).provenance || {}).translationService || '?'
+      : 'nothing shipped yet';
+
+    let same = 0;
+    let differ = 0;
+    let onlyNew = 0;
+    const rows = [];
+
+    for (const item of items) {
+      const before = shipped[item.id] && shipped[item.id].target;
+      const after = pack.entries[item.id] && pack.entries[item.id].target;
+      if (!after) continue;
+      if (!before) { onlyNew += 1; continue; }
+      if (before === after) same += 1;
+      else { differ += 1; rows.push([item.en, before, after]); }
+    }
+
+    ok('identical to what is shipped: ' + same);
+    ok('different: ' + differ);
+    if (onlyNew) ok('present only in the Bhashini run: ' + onlyNew);
+
+    console.log('');
+    console.log('  shipped  : ' + priorService);
+    console.log('  bhashini : ' + tService);
+    console.log('');
+    console.log('  First ten differences. Read them and decide which is better.');
+    console.log('');
+
+    for (const [en, before, after] of rows.slice(0, 10)) {
+      console.log('  ' + en);
+      console.log('    shipped  : ' + before);
+      console.log('    bhashini : ' + after);
+      console.log('');
+    }
+
+    console.log('  Nothing was written. Rerun without --compare to replace the pack.');
+    console.log('');
+    return;
   }
 
   pack.generated = new Date().toISOString();

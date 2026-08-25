@@ -1,12 +1,19 @@
 # Demo click-path
 
 > Keep this current. Any step that breaks is P0.
-> Record the walkthrough as soon as it works — do not wait until the end.
+> Record the walkthrough as soon as it works — do not wait at the end.
 
-## Setup before demoing
-- [ ] Ol Saathi app installed on Android 9+ tablet (2 GB RAM minimum)
-- [ ] App running, console clean
-- [ ] Recording ready
+## Pre-flight (do this on the morning of the demo)
+
+Before anyone touches the app, run the built-in self-test:
+
+1. Open Ol Saathi → tap **🔍 Pre-Flight**
+2. Tap **▶ Run All Checks**
+3. All 7 checks must be green. If **Hindi offline recognition** is red:
+   - Go to **Settings → System → Languages & input → On-device speech recognition**
+   - Add **Hindi** to the installed languages
+   - This must be done with internet access, before aeroplane mode
+4. All green? Tap **📋 Live Proof** to confirm the device is ready
 
 ## Install on tablet (sideload)
 
@@ -31,28 +38,25 @@
 2. Copy `app-release.apk` to the tablet via a USB drive or cloud transfer
 3. Open the file on the tablet and tap **Install**
 
+## The demo path
+1. App opens to **Ol Saathi** lesson list — tap any lesson
+2. A Hindi phrase is shown; tap **Translate** or type Hindi
+3. Santali translation appears with provenance label
+4. Tap **▶ Play Santali** to hear the pre-rendered pack audio
+5. Tap **🎤** (single tap) for a mock Hindi prompt (debug build only)
+6. Long-press the mic button for real voice input (on hardware)
+7. Tap **📄 Worksheet** to generate a bilingual A4 PDF (with assessment questions)
+8. Share or print the worksheet
+9. Return to lesson list, tap **📋 Live Proof** to see live device state
+10. Tap **🔍 Pre-Flight** to re-run the self-test anytime
+
 ## APK details
 - Package: `app.olsaathi`
 - minSdk: 28 (Android 9)
 - Signed with `app/release-key.jks`
 - APK is NOT committed to the repo
 
-## The path
-1. App opens to **Ol Saathi** lesson list — tap any lesson
-2. A Hindi phrase is shown; tap **Translate** or type Hindi
-3. Ol Chiki translation appears with **VERIFIED CONTENT** label
-4. Tap **▶ Play Santali** to hear the asset audio
-5. Tap **🎤** (single tap) for a mock Hindi prompt (emulator demo)
-6. Long-press the mic button for real voice input (on hardware)
-7. Tap **📄 Worksheet** to generate a bilingual A4 PDF
-8. Share or print the worksheet
-9. Return to lesson list, tap **📋 Live Proof** to see:
-   - Content pack details with green VERIFIED chip
-   - Ol Chiki font live render test (ᱚᱞ ᱪᱤᱠᱤ)
-   - Offline status (network calls: 0)
-   - Latency history
-   - Build info (versionName, applicationId, minSdk, ABI)
-
 ## Known gaps to not click on
-- Voice input requires a physical microphone (use mock tap on emulator)
+- Voice input requires the Hindi speech pack to be installed (pre-flight checks this)
 - TTS audio for translations depends on the device TTS engine being installed
+- No Santali system voice on Android — audio comes from pre-rendered pack WAVs

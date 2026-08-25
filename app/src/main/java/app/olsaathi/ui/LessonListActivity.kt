@@ -68,6 +68,11 @@ class LessonListActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // Pre-flight button
+        binding.btnPreflight.setOnClickListener {
+            startActivity(Intent(this, PreFlightActivity::class.java))
+        }
+
         // Proof button — opens the live-proof screen
         binding.btnProof.setOnClickListener {
             startActivity(Intent(this, ProofActivity::class.java))

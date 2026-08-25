@@ -108,7 +108,7 @@ class HindiSpeechInput(
                 SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> "No speech detected"
                 SpeechRecognizer.ERROR_AUDIO -> "Audio recording error"
                 SpeechRecognizer.ERROR_CLIENT -> "Client error"
-                SpeechRecognizer.ERROR_NETWORK -> "Network error (try offline mode)"
+                SpeechRecognizer.ERROR_NETWORK -> "No offline Hindi model and no network. Install the Hindi speech pack."
                 SpeechRecognizer.ERROR_NETWORK_TIMEOUT -> "Network timeout"
                 SpeechRecognizer.ERROR_SERVER -> "Server error"
                 SpeechRecognizer.ERROR_RECOGNIZER_BUSY -> "Recognition service busy"

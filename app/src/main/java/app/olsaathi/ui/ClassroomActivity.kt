@@ -132,16 +132,18 @@ class ClassroomActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             startActivity(intent)
         }
 
-        // Phrase list
-        val entries = pack.entries(lessonId)
+        // Phrase list — lesson lines, then assessment questions
+        val lessonEntries = pack.entries(lessonId)
+        val checkEntries = pack.entries(lessonId).filter { it.kind == "check" }
+        val allEntries = lessonEntries + checkEntries
         binding.recyclerPhrases.layoutManager = LinearLayoutManager(this)
-        binding.recyclerPhrases.adapter = PhraseAdapter(entries) { entry ->
+        binding.recyclerPhrases.adapter = PhraseAdapter(allEntries) { entry ->
             translateAndDisplay(entry.source)
         }
 
         // If we have a lesson, show its first entry
-        if (lessonId != null && entries.isNotEmpty()) {
-            translateAndDisplay(entries.first().source)
+        if (lessonId != null && allEntries.isNotEmpty()) {
+            translateAndDisplay(allEntries.first().source)
         }
     }
 

@@ -155,6 +155,38 @@
             android:paddingHorizontal="16dp"
             android:paddingBottom="16dp" />
 
+        <!-- Pre-flight -->
+        <LinearLayout
+            android:id="@+id/preflightSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pre-flight"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/md_theme_onSurface"
+                android:paddingStart="16dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="4dp" />
+
+            <TextView
+                android:id="@+id/textPreflightInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/md_theme_onSurface"
+                android:fontFamily="monospace"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="16dp" />
+
+        </LinearLayout>
+
         <!-- Build -->
         <TextView
             android:layout_width="match_parent"

@@ -11,6 +11,7 @@ import android.text.Spanned
 import android.text.TextPaint
 import android.text.style.ForegroundColorSpan
 import android.view.Gravity
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import app.olsaathi.OlSaathiApplication
 import app.olsaathi.databinding.ActivityProofBinding
@@ -181,6 +182,20 @@ class ProofActivity : AppCompatActivity() {
         }
 
         binding.textLatencyInfo.text = latSb
+
+        // ── Pre-flight ──────────────────────────────────────────
+        val pfSummary = app.preflightSummary
+        if (pfSummary != null) {
+            val pfSb = SpannableStringBuilder()
+            pfSb.append("Pre-flight: $pfSummary")
+            binding.textPreflightInfo.text = pfSb
+            binding.textPreflightInfo.visibility = View.VISIBLE
+            binding.preflightSection.visibility = View.VISIBLE
+        } else {
+            binding.textPreflightInfo.text = "Pre-flight: not run yet"
+            binding.textPreflightInfo.visibility = View.VISIBLE
+            binding.preflightSection.visibility = View.VISIBLE
+        }
 
         // ── Build ─────────────────────────────────────────────────────
         val pkgManager = packageManager
