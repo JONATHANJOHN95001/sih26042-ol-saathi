@@ -116,57 +116,17 @@ class PreFlightActivity : AppCompatActivity() {
             return
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            // API 33+: checkRecognitionSupport gives a definitive answer
-            val recognizer = SpeechRecognizer.createSpeechRecognizer(this)
-            val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-                putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-                putExtra(RecognizerIntent.EXTRA_LANGUAGE, "hi-IN")
-                putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE, true)
-            }
-            recognizer.checkRecognitionSupport(intent, mainExecutor,
-                object : SpeechRecognizer.RecognitionSupportCallback {
-                    override fun onRecognitionSupportResult(supported: Boolean, details: Bundle?) {
-                        val hiOffline = if (supported) {
-                            val supportedLangs = details?.getStringArrayList(
-                                RecognizerIntent.EXTRA_SUPPORTED_LANGUAGES
-                            ) ?: arrayListOf()
-                            supportedLangs.any { it.startsWith("hi") }
-                        } else false
-
-                        runOnUiThread {
-                            if (hiOffline) {
-                                addResult(true, "Hindi offline recognition: installed and ready")
-                            } else {
-                                addResult(false, "Hindi offline speech is not installed. " +
-                                    "Settings → System → Languages & input → " +
-                                    "On-device speech recognition → add Hindi. " +
-                                    "Needed before demonstrating in aeroplane mode.")
-                            }
-                        }
-                        recognizer.destroy()
-                    }
-
-                    override fun onError(error: Int) {
-                        runOnUiThread {
-                            addResult(false, "Hindi offline recognition: check failed (error $error). " +
-                                "Settings → System → Languages & input → " +
-                                "On-device speech recognition → add Hindi.")
-                        }
-                        recognizer.destroy()
-                    }
-                }
-            )
-        } else {
-            // Pre-API 33: best-effort check via ACTION_GET_LANGUAGE_DETAILS
-            val intent = Intent(RecognizerIntent.ACTION_GET_LANGUAGE_DETAILS)
-            try {
-                @Suppress("DEPRECATION")
-                startActivityForResult(intent, REQUEST_GET_LANGUAGE_DETAILS)
-            } catch (e: Exception) {
-                addResult(false, "Hindi offline recognition: cannot check (API < 33). " +
-                    "Verify manually in Settings → Languages & input.")
-            }
+        // Use ACTION_GET_LANGUAGE_DETAILS to check if hi-IN is supported.
+        // This works on all API levels and tells us whether the language
+        // pack is available on the device (offline or online).
+        val intent = Intent(RecognizerIntent.ACTION_GET_LANGUAGE_DETAILS)
+        try {
+            @Suppress("DEPRECATION")
+            startActivityForResult(intent, REQUEST_GET_LANGUAGE_DETAILS)
+        } catch (e: Exception) {
+            addResult(false, "Hindi offline recognition: cannot check. " +
+                "Verify manually in Settings → Languages & input → " +
+                "On-device speech recognition → add Hindi.")
         }
     }
 

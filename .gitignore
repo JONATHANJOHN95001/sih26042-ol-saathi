@@ -77,3 +77,4 @@ generated_materials/
 # from working audio to anyone who does not open it.
 app/src/main/assets/pack/audio/*.wav
 !app/src/main/assets/pack/audio/README.md
+verification-*.json
