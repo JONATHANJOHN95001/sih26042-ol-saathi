@@ -27,9 +27,12 @@ class VerifiedContentPack private constructor() {
         val target: String,
         val en: String,
         val nipun: String,
+        val nipunGoal: String,
+        val nipunDomain: String,
         val kind: String,
         val service: String,
         val audio: String?,
+        val audioProvenance: String?,
         val lesson: String?,
         /** Set by apply_review.py when a Santali speaker reviews this entry. */
         val reviewedBy: String = "",
@@ -48,6 +51,15 @@ class VerifiedContentPack private constructor() {
 
     internal val entries = mutableMapOf<String, PackEntry>()
     private val normalisedIndex = mutableMapOf<String, PackEntry>()
+
+    /**
+     * Entries keyed by their pack id, e.g. "p01".
+     *
+     * [entries] is keyed by source text, so anything holding an entry id had
+     * no way to get back to the entry. That is what made audioPath() always
+     * return null.
+     */
+    private val byId = mutableMapOf<String, PackEntry>()
 
     /** Provenance metadata from the pack header. */
     var translationService: String = ""
@@ -140,7 +152,11 @@ class VerifiedContentPack private constructor() {
             serviceId = entry.service,
             entryId = entry.id,
             nipun = entry.nipun,
+            nipunGoal = entry.nipunGoal,
+            nipunDomain = entry.nipunDomain,
             kind = entry.kind,
+            audioAsset = entry.audio,
+            audioProvenance = audioProvenanceOf(entry),
             reviewerName = entry.reviewedBy,
             reviewedOn = entry.reviewedOn,
         )
@@ -148,7 +164,25 @@ class VerifiedContentPack private constructor() {
 
     /** Get the audio asset path for a translation, or null. */
     fun audioPath(translation: Translation): String? {
-        return entries[translation.entryId]?.audio
+        return byId[translation.entryId]?.audio
+    }
+
+    /** Number of entries that ship a recording. */
+    val audioCount: Int get() = entries.values.count { !it.audio.isNullOrEmpty() }
+
+    /**
+     * Read the audio label off the entry.
+     *
+     * An entry with no audio is NONE regardless of what the field says, so a
+     * stale label can never enable a play button that has nothing to play.
+     */
+    private fun audioProvenanceOf(entry: PackEntry): AudioProvenance {
+        if (entry.audio.isNullOrEmpty()) return AudioProvenance.NONE
+        return when (entry.audioProvenance) {
+            "native" -> AudioProvenance.SPOKEN_BY_NATIVE
+            "bhashini" -> AudioProvenance.BHASHINI_TTS
+            else -> AudioProvenance.NONE
+        }
     }
 
     /** Get all entries, optionally filtered by lesson id. */
@@ -213,6 +247,7 @@ class VerifiedContentPack private constructor() {
                 val e = entriesObj.getJSONObject(id)
                 val entry = parseEntry(id, e)
                 pack.entries[normaliseKey(entry.source)] = entry
+                pack.byId[id] = entry
                 // Build normalised index for fuzzy lookup
                 val norm = normalise(entry.source)
                 if (norm.isNotEmpty()) {
@@ -258,6 +293,7 @@ class VerifiedContentPack private constructor() {
                 val e = entriesObj.getJSONObject(id)
                 val entry = parseEntry(id, e)
                 pack.entries[normaliseKey(entry.source)] = entry
+                pack.byId[id] = entry
                 val norm = normalise(entry.source)
                 if (norm.isNotEmpty()) {
                     pack.normalisedIndex[norm] = entry
@@ -266,20 +302,35 @@ class VerifiedContentPack private constructor() {
             return pack
         }
 
+        /**
+         * Read a string field, treating JSON null as absent.
+         *
+         * org.json returns the literal string "null" from optString when the
+         * key holds JSON null rather than returning the default. That made
+         * every entry written as {"audio": null} look like it had audio.
+         */
+        private fun optText(e: JSONObject, key: String): String {
+            if (e.isNull(key)) return ""
+            return e.optString(key, "")
+        }
+
         private fun parseEntry(id: String, e: JSONObject): PackEntry {
             return PackEntry(
                 id = id,
-                source = e.optString("source", ""),
-                target = e.optString("target", ""),
-                en = e.optString("en", ""),
-                nipun = e.optString("nipun", ""),
-                kind = e.optString("kind", ""),
-                service = e.optString("service", ""),
-                audio = e.optString("audio", "").ifEmpty { null },
-                lesson = e.optString("lesson", "").ifEmpty { null },
-                reviewedBy = e.optString("reviewedBy", ""),
-                reviewedOn = e.optString("reviewedOn", ""),
-                reviewVerdict = e.optString("reviewVerdict", ""),
+                source = optText(e, "source"),
+                target = optText(e, "target"),
+                en = optText(e, "en"),
+                nipun = optText(e, "nipun"),
+                nipunGoal = optText(e, "nipunGoal"),
+                nipunDomain = optText(e, "nipunDomain"),
+                kind = optText(e, "kind"),
+                service = optText(e, "service"),
+                audio = optText(e, "audio").ifEmpty { null },
+                audioProvenance = optText(e, "audioProvenance").ifEmpty { null },
+                lesson = optText(e, "lesson").ifEmpty { null },
+                reviewedBy = optText(e, "reviewedBy"),
+                reviewedOn = optText(e, "reviewedOn"),
+                reviewVerdict = optText(e, "reviewVerdict"),
             )
         }
 

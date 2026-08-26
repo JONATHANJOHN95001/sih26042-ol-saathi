@@ -10,6 +10,25 @@ package app.olsaathi.content
  * with an empty string. There is no fallback phrase, no guess, no
  * "close enough" match.
  */
+/**
+ * Where a piece of Santali audio came from.
+ *
+ * Audio needs its own provenance because the two can disagree: a line can be
+ * machine translated and then read aloud by a native speaker, which makes the
+ * audio the more trustworthy of the two. The UI shows whichever label applies
+ * to the thing the user is about to hear.
+ */
+enum class AudioProvenance(val label: String) {
+    /** Read aloud by a Santali speaker and recorded. The strongest claim. */
+    SPOKEN_BY_NATIVE("Recorded by a Santali speaker"),
+
+    /** Synthesised by Bhashini's Santali TTS. */
+    BHASHINI_TTS("Synthesised speech · Bhashini"),
+
+    /** No audio for this entry. The play button is disabled. */
+    NONE("No audio yet")
+}
+
 enum class Provenance(val label: String) {
     /**
      * Checked by a Santali speaker. The strongest claim we make.
@@ -54,7 +73,14 @@ data class Translation(
     val serviceId: String = "",
     val entryId: String = "",
     val nipun: String = "",
+    /** NIPUN Bharat developmental goal, e.g. "Children become effective communicators". */
+    val nipunGoal: String = "",
+    /** NIPUN Bharat foundational domain, e.g. "Oral Language Development". */
+    val nipunDomain: String = "",
     val kind: String = "",
+    /** Asset path of the spoken form, null when the pack has no audio for it. */
+    val audioAsset: String? = null,
+    val audioProvenance: AudioProvenance = AudioProvenance.NONE,
     /** Reviewer name, set only when provenance is HUMAN_VERIFIED. */
     val reviewerName: String = "",
     /** Review date (ISO), set only when provenance is HUMAN_VERIFIED. */
@@ -69,4 +95,8 @@ data class Translation(
     /** True for real Bhashini output or human-reviewed content. */
     val isTrustworthy: Boolean get() =
         provenance == Provenance.VERIFIED || provenance == Provenance.HUMAN_VERIFIED
+
+    /** True when there is something to play. Drives the play button's enabled state. */
+    val hasAudio: Boolean get() =
+        audioAsset != null && audioProvenance != AudioProvenance.NONE
 }

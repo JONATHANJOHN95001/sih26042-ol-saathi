@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/md_theme_primary"
-        app:title="Worksheet"
+        app:title="Materials"
         app:titleTextColor="@color/md_theme_onPrimary"
         app:navigationIconTint="@color/md_theme_onPrimary"
         app:menu="@menu/overflow_menu" />
@@ -19,7 +19,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select a lesson to generate a bilingual A4 worksheet."
+        android:text="Pick a lesson, then generate a bilingual worksheet to write on or a sheet of flashcards to cut out. Both carry Hindi and Santali on every item."
         android:textColor="@color/md_theme_onSurfaceVariant"
         android:padding="16dp"
         android:textSize="14sp" />
@@ -36,8 +36,18 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
         android:text="Generate Worksheet"
         android:textSize="16sp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnFlashcards"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="16dp"
+        android:text="Generate Flashcards"
+        android:textSize="16sp"
+        style="@style/Widget.Material3.Button.TonalButton" />
 
     <TextView
         android:id="@+id/textStatus"
@@ -66,6 +76,11 @@
         android:text="@string/btn_print"
         android:visibility="gone"
         style="@style/Widget.Material3.Button.OutlinedButton" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <!-- Bottom navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView

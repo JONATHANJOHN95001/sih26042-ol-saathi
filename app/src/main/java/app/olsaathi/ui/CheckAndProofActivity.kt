@@ -205,6 +205,12 @@ class CheckAndProofActivity : AppCompatActivity() {
         sb.append("  translationService: ${app.pack.translationService}\n")
         sb.append("  platform: ${app.pack.platform}\n")
         if (app.pack.pivot.isNotEmpty()) sb.append("  pivot: ${app.pack.pivot}\n")
+        // NIPUN Bharat alignment, so a judge can see the framework mapping
+        // without opening the pack file.
+        val domains = app.pack.entries(null).mapNotNull { it.nipunDomain.ifEmpty { null } }.distinct()
+        sb.append("NIPUN Bharat: ${domains.size} domains across ${app.pack.size} entries\n")
+        domains.sorted().forEach { sb.append("  \u2022 $it\n") }
+
         val reviewed = app.pack.reviewedCount
         val totalEntries = app.pack.size
         val hr = app.pack.humanReview
@@ -270,6 +276,17 @@ class CheckAndProofActivity : AppCompatActivity() {
         packAudioSb.append("Pack audio: $entriesWithAudio of ${app.pack.size} entries have WAV\n")
         val ttsService = app.pack.ttsService
         packAudioSb.append("Audio source: ${if (ttsService.isNotEmpty() && ttsService != "null") ttsService else "none yet"}\n")
+        if (entriesWithAudio == 0) {
+            // Say the real reason rather than leaving a bare zero. Santali has
+            // no open TTS model and Android ships no Santali voice, so audio
+            // can only come from Bhashini or from a person reading the lines.
+            packAudioSb.append(
+                "No Santali audio ships yet. There is no open Santali TTS model, " +
+                    "and Android has no Santali voice, so it comes from Bhashini " +
+                    "or from a speaker recording it. Playback is built and tested; " +
+                    "dropping the files in switches it on.\n"
+            )
+        }
         binding.textAudioInfo.text = packAudioSb
 
         // ── Offline ───────────────────────────────────────────────
