@@ -97,13 +97,14 @@ source/                      the whole project
   tools/                     pack generation, verification, the review sheet
   bhashini/                  the Bhashini pipeline, ready for when keys arrive
   design/wireframes.html     the screen designs
-  verification/              the Santali review sheet
+  verification/              the review sheet and the recording studio
   deck/                      the pitch deck
 ```
 
 Three files worth opening in a browser right now, no install needed:
 
 - `verification/santali-review-sheet.html` — hand this to anyone who reads Ol Chiki
+- `verification/santali-recording-studio.html` — hand this to anyone who speaks it
 - `design/wireframes.html` — what the screens are meant to look like
 - `deck/Ol-Saathi-SIH26042.pptx` — the pitch
 
@@ -114,16 +115,31 @@ Three files worth opening in a browser right now, no install needed:
 | The six graded items | State |
 |---|---|
 | Hindi to Santali, minimum one language | **Built.** 53 entries, machine translated, in the APK |
-| Voice to voice under three seconds | **Wired, needs a real tablet.** Lookup is 1 ms |
-| Bilingual worksheet | **Built and verified.** 3 A4 pages, both scripts |
-| Offline on a low-end tablet | **Built and measured.** 43 MB on a 2 GB Android 9 device |
+| Voice to voice under three seconds | **Half built.** Hindi in works, lookup is 1 ms, Santali audio does not exist yet |
+| Bilingual worksheets **and flashcards** | **Built and verified.** Worksheet 3 pages, flashcards 7 pages, both scripts |
+| Offline on a low-end tablet | **Built and measured.** 43 MB on a 2 GB Android 9 device, 656 ms cold start |
 | Demo video | **Not started** |
 | Public GitHub repository | **Not pushed** |
 
-**No audio yet.** The statement asks for synthesised Santali speech. No open
-Santali text-to-speech exists and Android has no Santali voice, so it can only
-come from Bhashini, and that account is still waiting on a faculty supervisor.
-The app says so on screen rather than hiding it.
+Everything is aligned to **NIPUN Bharat**: three developmental goals across seven
+foundational domains, shown on the proof screen and printed on every flashcard.
+
+**No audio yet, and it cannot be generated.** The statement asks for synthesised
+Santali speech. Meta's MMS model covers 1,143 languages and Santali is not one of
+them, eSpeak has no Santali voice, and Android ships none. Bhashini is the only
+synthesis route, and that account is still waiting on a faculty supervisor.
+
+So the fix is a person rather than a model, and everything around that person is
+built. Open `verification/santali-recording-studio.html` in any browser. It shows
+each line in Hindi and Ol Chiki, records from the microphone, and exports the lot
+as a zip. Then one command installs it:
+
+```bash
+python tools/apply_audio.py santali-recordings.zip --provenance native --reviewer "Their Name" --write
+```
+
+Rebuild and the play buttons are live. That is about twenty minutes of recording,
+from the same person the translation review already needs.
 
 ---
 
@@ -143,12 +159,19 @@ this codebase, do not add a fallback that produces plausible-looking output.
 
 **1. Push the repo.** Two commands above. Graded, currently zero.
 
-**2. Find a Santali speaker.** This is the biggest single win available. Every
-line currently reads "Machine translation". One hour from one person who reads Ol
-Chiki and it reads "Checked by" with their name and date. The review sheet is
-already sorted so the most doubtful lines come first. Ask the department, ask the
-SIH mentor, ask the student groups. Jharkhand has 7.6 million Santali speakers
-and JAIN takes students from everywhere.
+**2. Find a Santali speaker.** This is by far the biggest win available, and it
+now closes **two** graded items in the same sitting, not one.
+
+- **They read.** Every line currently says "Machine translation". After an hour
+  with `verification/santali-review-sheet.html`, sorted worst first, the lines
+  they confirm say "Checked by" with their name and date.
+- **They speak.** Twenty more minutes with
+  `verification/santali-recording-studio.html` and the app has audio, which is
+  the only requirement no amount of code can close.
+
+Ask the department, ask the SIH mentor, ask the student groups. Jharkhand has
+7.6 million Santali speakers and JAIN takes students from everywhere. Both files
+open in a browser with nothing installed and no network.
 
 **3. Get it on a real tablet**, Android 9 or newer, and install the Hindi offline
 speech pack. Then measure the voice round trip ten times in aeroplane mode and
