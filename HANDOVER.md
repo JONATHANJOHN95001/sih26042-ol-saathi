@@ -101,7 +101,7 @@ source/                      the whole project
   deck/                      the pitch deck
 ```
 
-Three files worth opening in a browser right now, no install needed:
+Four files worth opening in a browser right now, no install needed:
 
 - `verification/santali-review-sheet.html` — hand this to anyone who reads Ol Chiki
 - `verification/santali-recording-studio.html` — hand this to anyone who speaks it
