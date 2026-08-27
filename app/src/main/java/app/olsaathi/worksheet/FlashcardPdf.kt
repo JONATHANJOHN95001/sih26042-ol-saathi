@@ -6,8 +6,10 @@ import android.graphics.Color
 import android.graphics.DashPathEffect
 import android.graphics.Paint
 import android.graphics.Typeface
+import android.graphics.Rect
 import android.graphics.pdf.PdfDocument
 import android.util.Log
+import androidx.core.content.ContextCompat
 import app.olsaathi.content.VerifiedContentPack
 import java.io.File
 import java.io.FileOutputStream
@@ -188,9 +190,22 @@ class FlashcardPdf(private val context: Context) {
         y += 6f
         canvas.drawLine(left + pad, y, left + width - pad, y, rulePaint)
 
-        drawCentred(canvas, entry.source, left + pad, innerWidth, top + height * 0.34f, hindiPaint)
-        drawCentred(canvas, entry.target, left + pad, innerWidth, top + height * 0.56f, olChikiPaint)
-        drawCentred(canvas, entry.en, left + pad, innerWidth, top + height * 0.74f, glossPaint)
+        // Picture first, then the two scripts, then the gloss. If there is no
+        // picture the text uses the space instead of leaving a gap.
+        val hasIcon = drawIcon(
+            canvas,
+            entry.image,
+            left + width / 2f,
+            top + height * 0.30f,
+            height * 0.26f
+        )
+        val hindiY = if (hasIcon) 0.53f else 0.34f
+        val olY = if (hasIcon) 0.68f else 0.56f
+        val glossY = if (hasIcon) 0.80f else 0.74f
+
+        drawCentred(canvas, entry.source, left + pad, innerWidth, top + height * hindiY, hindiPaint)
+        drawCentred(canvas, entry.target, left + pad, innerWidth, top + height * olY, olChikiPaint)
+        drawCentred(canvas, entry.en, left + pad, innerWidth, top + height * glossY, glossPaint)
 
         val label = when {
             isSample -> "SAMPLE DATA, not a real translation"
@@ -198,6 +213,32 @@ class FlashcardPdf(private val context: Context) {
             else -> "Machine translation, IndicTrans2"
         }
         canvas.drawText(label, left + pad, top + height - pad, provenancePaint)
+    }
+
+    /**
+     * Draw the card's picture, if it has one.
+     *
+     * A six-year-old learning to read cannot decode the card yet. The picture
+     * is what lets them connect the word they hear to the marks on the paper,
+     * so it sits above the text rather than beside it.
+     *
+     * Returns true if something was drawn. A missing or unresolvable drawable
+     * is skipped silently and the text simply moves up, because a card with no
+     * picture is still a usable card.
+     */
+    private fun drawIcon(canvas: Canvas, name: String?, cx: Float, cy: Float, size: Float): Boolean {
+        if (name.isNullOrEmpty()) return false
+        @Suppress("DEPRECATION")
+        val id = context.resources.getIdentifier(name, "drawable", context.packageName)
+        if (id == 0) {
+            Log.w(TAG, "no drawable named " + name)
+            return false
+        }
+        val d = ContextCompat.getDrawable(context, id) ?: return false
+        val half = (size / 2f).toInt()
+        d.bounds = Rect(cx.toInt() - half, cy.toInt() - half, cx.toInt() + half, cy.toInt() + half)
+        d.draw(canvas)
+        return true
     }
 
     /**

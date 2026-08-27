@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fluent Emoji Flat, MIT. Fetched from Iconify at build time by
+     tools/fetch_flashcard_icons.py. Do not edit by hand. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="32"
+    android:viewportHeight="32">
+    <path
+        android:fillColor="#D3883E"
+        android:pathData="m2 2l14 3l14-3v28l-14-3l-14 3z" />
+    <path
+        android:fillColor="#F3AD61"
+        android:pathData="M30 2H2l14 14z" />
+    <path
+        android:fillColor="#B97028"
+        android:pathData="M30 30H2l14-14z" />
+    <path
+        android:fillColor="#AEDDFF"
+        android:pathData="M5 5h22v4.164L18 22L5 19v-3l1.5-3L5 10z" />
+    <path
+        android:fillColor="#fff"
+        android:pathData="M24.667 10.114A3 3 0 0 1 27 9v6a3 3 0 0 1-2.009-.772a3 3 0 1 1-2.73-3.217a2 2 0 0 1 2.406-.897M5 16v-6c.981 0 1.853.471 2.4 1.2A1 1 0 0 1 9 12a2 2 0 1 1 0 4z" />
+    <path
+        android:fillColor="#14A085"
+        android:pathData="M8 17.5L5 19v8h22V12c-1.5 0-2.5.5-4 2l-4.5 4.5c-1 1-1.5 1.5-2.5 1l-4-2c-1.6-.8-3.167-.5-4 0" />
+    <path
+        android:fillColor="#96C34A"
+        android:pathData="M27 26.812V27H5v-.189c2.564-2.579 6.538-4.311 11-4.311s8.436 1.732 11 4.311" />
+    <path
+        android:fillColor="#FF822D"
+        android:pathData="M19.056 10.185a.75.75 0 0 0 0-1.37a.75.75 0 0 0-.685-1.186a.75.75 0 0 0-1.186-.685a.75.75 0 0 0-1.37 0a.75.75 0 0 0-1.186.685a.75.75 0 0 0-.685 1.186a.75.75 0 0 0 0 1.37a.75.75 0 0 0 .685 1.186a.75.75 0 0 0 1.186.685a.75.75 0 0 0 1.37 0a.75.75 0 0 0 1.186-.685a.75.75 0 0 0 .685-1.186" />
+    <path
+        android:fillColor="#F9C23C"
+        android:pathData="M18.705 9.5a2.205 2.205 0 1 1-4.41 0a2.205 2.205 0 0 1 4.41 0" />
+</vector>

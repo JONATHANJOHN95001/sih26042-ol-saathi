@@ -33,6 +33,8 @@ class VerifiedContentPack private constructor() {
         val service: String,
         val audio: String?,
         val audioProvenance: String?,
+        /** Drawable resource name for the card picture, e.g. "ic_card_p01". */
+        val image: String?,
         val lesson: String?,
         /** Set by apply_review.py when a Santali speaker reviews this entry. */
         val reviewedBy: String = "",
@@ -327,6 +329,7 @@ class VerifiedContentPack private constructor() {
                 service = optText(e, "service"),
                 audio = optText(e, "audio").ifEmpty { null },
                 audioProvenance = optText(e, "audioProvenance").ifEmpty { null },
+                image = optText(e, "image").ifEmpty { null },
                 lesson = optText(e, "lesson").ifEmpty { null },
                 reviewedBy = optText(e, "reviewedBy"),
                 reviewedOn = optText(e, "reviewedOn"),
