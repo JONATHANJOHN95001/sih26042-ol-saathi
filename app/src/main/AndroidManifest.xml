@@ -50,6 +50,14 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
+        <!-- The child-facing view. Deliberately NOT portrait-locked: a
+             teacher turning the tablet to face a class turns it landscape. -->
+        <activity
+            android:name=".ui.ShowClassActivity"
+            android:exported="false"
+            android:theme="@style/Theme.OlSaathi"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+
         <!-- Merged Check & Proof screen (replaces PreFlight + Proof) -->
         <activity
             android:name=".ui.CheckAndProofActivity"

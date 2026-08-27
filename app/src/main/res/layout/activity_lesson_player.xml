@@ -136,6 +136,15 @@
 
             <!-- Play button (large circular) -->
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnShowClass"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/btn_show_class"
+                android:textSize="16sp"
+                style="@style/Widget.Material3.Button" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnPlay"
                 android:layout_width="56dp"
                 android:layout_height="56dp"

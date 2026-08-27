@@ -43,6 +43,8 @@ class LessonPlayerActivity : AppCompatActivity() {
         val reviewerName: String,
         val reviewedOn: String,
         val audioPath: String?,
+        /** Drawable name for the picture the class sees. */
+        val image: String?,
         val isCheck: Boolean,
     )
 
@@ -95,6 +97,7 @@ class LessonPlayerActivity : AppCompatActivity() {
                 reviewerName = translation.reviewerName,
                 reviewedOn = translation.reviewedOn,
                 audioPath = audioPath,
+                image = entry.image,
                 isCheck = entry.kind == "check",
             )
         }
@@ -125,6 +128,23 @@ class LessonPlayerActivity : AppCompatActivity() {
                 // Last item: finish
                 finish()
             }
+        }
+
+        // ── Show the class ────────────────────────────────────────
+        // Hands the current line to the child-facing screen and nothing else.
+        // No provenance, no counters, no controls: the teacher turns the
+        // tablet around and a six-year-old looks at a picture book page.
+        binding.btnShowClass.setOnClickListener {
+            val item = items[currentIndex]
+            startActivity(
+                ShowClassActivity.intent(
+                    context = this,
+                    source = item.source,
+                    target = item.target,
+                    image = item.image,
+                    audio = item.audioPath,
+                )
+            )
         }
 
         // ── Play button ───────────────────────────────────────────

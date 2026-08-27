@@ -46,4 +46,7 @@
 
     <!-- Audio status -->
     <string name="no_santali_voice">No Santali voice on this device. Audio comes from the pack.</string>
+    <string name="show_class_close">✕</string>
+    <string name="show_class_play">Play</string>
+    <string name="btn_show_class">Show the class</string>
 </resources>
