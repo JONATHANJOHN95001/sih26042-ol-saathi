@@ -111,6 +111,20 @@
         android:visibility="gone" />
 
     <!-- Voice input button -->
+    <!-- Turn the tablet around. Hidden until a lookup succeeds, because
+         a miss has nothing a child could read. -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnShowClass"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/btn_show_class"
+        android:textSize="16sp"
+        android:visibility="gone"
+        style="@style/Widget.Material3.Button" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnVoiceInput"
         android:layout_width="match_parent"

@@ -86,6 +86,22 @@ class ClassroomActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             } else false
         }
 
+        // Turn the tablet around. Same screen the lesson player opens, given
+        // only what a child needs: picture, Santali, Hindi. No provenance.
+        binding.btnShowClass.setOnClickListener {
+            val t = currentTranslation ?: return@setOnClickListener
+            if (t.target.isBlank()) return@setOnClickListener
+            startActivity(
+                ShowClassActivity.intent(
+                    context = this,
+                    source = t.source,
+                    target = t.target,
+                    image = pack.entries().firstOrNull { it.id == t.entryId }?.image,
+                    audio = pack.audioPath(t),
+                )
+            )
+        }
+
         // Play audio (pack WAV only)
         binding.btnPlayAudio.setOnClickListener {
             val t = currentTranslation ?: return@setOnClickListener
@@ -178,6 +194,11 @@ class ClassroomActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
             val audioPath = pack.audioPath(translation)
             binding.btnPlayAudio.isEnabled = audioPath != null && audioPlayer.hasAudio(audioPath)
+
+            // Only offer to show the class when there is Santali to show. On a
+            // miss the button disappears rather than opening an empty screen.
+            binding.btnShowClass.visibility =
+                if (translation.target.isNotBlank()) View.VISIBLE else View.GONE
 
             val colour = when (translation.provenance) {
                 Provenance.HUMAN_VERIFIED -> ContextCompat.getColor(this, R.color.human_verified_blue)
