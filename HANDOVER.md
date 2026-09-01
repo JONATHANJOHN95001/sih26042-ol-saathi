@@ -29,7 +29,7 @@ done. Use this zip only for people who just want to install the app.
 
 ## I only want to try it
 
-Install `app-release.apk`. It is **4 MB** and needs Android 9 or newer.
+Install `app-release.apk`. It is **4.23 MB** and needs Android 9 or newer.
 
 1. On the tablet or phone: Settings, Security, allow install from unknown sources
 2. Copy the APK across and tap it
@@ -116,7 +116,7 @@ Four files worth opening in a browser right now, no install needed:
 |---|---|
 | Hindi to Santali, minimum one language | **Built.** 53 entries, machine translated, in the APK |
 | Voice to voice under three seconds | **Half built.** Hindi in works, lookup is 1 ms, Santali audio does not exist yet |
-| Bilingual worksheets **and flashcards** | **Built and verified.** Worksheet 3 pages, flashcards 7 pages, both scripts |
+| Bilingual worksheets **and flashcards** | **Built and verified.** Worksheet 3 pages, flashcards 7 pages, both scripts. Every flashcard carries a picture (53 of 53). |
 | Offline on a low-end tablet | **Built and measured.** 43 MB on a 2 GB Android 9 device, 656 ms cold start |
 | Demo video | **Not started** |
 | Public GitHub repository | **Not pushed** |
@@ -140,6 +140,17 @@ python tools/apply_audio.py santali-recordings.zip --provenance native --reviewe
 
 Rebuild and the play buttons are live. That is about twenty minutes of recording,
 from the same person the translation review already needs.
+
+---
+
+## Show the class
+
+The lesson player and the Teach screen both have a **Show** button that opens
+`ShowClassActivity`: the picture, the Santali at up to 60sp, and the Hindi
+underneath. No controls, no provenance, no counters. The teacher turns the
+tablet to face the class. It is the only screen a child ever looks at.
+
+This is the strongest three seconds of the demo.
 
 ---
 
