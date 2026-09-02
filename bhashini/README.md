@@ -89,8 +89,14 @@ same way they caught them in the old.
 
 ## The one thing to get right
 
-The provenance chip reads from `provenance.translationService`, so it updates
-itself. But the wording matters.
+The provenance chip takes the service name out of the pack, from
+`provenance.platform` first and `provenance.translationService` as a fallback,
+so it updates itself. The audio has a second, separate label, and the play
+button is gated on it: `build_pack.mjs` writes `audioProvenance: "bhashini"`
+beside every wav, and a wav without that field will not play, because nothing
+on screen could then tell the teacher what they were about to play to a class.
+
+But the wording matters.
 
 Bhashini output is still **machine translation**. It comes from a government
 platform, which is a far stronger provenance claim than ours, but it is not

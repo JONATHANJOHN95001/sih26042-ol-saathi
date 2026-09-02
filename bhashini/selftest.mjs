@@ -193,6 +193,13 @@ async function main() {
     withAudio.length ? ok(`${withAudio.length} entries reference audio`)
                      : bad('no entry references audio');
 
+    // A wav with no audioProvenance loads in the app as AudioProvenance.NONE,
+    // so the file ships inside the APK and the screen still reads "no audio
+    // yet". The two fields have to be written together or not at all.
+    const unlabelled = withAudio.filter(([, e]) => e.audioProvenance !== 'bhashini');
+    unlabelled.length ? bad(`${unlabelled.length} entries have a wav and no audioProvenance`)
+                      : ok('every wav is labelled as bhashini synthesis');
+
     // ids must be distinct: a constant fallback once collapsed three
     // comprehension checks onto one key and silently lost two of them
     const ids = entries.map(([k]) => k);

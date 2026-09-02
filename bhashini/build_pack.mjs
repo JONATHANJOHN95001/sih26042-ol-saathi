@@ -282,6 +282,11 @@ async function main() {
             const file = `${item.id}.wav`;
             fs.writeFileSync(path.join(AUDIO_DIR, file), Buffer.from(b64, 'base64'));
             entry.audio = `pack/audio/${file}`;
+            // The app gates playback on this field, not on the file. An entry
+            // that has a wav and no audioProvenance loads as
+            // AudioProvenance.NONE, which reads on screen as "no audio yet"
+            // while the wav sits unused in the APK. Write the two together.
+            entry.audioProvenance = 'bhashini';
             withAudio++;
           }
         } catch {

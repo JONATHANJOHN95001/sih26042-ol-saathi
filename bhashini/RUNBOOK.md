@@ -21,7 +21,7 @@ $env:BHASHINI_USER_ID="..."; $env:BHASHINI_ULCA_KEY="..."; $env:BHASHINI_INFEREN
 **1. Prove the credentials work and Santali is reachable.**
 
 ```bash
-node bhashini-test.mjs
+node bhashini/test-connection.mjs
 ```
 
 Four checks: credentials, Hindi to Santali translation, Santali text to speech,
@@ -31,7 +31,7 @@ continuing.
 **2. See what would happen, without spending any calls.**
 
 ```bash
-node tools/build_pack.mjs --dry-run
+node bhashini/build_pack.mjs --dry-run
 ```
 
 Should report 53 strings.
@@ -39,7 +39,7 @@ Should report 53 strings.
 **3. Compare Bhashini against what is already shipped, before replacing it.**
 
 ```bash
-node tools/build_pack.mjs --compare
+node bhashini/build_pack.mjs --compare
 ```
 
 This translates all 53 through Bhashini and diffs them against the shipped
@@ -50,11 +50,12 @@ only for the audio.
 **4. Build for real.**
 
 ```bash
-node tools/build_pack.mjs
+node bhashini/build_pack.mjs
 ```
 
-Writes `app/src/main/assets/pack/pack.sat.json` and the wav files. Resumable and
+Writes `bhashini/out/pack.sat.json` and the wav files. Resumable and
 saves every ten entries, so a dropped connection costs almost nothing.
+Then run `node bhashini/build_pack.mjs --install` only after you have reviewed the output.
 
 ---
 
@@ -64,8 +65,15 @@ saves every ten entries, so a dropped connection costs almost nothing.
 - `./gradlew :app:testDebugUnitTest` must still pass. The pack tests run against
   whatever is shipped, so they will catch contamination or collisions in the new
   content the same way they did for IndicTrans2.
-- The provenance chip changes by itself, because it reads
-  `provenance.translationService` from the pack. Nothing to edit.
+- The provenance chip changes by itself. It takes the service name from
+  `provenance.platform`, trimmed to its opening clause, and falls back to
+  `provenance.translationService` when the pack does not carry a platform.
+  This is now true. It was not until 1 September 2026, when the name moved out
+  of a hardcoded enum constant that would have gone on saying IndicTrans2 over
+  Bhashini's text.
+- The audio carries its own label, separate from the text one, and the app
+  gates the play button on it. `build_pack.mjs` writes `audioProvenance:
+  "bhashini"` next to every wav. A wav without it will not play.
 - The Proof screen's audio section will start reporting a real count instead of
   "0 of 53 entries have audio".
 

@@ -78,3 +78,11 @@ generated_materials/
 app/src/main/assets/pack/audio/*.wav
 !app/src/main/assets/pack/audio/README.md
 verification-*.json
+
+# Scratch scaffold, never referenced by the build
+temp-scaffold/
+
+# A Bhashini run lands here. It is unreviewed machine output by definition,
+# so it must not reach a public repo before someone has read it.
+bhashini/out/*
+!bhashini/out/.gitkeep
