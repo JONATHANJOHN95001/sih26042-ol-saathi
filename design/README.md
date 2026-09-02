@@ -15,9 +15,6 @@ Android, Kotlin, XML layouts, Material 3. Five screens.
 | `app/src/main/res/layout/` | the five real screens, this is what ships |
 | `design/wireframes.html` | open in a browser, the intended layouts |
 | `design/teach.png` | the Teach screen as built |
-| `design/APP_REDESIGN_PROMPT.md` | the brief the current design came from |
-| `stitch_screens/*.png` | earlier Stitch mockups, historical, not current |
-| `screenshots/` | captures from the Android 9 emulator |
 
 The five screens: Lesson list, Lesson player, Teach (live translation), Show
 the class, and Check and proof.
@@ -83,6 +80,6 @@ actually have.
 
 ## Before you open a pull request
 
-Read `AGENTS.md` at the repo root. It is short and it explains why the app is
-built the way it is, including the one rule everything else follows: the app
-never shows output it cannot back up.
+Read `CONTRIBUTING.md` at the repo root. It is short, and it explains why the
+app is built the way it is, including the one rule everything else follows: the
+app never shows output it cannot back up.

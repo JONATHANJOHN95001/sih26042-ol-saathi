@@ -1,21 +1,16 @@
-# FREEBUFF prompt: wiring in the Bhashini key
+# When the Bhashini key arrives
 
-Paste everything below the line into FREEBUFF, in the repo root, once the
-Udyat key for `sih_vernacular_pedagogy` is approved.
+The Udyat key for `sih_vernacular_pedagogy` was requested on 1 September 2026
+and is pending. Everything that could be built without it has been built, so
+what is left here genuinely needs credentials.
 
-Everything that could be done without the key has been done, on 1 September
-2026. What is left genuinely needs credentials.
+Read `CONTRIBUTING.md` first, in particular the rule everything else follows:
+**the app never invents output**, and every Santali string carries a provenance
+label saying where it came from.
 
----
-
-You are working in the Ol Saathi repository (SIH26042). Read `AGENTS.md` first
-and obey it, in particular: **the app never invents output**, every Santali
-string carries a provenance label, and you propose a diff and wait rather than
-making sweeping changes unannounced.
-
-The Bhashini API key has been approved. Only stage 1 and stage 3 are open work.
-Stages 2, 4 and 5 are already done and are written down here as invariants,
-because the run you are about to do can break every one of them.
+Only stage 1 and stage 3 are open work. Stages 2, 4 and 5 are already done and
+are written down here as invariants, because the run described below can break
+every one of them.
 
 ## Context you must not get wrong
 
@@ -87,14 +82,14 @@ node bhashini/build_pack.mjs --limit 3
 node bhashini/build_pack.mjs --compare
 ```
 
-Show me the `--compare` output before running the full build. The decision it
+Read the `--compare` output before running the full build. The decision it
 feeds is genuine: IndicTrans2's Santali is already decent, so if Bhashini's is
 worse we keep the current text and take **only the audio** from Bhashini. In
 that case the pack ends up with IndicTrans2 text and `audioProvenance:
 "bhashini"`, and the provenance block must say exactly that rather than
 attributing everything to one service.
 
-Do not run `--install` yourself. I will.
+Do not run `--install` until you have read that output and decided.
 
 ## Stage 4: the audio has to be checked, and it has to fit
 
@@ -121,7 +116,7 @@ pack stores the path, so the extension is free to change). Keep any 48 kHz
 masters out of the APK.
 
 Every number in `README.md`, `HANDOVER.md`,
-`PROBLEM_STATEMENT_TRACEABILITY_MATRIX.md` and `AGENTS.md` that mentions APK
+`PROBLEM_STATEMENT_TRACEABILITY_MATRIX.md` and `CONTRIBUTING.md` that mentions APK
 size, audio count or "no Santali audio" is stale the moment the pack lands.
 Re-measure, do not re-estimate.
 

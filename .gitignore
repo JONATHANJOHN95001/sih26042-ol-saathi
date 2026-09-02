@@ -53,14 +53,12 @@ app/release-key.jks
 # OS files
 Thumbs.db
 Desktop.ini
-.aider*
 
 # Dead scaffold. settings.gradle includes only :app; android/ is an earlier
 # unrelated project under com.example.* and should be deleted, not reviewed.
 /android/
 
 # Agent working directories and one-off repair scripts
-.freebuff/
 fix_encodings.js
 fix_imports.mjs
 fix_packages.mjs
