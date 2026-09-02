@@ -10,7 +10,7 @@
  *   1. Sign up at https://bhashini.gov.in  (Sign Up -> verify email)
  *   2. Go to My Profile -> generate your API key
  *   3. Fill in the three values below
- *   4. Run:  node bhashini-test.mjs
+ *   4. Run:  node bhashini/test-connection.mjs
  */
 
 // Read from the environment, never from this file. The repository has to be
@@ -18,10 +18,10 @@
 //
 //   PowerShell:
 //     $env:BHASHINI_USER_ID="..."; $env:BHASHINI_ULCA_KEY="..."; $env:BHASHINI_INFERENCE_KEY="..."
-//     node bhashini-test.mjs
+//     node bhashini/test-connection.mjs
 //
 //   Git Bash:
-//     BHASHINI_USER_ID=... BHASHINI_ULCA_KEY=... BHASHINI_INFERENCE_KEY=... node bhashini-test.mjs
+//     BHASHINI_USER_ID=... BHASHINI_ULCA_KEY=... BHASHINI_INFERENCE_KEY=... node bhashini/test-connection.mjs
 //
 // Same three variables as tools/build_pack.mjs, so set them once per shell.
 const USER_ID       = process.env.BHASHINI_USER_ID       || '';

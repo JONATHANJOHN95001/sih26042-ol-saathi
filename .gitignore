@@ -73,10 +73,15 @@ generated_materials/
 # Office lock files
 ~$*
 
-# Placeholder media. A silent wav that nothing references is indistinguishable
-# from working audio to anyone who does not open it.
-app/src/main/assets/pack/audio/*.wav
-!app/src/main/assets/pack/audio/README.md
+# Audio ships, deliberately. These wavs used to be ignored, because a silent
+# placeholder is indistinguishable from working audio to anyone who does not
+# open it. That guard is now tools/verify_assets.py, which checks every wav is
+# a real RIFF/WAVE, is audible, and is referenced by the pack. So the files
+# belong in the repo: anyone who clones this has to get an app that speaks.
+
+# Python bytecode
+__pycache__/
+*.pyc
 verification-*.json
 
 # Scratch scaffold, never referenced by the build
