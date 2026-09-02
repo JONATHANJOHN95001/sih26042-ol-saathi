@@ -297,22 +297,38 @@ class CheckAndProofActivity : AppCompatActivity() {
         binding.textNetworkInfo.text = netSb
 
         // ── Latency ───────────────────────────────────────────────
+        // Two measurements, reported separately and never averaged together.
+        // They were one list once, so the median came out of dozens of
+        // near-zero lookups blended with a handful of real voice spans, which
+        // answered a question nobody had asked while looking like it had
+        // cleared the ceiling.
         val latSb = SpannableStringBuilder()
-        val history = app.latencyHistory
-        if (history.isEmpty()) {
-            latSb.append("No measurements yet")
+
+        val voice = app.voiceLatencyHistory
+        latSb.append("Voice to voice, speech result to first sound:\n")
+        if (voice.isEmpty()) {
+            latSb.append("  Not measured yet. Needs Santali audio in the pack;\n")
+            latSb.append("  there is none, so the play button never opens.\n")
         } else {
-            val median = history.sorted()[history.size / 2]
-            latSb.append("Last ${history.size} round trips (ms):\n")
-            history.forEachIndexed { idx, ms -> latSb.append("  ${idx + 1}. ${ms}ms\n") }
-            latSb.append("Median: ${median}ms\n")
-            latSb.append("Ceiling: 3000ms\n")
-            if (median <= 3000) latSb.append("✓ Median under 3-second ceiling")
+            val median = voice.sorted()[voice.size / 2]
+            voice.forEachIndexed { idx, ms -> latSb.append("  ${idx + 1}. ${ms}ms\n") }
+            latSb.append("  Median: ${median}ms\n")
+            latSb.append("  Ceiling: 3000ms\n")
+            if (median <= 3000) latSb.append("  ✓ Median under 3-second ceiling\n")
             else {
-                val warn = SpannableString("✗ Median exceeds 3-second ceiling")
+                val warn = SpannableString("  ✗ Median exceeds 3-second ceiling\n")
                 warn.setSpan(ForegroundColorSpan(Color.parseColor("#C62828")), 0, warn.length, 0)
                 latSb.append(warn)
             }
+        }
+
+        val history = app.latencyHistory
+        latSb.append("\nPack lookup only, not the deliverable:\n")
+        if (history.isEmpty()) {
+            latSb.append("  No measurements yet")
+        } else {
+            val median = history.sorted()[history.size / 2]
+            latSb.append("  Last ${history.size} lookups, median ${median}ms")
         }
         binding.textLatencyInfo.text = latSb
 

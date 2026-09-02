@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import app.olsaathi.OlSaathiApplication
 import app.olsaathi.R
 import app.olsaathi.audio.PackAudioPlayer
+import app.olsaathi.content.AudioProvenance
 import app.olsaathi.content.Provenance
 import app.olsaathi.content.Translation
 import app.olsaathi.content.VerifiedContentPack
@@ -40,13 +41,24 @@ class LessonPlayerActivity : AppCompatActivity() {
         val target: String,
         val en: String,
         val provenance: Provenance,
+        /** The label as shown, service name included. See Translation.provenanceLabel. */
+        val provenanceLabel: String,
         val reviewerName: String,
         val reviewedOn: String,
         val audioPath: String?,
+        val audioProvenance: AudioProvenance,
         /** Drawable name for the picture the class sees. */
         val image: String?,
         val isCheck: Boolean,
-    )
+    ) {
+        /**
+         * The same two-part test [Translation.hasAudio] makes: a file to play
+         * and a record of where the voice came from. Either one alone is not
+         * enough to put sound in front of a class.
+         */
+        val hasAudio: Boolean get() =
+            audioPath != null && audioProvenance != AudioProvenance.NONE
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,9 +106,11 @@ class LessonPlayerActivity : AppCompatActivity() {
                 target = translation.target,
                 en = translation.en,
                 provenance = translation.provenance,
+                provenanceLabel = translation.provenanceLabel,
                 reviewerName = translation.reviewerName,
                 reviewedOn = translation.reviewedOn,
                 audioPath = audioPath,
+                audioProvenance = translation.audioProvenance,
                 image = entry.image,
                 isCheck = entry.kind == "check",
             )
@@ -142,7 +156,9 @@ class LessonPlayerActivity : AppCompatActivity() {
                     source = item.source,
                     target = item.target,
                     image = item.image,
-                    audio = item.audioPath,
+                    // Only labelled audio crosses to the child screen, which
+                    // shows no provenance of its own.
+                    audio = if (item.hasAudio) item.audioPath else null,
                 )
             )
         }
@@ -150,7 +166,7 @@ class LessonPlayerActivity : AppCompatActivity() {
         // ── Play button ───────────────────────────────────────────
         binding.btnPlay.setOnClickListener {
             val item = items[currentIndex]
-            if (item.audioPath != null && audioPlayer.hasAudio(item.audioPath)) {
+            if (item.hasAudio && item.audioPath != null && audioPlayer.hasAudio(item.audioPath)) {
                 audioPlayer.play(item.audioPath,
                     onComplete = { runOnUiThread { binding.btnPlay.isEnabled = true } },                    onError = { _ ->
                         runOnUiThread { binding.btnPlay.isEnabled = true }
@@ -217,7 +233,7 @@ class LessonPlayerActivity : AppCompatActivity() {
                 Provenance.UNAVAILABLE -> ContextCompat.getColor(this, R.color.md_theme_outline)
                 Provenance.SAMPLE -> ContextCompat.getColor(this, R.color.sample_red)
             }
-            binding.textProvenance.text = item.provenance.label
+            binding.textProvenance.text = item.provenanceLabel
             binding.textProvenance.setTextColor(colour)
             binding.textProvenance.visibility = View.VISIBLE
 
@@ -243,7 +259,17 @@ class LessonPlayerActivity : AppCompatActivity() {
         }
 
         // ── Play button ───────────────────────────────────────────
-        binding.btnPlay.isEnabled = item.audioPath != null && audioPlayer.hasAudio(item.audioPath)
+        // Enabled only when the wav exists and the pack says where the voice
+        // came from, so the button and the label beneath it cannot disagree.
+        binding.btnPlay.isEnabled =
+            item.hasAudio && item.audioPath != null && audioPlayer.hasAudio(item.audioPath)
+
+        if (item.hasAudio) {
+            binding.textAudioProvenance.text = item.audioProvenance.label
+            binding.textAudioProvenance.visibility = View.VISIBLE
+        } else {
+            binding.textAudioProvenance.visibility = View.GONE
+        }
 
         // ── Navigation buttons ────────────────────────────────────
         binding.btnBack.visibility = if (currentIndex > 0) View.VISIBLE else View.INVISIBLE

@@ -40,7 +40,11 @@ class PackAudioPlayer(private val context: Context) {
     fun play(
         assetPath: String,
         onComplete: () -> Unit = {},
-        onError: (String) -> Unit = {}
+        onError: (String) -> Unit = {},
+        /** Called the instant MediaPlayer is prepared and sound can leave the
+         *  speaker.  Used by the latency measurement which starts when speech
+         *  recognition returns and ends here. */
+        onReady: () -> Unit = {}
     ) {
         stop()
 
@@ -57,6 +61,7 @@ class PackAudioPlayer(private val context: Context) {
                 afd.close()
 
                 setOnPreparedListener {
+                    onReady()
                     start()
                 }
                 setOnCompletionListener {

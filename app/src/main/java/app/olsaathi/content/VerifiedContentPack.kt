@@ -75,6 +75,26 @@ class VerifiedContentPack private constructor() {
     var generated: String = ""
         private set
 
+    /**
+     * The name to put on screen for whoever produced this Santali.
+     *
+     * Taken from the pack, never compiled in, so that replacing the content
+     * replaces the label with it. The provenance block writes [platform] as a
+     * sentence ("Bhashini (MeitY, Government of India)"), and only its opening
+     * clause belongs on a 12sp chip, so that is what this trims to. Falls back
+     * to the raw service id, and then to nothing at all: a pack that does not
+     * say who made it gets a label that does not claim to know.
+     */
+    val serviceName: String
+        get() {
+            val fromPlatform = platform
+                .substringBefore('(')
+                .substringBefore(',')
+                .substringBefore('.')
+                .trim()
+            return fromPlatform.ifEmpty { translationService }
+        }
+
     /** Human review metadata from the pack header. Null when no review has happened. */
     var humanReview: HumanReview? = null
         private set
@@ -152,6 +172,7 @@ class VerifiedContentPack private constructor() {
             en = entry.en,
             provenance = provenance,
             serviceId = entry.service,
+            serviceName = serviceName,
             entryId = entry.id,
             nipun = entry.nipun,
             nipunGoal = entry.nipunGoal,

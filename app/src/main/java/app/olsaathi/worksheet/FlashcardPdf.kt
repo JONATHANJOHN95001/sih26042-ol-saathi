@@ -149,7 +149,7 @@ class FlashcardPdf(private val context: Context) {
             pageCards.forEachIndexed { i, entry ->
                 val left = MARGIN + (i % COLUMNS) * cardWidth
                 val top = MARGIN + (i / COLUMNS) * cardHeight
-                drawCard(canvas, entry, left, top, cardWidth, cardHeight, pack.isSample)
+                drawCard(canvas, entry, left, top, cardWidth, cardHeight, pack.isSample, pack.serviceName)
             }
 
             document.finishPage(page)
@@ -177,6 +177,9 @@ class FlashcardPdf(private val context: Context) {
         width: Float,
         height: Float,
         isSample: Boolean,
+        /** Read from the pack, so a card printed after a content swap names the
+         *  service that actually produced the line rather than the last one. */
+        serviceName: String,
     ) {
         canvas.drawRect(left, top, left + width, top + height, cutPaint)
 
@@ -210,7 +213,8 @@ class FlashcardPdf(private val context: Context) {
         val label = when {
             isSample -> "SAMPLE DATA, not a real translation"
             entry.reviewedBy.isNotEmpty() -> "Checked by " + entry.reviewedBy
-            else -> "Machine translation, IndicTrans2"
+            serviceName.isNotEmpty() -> "Machine translation, " + serviceName
+            else -> "Machine translation"
         }
         canvas.drawText(label, left + pad, top + height - pad, provenancePaint)
     }

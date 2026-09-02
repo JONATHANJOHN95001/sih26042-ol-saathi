@@ -98,6 +98,22 @@
         android:enabled="false"
         style="@style/Widget.Material3.Button.TonalButton" />
 
+    <!-- Where the voice comes from. Kept separate from the text label above,
+         because the two can disagree: a line can be machine translated and
+         then read aloud by a Santali speaker, which makes the audio the more
+         trustworthy of the two. -->
+    <TextView
+        android:id="@+id/textAudioProvenance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/md_theme_onSurfaceVariant"
+        android:textAlignment="center"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="4dp"
+        android:text=""
+        android:visibility="gone" />
+
     <TextView
         android:id="@+id/textAudioStatus"
         android:layout_width="match_parent"

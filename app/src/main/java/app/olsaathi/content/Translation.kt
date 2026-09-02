@@ -45,8 +45,15 @@ enum class Provenance(val label: String) {
      * been checked by a Santali speaker, and a teacher who cannot read Ol Chiki
      * would take the word "verified" at face value. What we can honestly claim
      * is the source, so that is what the label states.
+     *
+     * It names no service, because an enum constant cannot know which one
+     * produced the pack it is describing. This read "Machine translation ·
+     * IndicTrans2" until the service name moved into the data, and it would
+     * have gone on saying IndicTrans2 after a Bhashini run replaced every
+     * string in the pack. The name is appended at display time from the pack's
+     * own provenance block: see [Translation.provenanceLabel].
      */
-    VERIFIED("Machine translation · IndicTrans2"),
+    VERIFIED("Machine translation"),
 
     /** Hindi text respelled in the target script — not a translation. */
     TRANSLITERATED("Transliterated, not a translation"),
@@ -71,6 +78,12 @@ data class Translation(
     val en: String,
     val provenance: Provenance,
     val serviceId: String = "",
+    /**
+     * Display name of whoever produced this line, read out of the pack's
+     * provenance block rather than compiled in. Empty when the pack does not
+     * say, in which case the label omits it rather than guessing.
+     */
+    val serviceName: String = "",
     val entryId: String = "",
     val nipun: String = "",
     /** NIPUN Bharat developmental goal, e.g. "Children become effective communicators". */
@@ -99,4 +112,17 @@ data class Translation(
     /** True when there is something to play. Drives the play button's enabled state. */
     val hasAudio: Boolean get() =
         audioAsset != null && audioProvenance != AudioProvenance.NONE
+
+    /**
+     * The provenance string actually put on screen.
+     *
+     * Only VERIFIED takes a service name. HUMAN_VERIFIED is a claim about a
+     * person rather than a model, and SAMPLE and UNAVAILABLE must keep saying
+     * exactly what they say now.
+     */
+    val provenanceLabel: String get() =
+        if (provenance == Provenance.VERIFIED && serviceName.isNotEmpty())
+            "${provenance.label} · $serviceName"
+        else
+            provenance.label
 }

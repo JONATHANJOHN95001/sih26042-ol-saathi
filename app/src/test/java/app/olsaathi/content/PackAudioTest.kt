@@ -65,6 +65,33 @@ class PackAudioTest {
         }
     """.trimIndent()
 
+    /**
+     * A pack as the Bhashini generator writes one: government platform in the
+     * provenance block, and every wav labelled where it came from.
+     */
+    private val bhashiniPackJson = """
+        {
+          "generated": "2026-09-01T00:00:00Z",
+          "provenance": {
+            "translationService": "ai4bharat/indictrans-v2-all-gpu--t4",
+            "ttsService": "ai4bharat/indic-tts-coqui-misc-gpu--t4",
+            "platform": "Bhashini (MeitY, Government of India)"
+          },
+          "entries": {
+            "p01": {
+              "source": "नमस्ते बच्चों।",
+              "target": "ᱦᱚᱞᱳ ᱜᱤᱫᱽᱨᱟᱹᱠᱚ ᱾",
+              "en": "Hello children.",
+              "nipun": "EC-CR-G1",
+              "kind": "phrase",
+              "service": "ai4bharat/indictrans-v2-all-gpu--t4",
+              "audio": "pack/audio/p01.wav",
+              "audioProvenance": "bhashini"
+            }
+          }
+        }
+    """.trimIndent()
+
     private val pack = VerifiedContentPack.loadFromString(packJson)
 
     @Test
@@ -167,6 +194,71 @@ class PackAudioTest {
         assertEquals("EC-CR-G1", t.nipun)
         assertEquals("Classroom Routine", t.nipunDomain)
         assertEquals("Children become effective communicators", t.nipunGoal)
+    }
+
+    /**
+     * Bhashini synthesis has to arrive labelled.
+     *
+     * The generator wrote the wav and set entry.audio and nothing else, so a
+     * whole Bhashini run would have loaded as AudioProvenance.NONE: fifty-three
+     * files in the APK, hasAudio false on every one of them, and a screen
+     * reading "no audio yet" over content that was sitting right there. The
+     * play buttons would still have lit up, because they tested the asset file
+     * directly, so the button and the label disagreed and neither was obviously
+     * wrong. This pins the pairing.
+     */
+    @Test
+    fun `bhashini synthesis is labelled as synthesised speech`() {
+        val bhashini = VerifiedContentPack.loadFromString(bhashiniPackJson)
+        val t = bhashini.lookup("नमस्ते बच्चों।")
+        assertEquals(AudioProvenance.BHASHINI_TTS, t.audioProvenance)
+        assertEquals("Synthesised speech · Bhashini", t.audioProvenance.label)
+        assertTrue(t.hasAudio)
+        assertEquals("pack/audio/p01.wav", bhashini.audioPath(t))
+    }
+
+    /**
+     * The other direction: a file with no label is not playable.
+     *
+     * An unlabelled wav is exactly what the generator used to produce. The app
+     * shows the audio label next to the play button, so a wav it cannot
+     * describe is one it must not offer. A miss is correct behaviour.
+     */
+    @Test
+    fun `a wav with no recorded provenance is not playable`() {
+        val unlabelled = VerifiedContentPack.loadFromString(
+            bhashiniPackJson.replace(
+                "\"audioProvenance\": \"bhashini\"",
+                "\"audioProvenance\": \"\""
+            )
+        )
+        val t = unlabelled.lookup("नमस्ते बच्चों।")
+        assertEquals(AudioProvenance.NONE, t.audioProvenance)
+        assertFalse(t.hasAudio)
+    }
+
+    /**
+     * The service name on screen comes from the pack, not from the enum.
+     *
+     * Provenance.VERIFIED read "Machine translation · IndicTrans2" as a
+     * compiled-in constant, so a Bhashini pack would have been displayed under
+     * the name of the model it replaced. The trust level stays in the enum; the
+     * name comes from the data.
+     */
+    @Test
+    fun `the provenance label names the service the pack names`() {
+        val bhashini = VerifiedContentPack.loadFromString(bhashiniPackJson)
+        assertEquals("Bhashini", bhashini.serviceName)
+        assertEquals(
+            "Machine translation · Bhashini",
+            bhashini.lookup("नमस्ते बच्चों।").provenanceLabel
+        )
+
+        assertEquals("AI4Bharat IndicTrans2", pack.serviceName)
+        assertEquals(
+            "Machine translation · AI4Bharat IndicTrans2",
+            pack.lookup("नमस्ते बच्चों।").provenanceLabel
+        )
     }
 
     /** A miss must stay a miss. No audio, no text, no guess. */

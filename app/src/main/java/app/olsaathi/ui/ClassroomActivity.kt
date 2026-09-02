@@ -40,6 +40,17 @@ class ClassroomActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var tts: TextToSpeech? = null
     private var ttsReady = false
     private var haveSantaliVoice = false
+    /**
+     * When speech recognition returned the Hindi now on screen, or 0 when it
+     * did not come from speech.
+     *
+     * Set only by [translateAndDisplay] from its parameter, and cleared the
+     * moment it is used, so it cannot outlive the utterance it belongs to. It
+     * was previously assigned at each call site and never cleared, which meant
+     * a teacher who spoke once and pressed play again ten minutes later
+     * recorded ten minutes as a voice-to-voice latency.
+     */
+    private var speechResultMs: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,7 +108,10 @@ class ClassroomActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                     source = t.source,
                     target = t.target,
                     image = pack.entries().firstOrNull { it.id == t.entryId }?.image,
-                    audio = pack.audioPath(t),
+                    // Only audio the pack labels. That screen shows no
+                    // provenance by design, so anything it plays has to have
+                    // been vouched for before it gets there.
+                    audio = if (t.hasAudio) pack.audioPath(t) else null,
                 )
             )
         }
@@ -106,11 +120,24 @@ class ClassroomActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         binding.btnPlayAudio.setOnClickListener {
             val t = currentTranslation ?: return@setOnClickListener
             val path = pack.audioPath(t)
-            if (path != null && audioPlayer.hasAudio(path)) {
+            if (t.hasAudio && path != null && audioPlayer.hasAudio(path)) {
+                // Consumed once. A replay of the same line is not a
+                // voice-to-voice event and must not be recorded as one.
+                val voiceStartMs = speechResultMs
+                speechResultMs = 0
                 audioPlayer.play(path,
                     onComplete = { runOnUiThread { binding.btnPlayAudio.isEnabled = true } },
                     onError = { err ->
                         runOnUiThread { Toast.makeText(this, err, Toast.LENGTH_SHORT).show() }
+                    },
+                    onReady = {
+                        // First moment sound can leave the tablet. Only a line
+                        // that arrived by voice counts: playing something the
+                        // teacher typed measures nothing about voice to voice.
+                        if (voiceStartMs > 0) {
+                            val elapsed = System.currentTimeMillis() - voiceStartMs
+                            (application as OlSaathiApplication).recordVoiceLatency(elapsed)
+                        }
                     }
                 )
             }
@@ -125,7 +152,9 @@ class ClassroomActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             binding.btnVoiceInput.setOnClickListener {
                 val prompt = MOCK_PROMPTS.random()
                 binding.textSource.text = prompt
-                translateAndDisplay(prompt)
+                // Stands in for a speech result, so the debug button exercises
+                // the same measurement path the real microphone does.
+                translateAndDisplay(prompt, spokenAtMs = System.currentTimeMillis())
             }
         } else {
             binding.btnVoiceInput.setOnClickListener { /* no-op in release */ }
@@ -179,21 +208,44 @@ class ClassroomActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
     }
 
-    private fun translateAndDisplay(hindi: String) {
+    /**
+     * @param spokenAtMs when speech recognition produced this Hindi, or 0 when
+     *   it came from the keyboard or from opening a lesson. Passed rather than
+     *   assigned by each caller, so no path can leave a stale timestamp behind
+     *   for the next playback to measure against.
+     */
+    private fun translateAndDisplay(hindi: String, spokenAtMs: Long = 0) {
         val startMs = System.currentTimeMillis()
         val translation = pack.lookup(hindi)
         val elapsed = System.currentTimeMillis() - startMs
 
         currentTranslation = translation
+        speechResultMs = spokenAtMs
+        // Two different numbers, kept apart. This one is the offline lookup and
+        // lands near zero. The voice-to-voice span, which is the one the
+        // 3-second ceiling is about, is measured in the play handler above.
         (application as OlSaathiApplication).recordLatency(elapsed)
 
         runOnUiThread {
             binding.textSource.text = translation.source.ifEmpty { hindi }
             binding.textTarget.text = translation.target.ifEmpty { "—" }
-            binding.textProvenance.text = translation.provenance.label
+            binding.textProvenance.text = translation.provenanceLabel
 
+            // Both halves have to agree before the button lights up: the wav
+            // has to be in the APK and the pack has to record where the voice
+            // came from. A wav with no recorded provenance stays unplayable,
+            // because nothing on screen could then tell the teacher what they
+            // are about to play to a class.
             val audioPath = pack.audioPath(translation)
-            binding.btnPlayAudio.isEnabled = audioPath != null && audioPlayer.hasAudio(audioPath)
+            binding.btnPlayAudio.isEnabled =
+                translation.hasAudio && audioPath != null && audioPlayer.hasAudio(audioPath)
+
+            if (translation.hasAudio) {
+                binding.textAudioProvenance.text = translation.audioProvenance.label
+                binding.textAudioProvenance.visibility = View.VISIBLE
+            } else {
+                binding.textAudioProvenance.visibility = View.GONE
+            }
 
             // Only offer to show the class when there is Santali to show. On a
             // miss the button disappears rather than opening an empty screen.
@@ -217,7 +269,7 @@ class ClassroomActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                     if (parts.size == 3) "${parts[2].toInt()} ${monthName(parts[1].toInt())} ${parts[0]}"
                     else translation.reviewedOn
                 } catch (e: Exception) { translation.reviewedOn }
-                binding.textProvenance.text = "${translation.provenance.label}\nChecked by ${translation.reviewerName}, $date"
+                binding.textProvenance.text = "${translation.provenanceLabel}\nChecked by ${translation.reviewerName}, $date"
             } else if (pack.isSample) {
                 binding.textProvenance.text = getString(R.string.sample_pack_warning)
             }
@@ -251,7 +303,15 @@ class ClassroomActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         if (speechInput == null) {
             speechInput = HindiSpeechInput(
                 context = this,
-                onResult = { text -> runOnUiThread { binding.textSource.text = text; translateAndDisplay(text) } },
+                onResult = { text ->
+                    // The clock starts here, the moment recognition returns
+                    // Hindi, and stops when MediaPlayer is prepared.
+                    val spokenAt = System.currentTimeMillis()
+                    runOnUiThread {
+                        binding.textSource.text = text
+                        translateAndDisplay(text, spokenAtMs = spokenAt)
+                    }
+                },
                 onError = { err ->
                     runOnUiThread {
                         Toast.makeText(this, err, Toast.LENGTH_SHORT).show()

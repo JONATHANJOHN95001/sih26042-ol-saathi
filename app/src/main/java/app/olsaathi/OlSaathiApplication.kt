@@ -18,7 +18,25 @@ class OlSaathiApplication : Application() {
         private set
 
     /** Last few round-trip latency measurements (ms), most recent last. */
+    /**
+     * Pack lookup times, in milliseconds.
+     *
+     * This is a hash lookup and lands near zero. It is worth showing because it
+     * is the offline claim made concrete, but it is NOT the deliverable, which
+     * is voice in to voice out. Keeping the two in one list produced a median
+     * blended out of dozens of near-zero lookups and a handful of real spans,
+     * which flattered the number and measured nothing anyone asked about.
+     */
     val latencyHistory = mutableListOf<Long>()
+
+    /**
+     * Voice-to-voice times, in milliseconds: from the moment speech
+     * recognition returns Hindi to the moment MediaPlayer is prepared and
+     * Santali can leave the speaker. This is the one the 3-second ceiling
+     * applies to. Empty until the pack ships audio, and saying so is better
+     * than borrowing the lookup number.
+     */
+    val voiceLatencyHistory = mutableListOf<Long>()
 
     /** Pre-flight summary from the last run, or null if never run. */
     var preflightSummary: String? = null
@@ -73,10 +91,16 @@ class OlSaathiApplication : Application() {
         }
     }
 
-    /** Record a latency measurement. Keeps at most 20 entries. */
+    /** Record a pack lookup time. Keeps at most 20 entries. */
     fun recordLatency(ms: Long) {
         latencyHistory.add(ms)
         if (latencyHistory.size > 20) latencyHistory.removeAt(0)
+    }
+
+    /** Record a voice-to-voice time. Keeps at most 20 entries. */
+    fun recordVoiceLatency(ms: Long) {
+        voiceLatencyHistory.add(ms)
+        if (voiceLatencyHistory.size > 20) voiceLatencyHistory.removeAt(0)
     }
 
     companion object {
