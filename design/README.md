@@ -19,6 +19,41 @@ Android, Kotlin, XML layouts, Material 3. Five screens.
 The five screens: Lesson list, Lesson player, Teach (live translation), Show
 the class, and Check and proof.
 
+## How the screens connect
+
+Three tabs across the bottom, one item in the overflow menu, and two screens
+that are pushed on top rather than tabbed to. That is the whole app.
+
+```
+BOTTOM NAV
+  Lessons     LessonListActivity      the launcher screen, opens on start
+  Teach       ClassroomActivity       live Hindi in, Santali out
+  Materials   WorksheetActivity       generates the printable PDFs
+
+OVERFLOW MENU
+  Check & Proof  CheckAndProofActivity  the evidence screen: fonts, audio,
+                                        network calls, latency, pack provenance
+
+PUSHED ON TOP
+  Lessons  -> tap a lesson       -> Lesson player   LessonPlayerActivity
+  Lesson player -> "Show the class" -> Show the class  ShowClassActivity
+  Teach         -> "Show the class" -> Show the class  ShowClassActivity
+```
+
+Two things about that structure are deliberate and worth keeping.
+
+**The three tabs are the teacher's three jobs**, not a feature list: run a
+prepared lesson, translate something unplanned, print something to hand out.
+
+**"Show the class" is a leaf with no navigation on it at all.** No tabs, no
+back arrow in the usual place, no chrome. The teacher turns the tablet around
+and a child sees a page, not an app. Getting out of it is a deliberate act by
+the teacher. If you add navigation to that screen you have broken it.
+
+**Check & Proof is in the overflow on purpose.** It is for a judge or a
+sceptical headteacher, not for daily teaching, so it should be findable but not
+in the way.
+
 ## Four rules the design cannot break
 
 These are not taste. Each one exists because the app makes a claim it has to be
