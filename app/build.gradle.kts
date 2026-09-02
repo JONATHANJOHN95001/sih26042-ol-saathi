@@ -1,9 +1,27 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
 
+// Signing credentials, read from local.properties or the environment, never
+// committed. They used to sit in this file as string literals, which put them
+// on a public repo the moment it was pushed. The keystore itself has always
+// been gitignored, so nothing could be signed with them, but a password in
+// public is a password to change.
+val keystoreProps = Properties().apply {
+    val f = rootProject.file("local.properties")
+    if (f.exists()) f.inputStream().use { load(it) }
+}
+fun secret(key: String): String? =
+    keystoreProps.getProperty(key) ?: System.getenv(key)
+
 android {
+    // Produces OlSaathi-SIH26042-v1.0.0-debug.apk rather than app-debug.apk,
+    // so the file still says what it is once it has been mailed around.
+    base.archivesName = "OlSaathi-SIH26042-v1.0.0"
+
     namespace = "app.olsaathi"
     compileSdk = 35
 
@@ -17,12 +35,23 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // Configured only when the keystore and its credentials are actually
+    // present, so a contributor who has neither can still clone and build a
+    // debug APK. A release build without them stays unsigned rather than
+    // failing with a misleading error.
+    val keystoreFile = file("release-key.jks")
+    val hasSigning = keystoreFile.exists() &&
+        secret("RELEASE_STORE_PASSWORD") != null &&
+        secret("RELEASE_KEY_PASSWORD") != null
+
     signingConfigs {
-        create("release") {
-            storeFile = file("release-key.jks")
-            storePassword = "TribalFLN2026"
-            keyAlias = "tribalfln"
-            keyPassword = "TribalFLN2026"
+        if (hasSigning) {
+            create("release") {
+                storeFile = keystoreFile
+                storePassword = secret("RELEASE_STORE_PASSWORD")
+                keyAlias = secret("RELEASE_KEY_ALIAS") ?: "tribalfln"
+                keyPassword = secret("RELEASE_KEY_PASSWORD")
+            }
         }
     }
 
@@ -34,7 +63,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("release")
+            if (hasSigning) signingConfig = signingConfigs.getByName("release")
         }
         debug {
             isMinifyEnabled = false

@@ -1,1 +1,7 @@
-sdk.dir=C\:\Users\YOURNAME\AppData\Local\Android\Sdk
+sdk.dir=C:\Users\YOURNAME\AppData\Local\Android\Sdk
+
+# Only needed to build a signed release. A debug build needs none of this.
+# Set them here or as environment variables; this file is gitignored.
+RELEASE_STORE_PASSWORD=
+RELEASE_KEY_ALIAS=tribalfln
+RELEASE_KEY_PASSWORD=
