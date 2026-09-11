@@ -156,6 +156,12 @@ Every one of these was in a previous attempt. None is graded. Together they are 
 
 **Team INNOV8** — JAIN Deemed-to-be University, Bengaluru
 
+Team members:
+
+- Jonathan John ([@JONATHANJOHN95001](https://github.com/JONATHANJOHN95001))
+
+Credits:
+
 - AI4Bharat for IndicTrans2 1.1B (prajdabre/rotary-indictrans2-en-indic-1B) — the actual translation model used, run locally at build time
 - AI4Bharat for Indic Parler-TTS — the available-but-not-yet-used Santali audio path
 - Bhashini (MeitY, Government of India) for live translation and speech; its IIT Madras voice (`Bhashini/IITM/TTS`) is what speaks Santali in the app
