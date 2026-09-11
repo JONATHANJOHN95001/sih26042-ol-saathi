@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  One line lifted from a teacher PDF.
+
+  Target language leads, Hindi sits under it as the gloss, matching every
+  other surface in the app. A line the pack cannot translate keeps its grey
+  italic "not in offline pack" rather than a guess, so this card has to look
+  the same whether the lookup hit or missed.
+-->
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/textTranslation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/md_theme_secondary"
+            android:textSize="20sp"
+            android:lineSpacingMultiplier="1.6"
+            tools:text="ᱚᱞ ᱪᱤᱠᱤ ᱛᱮ" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/md_theme_outlineVariant" />
+
+        <TextView
+            android:id="@+id/textHindi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/md_theme_onSurfaceVariant"
+            android:textSize="15sp"
+            tools:text="यहाँ हिंदी का वाक्य है" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

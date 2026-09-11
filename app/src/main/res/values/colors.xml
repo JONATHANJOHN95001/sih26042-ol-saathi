@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- Design Token Palette — "Earth & Script" Theme                -->
+    <!-- Rugged Modernism: tribal heritage + professional SaaS         -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+
+    <!-- ── Primary (Deep Indigo) ─────────────────────────────────── -->
+    <color name="md_theme_primary">#1E4B38</color>
+    <color name="md_theme_onPrimary">#FBF9F5</color>
+    <color name="md_theme_primaryContainer">#1E4B38</color>
+    <color name="md_theme_onPrimaryContainer">#FBF9F5</color>
+    <color name="md_theme_inversePrimary">#9CCFB6</color>
+
+    <!-- ── Secondary (Forest Green) ──────────────────────────────── -->
+    <color name="md_theme_secondary">#C05621</color>
+    <color name="md_theme_onSecondary">#FBF9F5</color>
+    <color name="md_theme_secondaryContainer">#FDEAE2</color>
+    <color name="md_theme_onSecondaryContainer">#4A1B05</color>
+
+    <!-- ── Tertiary (Terracotta/Ochre) ───────────────────────────── -->
+    <color name="md_theme_tertiary">#D97706</color>
+    <color name="md_theme_onTertiary">#2B1A05</color>
+    <color name="md_theme_tertiaryContainer">#683600</color>
+    <color name="md_theme_onTertiaryContainer">#FDEBD2</color>
+
+    <!-- ── Error ─────────────────────────────────────────────────── -->
+    <color name="md_theme_error">#BA1A1A</color>
+    <color name="md_theme_onError">#FFFFFF</color>
+    <color name="md_theme_errorContainer">#FFDAD6</color>
+    <color name="md_theme_onErrorContainer">#93000A</color>
+
+    <!-- ── Background & Surface (Parchment) ──────────────────────── -->
+    <color name="md_theme_background">#FBF9F5</color>
+    <color name="md_theme_onBackground">#19201D</color>
+    <color name="md_theme_surface">#FBF9F5</color>
+    <color name="md_theme_onSurface">#19201D</color>
+    <color name="md_theme_surfaceVariant">#EDE7DF</color>
+    <color name="md_theme_onSurfaceVariant">#45514B</color>
+    <color name="md_theme_surfaceDim">#EDE7DF</color>
+    <color name="md_theme_surfaceBright">#FBF9F5</color>
+    <color name="md_theme_surfaceTint">#1E4B38</color>
+
+    <!-- ── Surface Containers (Tonal Depth) ──────────────────────── -->
+    <color name="md_theme_surfaceContainerLowest">#FDFCFA</color>
+    <color name="md_theme_surfaceContainerLow">#F7F3EE</color>
+    <color name="md_theme_surfaceContainer">#F4EFEA</color>
+    <color name="md_theme_surfaceContainerHigh">#EDE7DF</color>
+    <color name="md_theme_surfaceContainerHighest">#E8E1D7</color>
+
+    <!-- ── Inverse ───────────────────────────────────────────────── -->
+    <color name="md_theme_inverseSurface">#2F352F</color>
+    <color name="md_theme_inverseOnSurface">#F1EEE8</color>
+
+    <!-- ── Outline ───────────────────────────────────────────────── -->
+    <color name="md_theme_outline">#8C8479</color>
+    <color name="md_theme_outlineVariant">#E2DBD2</color>
+
+    <!-- ── Fixed Palettes ────────────────────────────────────────── -->
+    <color name="md_theme_primaryFixed">#D4E5DB</color>
+    <color name="md_theme_primaryFixedDim">#9CCFB6</color>
+    <color name="md_theme_onPrimaryFixed">#06281A</color>
+    <color name="md_theme_onPrimaryFixedVariant">#2F6B4F</color>
+    <color name="md_theme_secondaryFixed">#FBE0D0</color>
+    <color name="md_theme_secondaryFixedDim">#F0B48A</color>
+    <color name="md_theme_onSecondaryFixed">#4A1B05</color>
+    <color name="md_theme_onSecondaryFixedVariant">#94420F</color>
+    <color name="md_theme_tertiaryFixed">#FDEBD2</color>
+    <color name="md_theme_tertiaryFixedDim">#F3C77E</color>
+    <color name="md_theme_onTertiaryFixed">#4A2A02</color>
+    <color name="md_theme_onTertiaryFixedVariant">#A85B04</color>
+
+    <!-- ── Semantic Colors ───────────────────────────────────────── -->
+    <color name="voice_active">#1E6F8C</color>
+    <color name="mesh_connected">#4F7A3F</color>
+    <color name="mesh_disconnected">#8A8178</color>
+    <color name="success_green">#4F7A3F</color>
+    <color name="warning_orange">#D97706</color>
+
+    <!-- ── Ol Chiki Accent ───────────────────────────────────────── -->
+    <color name="ol_chiki_accent">#C05621</color>
+    <!-- White, to match the logo's own background; see tools/make_launcher_icons.py -->
+    <color name="ic_launcher_background">#FFFFFF</color>
+
+    <!-- ── Tribal Pattern Decorative ─────────────────────────────── -->
+    <color name="tribal_pattern_stroke">#4F7A3F</color>
+    <color name="tribal_pattern_fill">#1E4B38</color>
+    <!-- Sample data warning. Deliberately alarming: this label means the
+         Santali on screen was not produced by Bhashini. -->
+    <color name="sample_red">#C62828</color>
+    <!-- Human-verified: a blue that stands apart from the machine-translation green -->
+    <color name="human_verified_blue">#1565C0</color>
+    <!-- Live network translation. Distinct from the machine-translation olive
+         and the human-verified blue, because it is a third claim: real
+         translation, but not through the build-time contamination guard. -->
+    <color name="online_machine_teal">#1E6F6B</color>
+    <!-- NIPUN outcome chip. Its own token because primaryContainer is a
+         filled dark badge in this design, and a code label needs to sit on a
+         light tint to stay readable next to body text. -->
+    <color name="nipun_chip_fill">#DDE8E1</color>
+    <color name="nipun_chip_ink">#16382A</color>
+</resources>

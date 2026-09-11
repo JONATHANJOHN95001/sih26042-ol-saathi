@@ -1,0 +1,40 @@
+{
+  "folders": [
+    { "name": "Start here: Ol Saathi", "path": "." },
+    { "name": "Android app (Kotlin)", "path": "app/src/main/java/app/olsaathi" },
+    { "name": "App resources, packs and audio", "path": "app/src/main" },
+    { "name": "Unit tests", "path": "app/src/test" },
+    { "name": "Build-time content pipeline", "path": "tools" },
+    { "name": "Bhashini integration and probes", "path": "bhashini" },
+    { "name": "Bhashini SDK pipeline and Postman", "path": "pipelines" },
+    { "name": "Docs and verification", "path": "docs" }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/build": true,
+      "**/.gradle": true,
+      "**/node_modules": true,
+      "**/__pycache__": true,
+      "**/.venv": true,
+      "**/out": true,
+      "**/.idea": true
+    },
+    "search.exclude": {
+      "**/assets/pack/audio": true,
+      "**/*.pptx": true
+    },
+    "workbench.editorAssociations": {
+      "JUDGES_GUIDE.md": "vscode.markdown.preview.editor"
+    },
+    "explorer.sortOrder": "type",
+    "editor.wordWrap": "on",
+    "markdown.preview.breaks": false
+  },
+  "extensions": {
+    "recommendations": [
+      "mathiasfrohlich.kotlin",
+      "ms-python.python",
+      "redhat.vscode-xml"
+    ]
+  }
+}

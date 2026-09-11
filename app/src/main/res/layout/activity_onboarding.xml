@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  First-run onboarding, three steps in one layout.
+
+  One layout rather than a ViewPager: the three screens differ only in their
+  text and picture, and adding a pager dependency to animate that would be more
+  moving parts than the thing itself.
+
+  Bilingual throughout, English above Hindi, because the teacher reading this
+  is the one being asked to trust the tablet.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/md_theme_background">
+
+    <!-- ── Brand bar ─────────────────────────────────────────────── -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/md_theme_primary"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="14dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OL SAATHI • ऑल साथी"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.04"
+                android:textColor="@color/md_theme_onPrimary" />
+
+            <TextView
+                android:id="@+id/textBrandSub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textSize="12sp"
+                android:alpha="0.85"
+                android:textColor="@color/md_theme_onPrimary"
+                tools:text="Jharkhand Primary Education Deployment" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSkip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="56dp"
+            android:text="Skip (छोड़ें)"
+            android:textSize="14sp"
+            android:textColor="@color/md_theme_onPrimary"
+            style="@style/Widget.Material3.Button.TextButton" />
+
+    </LinearLayout>
+
+    <!--
+        The fading edge is not decoration. On a short screen the body text does
+        not fit, and it scrolls, but a line cut cleanly in half at the bottom
+        reads as a rendering bug rather than as "there is more below". The
+        target Lenovo Tab M8 is 1280x800, shorter than any phone this has been
+        seen on, so this is the screen where it matters most.
+    -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:requiresFadingEdge="vertical"
+        android:fadingEdgeLength="28dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imageStep"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="@null"
+                    tools:src="@drawable/ob_1" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/textEyebrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.08"
+                android:textColor="@color/md_theme_secondary"
+                tools:text="चरण 1 • STEP 1 OF 3" />
+
+            <TextView
+                android:id="@+id/textHeadline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:textColor="@color/md_theme_onSurface"
+                tools:text="Teach in their language" />
+
+            <TextView
+                android:id="@+id/textHeadlineHi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textSize="17sp"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="@color/md_theme_secondary"
+                tools:text="बच्चों की अपनी मातृभाषा में पढ़ाएं" />
+
+            <TextView
+                android:id="@+id/textBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:textSize="15sp"
+                android:lineSpacingMultiplier="1.4"
+                android:textColor="@color/md_theme_onSurfaceVariant"
+                tools:text="OL SAATHI helps teachers bridge classroom communication." />
+
+            <TextView
+                android:id="@+id/textBodyHi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="15sp"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="@color/md_theme_onSurfaceVariant"
+                tools:text="अब हर बच्चा पाठ को अपनी भाषा में समझेगा।" />
+
+            <!-- What this step is claiming, in short form. Kept as one block
+                 so the three steps can share a layout. -->
+            <TextView
+                android:id="@+id/textHighlights"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:padding="14dp"
+                android:background="@drawable/bg_telemetry"
+                android:textSize="13sp"
+                android:lineSpacingMultiplier="1.45"
+                android:textColor="@color/md_theme_onSurface"
+                tools:text="Santali • ᱥᱟᱱᱛᱟᱲᱤ (Ol Chiki) • 16 more Indian languages" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- ── Step controls ─────────────────────────────────────────── -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="14dp">
+
+        <TextView
+            android:id="@+id/textCounter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="13sp"
+            android:textColor="@color/md_theme_onSurfaceVariant"
+            tools:text="1 of 3" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="56dp"
+            android:layout_marginEnd="8dp"
+            android:text="Back (पीछे)"
+            android:textSize="14sp"
+            android:visibility="invisible"
+            style="@style/Widget.Material3.Button.OutlinedButton" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="56dp"
+            android:text="Next (आगे बढ़ें)"
+            android:textSize="14sp"
+            style="@style/Widget.Material3.Button" />
+
+    </LinearLayout>
+
+</LinearLayout>

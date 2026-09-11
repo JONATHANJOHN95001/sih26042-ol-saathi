@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Chip behind a NIPUN outcome code. Tinted, not outlined, so it reads as a
+     label rather than another tappable control on a card that is itself one. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/nipun_chip_fill" />
+    <corners android:radius="8dp" />
+</shape>

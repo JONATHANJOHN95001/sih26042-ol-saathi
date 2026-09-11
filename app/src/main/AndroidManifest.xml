@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Speech recognition input -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- Read-only. The Proof screen reports whether the device has a
+         network so a judge can see the app is genuinely offline. -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--
+        Used only by BhashiniClient, and only for sentences the offline pack
+        cannot answer. With no key compiled in, nothing ever opens a socket.
+        NetworkGuard counts every call and Check and Proof shows the count, so
+        the offline claim stays something a judge can check rather than trust.
+    -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-feature android:name="android.hardware.microphone" android:required="true" />
+
+    <application
+        android:name=".OlSaathiApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.OlSaathi"
+        tools:targetApi="34">
+
+        <!-- Launcher: Lessons hub -->
+        <activity
+            android:name=".ui.LessonListActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Teach screen (phrase lookup) -->
+        <activity
+            android:name=".ui.OnboardingActivity"
+            android:exported="false"
+            android:label="@string/app_name" />
+
+        <activity
+            android:name=".ui.ClassroomActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- Lesson player (line-by-line walker) -->
+        <activity
+            android:name=".ui.LessonPlayerActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- Worksheet -->
+        <activity
+            android:name=".ui.WorksheetActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- The child-facing view. Deliberately NOT portrait-locked: a
+             teacher turning the tablet to face a class turns it landscape. -->
+        <activity
+            android:name=".ui.ShowClassActivity"
+            android:exported="false"
+            android:theme="@style/Theme.OlSaathi"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+
+        <!-- Merged Check & Proof screen (replaces PreFlight + Proof) -->
+        <activity
+            android:name=".ui.CheckAndProofActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- Import lesson PDF -->
+        <activity
+            android:name=".ui.ImportLessonActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+    </application>
+</manifest>

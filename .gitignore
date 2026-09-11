@@ -1,0 +1,95 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Android / Gradle
+.gradle/
+build/
+app/build/
+local.properties
+*.apk
+*.ap_
+*.aab
+*.dex
+*.class
+*.hprof
+
+# Generated files
+generated_sheets/
+screenshots/
+*.regtrans-ms
+*.blf
+*.log
+*.tmp.*
+desktop.ini
+NTUSER.DAT*
+
+# Keystore (never commit release keys)
+app/release-key.jks
+
+# OS files
+Thumbs.db
+Desktop.ini
+
+# Dead scaffold. settings.gradle includes only :app; android/ is an earlier
+# unrelated project under com.example.* and should be deleted, not reviewed.
+/android/
+
+# One-off repair scripts
+fix_encodings.js
+fix_imports.mjs
+fix_packages.mjs
+reconstruct_stubs.sh
+
+# Debug dumps and build output
+EMULATOR_UI_*.xml
+generated_materials/
+
+# Office lock files
+~$*
+
+# Audio ships, deliberately. These wavs used to be ignored, because a silent
+# placeholder is indistinguishable from working audio to anyone who does not
+# open it. That guard is now tools/verify_assets.py, which checks every wav is
+# a real RIFF/WAVE, is audible, and is referenced by the pack. So the files
+# belong in the repo: anyone who clones this has to get an app that speaks.
+
+# Python bytecode
+__pycache__/
+*.pyc
+verification-*.json
+
+# Scratch scaffold, never referenced by the build
+temp-scaffold/
+
+# A Bhashini run lands here. It is unreviewed machine output by definition,
+# so it must not reach a public repo before someone has read it.
+bhashini/out/*
+!bhashini/out/.gitkeep
+
+# Python virtualenvs (the TTS toolchain pins transformers 4.46.1, so it lives apart)
+.venv-tts/
+.venv/
+venv/
+

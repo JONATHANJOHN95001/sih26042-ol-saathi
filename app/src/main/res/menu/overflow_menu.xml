@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_autoplay"
+        android:checkable="true"
+        android:title="@string/autoplay_label"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_import_pdf"
+        android:title="Import PDF"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_check_proof"
+        android:title="Check &amp; Proof"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_onboarding"
+        android:title="Show intro"
+        app:showAsAction="never" />
+</menu>

@@ -1,0 +1,432 @@
+{
+  "forward": "prajdabre/rotary-indictrans2-en-indic-1B",
+  "backward": "prajdabre/rotary-indictrans2-indic-en-1B",
+  "median": 0.484,
+  "note": "Round-trip similarity ranks suspicion, it does not measure correctness. A low score means a human should look, not that the translation is wrong.",
+  "rows": [
+    {
+      "id": "p02",
+      "kind": "phrase",
+      "original_en": "Everyone sit down.",
+      "santali": "ᱡᱚᱛᱚ ᱦᱚᱲ ᱠᱚ ᱫᱩᱲᱩᱵ ᱮᱱᱟ ᱾",
+      "back_en": "All the people took their seats.",
+      "score": 0.1
+    },
+    {
+      "id": "p33",
+      "kind": "phrase",
+      "original_en": "Read this word.",
+      "santali": "ᱱᱚᱣᱟ ᱟᱹᱲᱟᱹ ᱫᱚ ᱯᱟᱲᱦᱟᱣ ᱢᱮ ᱾",
+      "back_en": "Let's take a look at this sentence.",
+      "score": 0.18
+    },
+    {
+      "id": "neema-dadi.l4",
+      "kind": "lesson",
+      "original_en": "Her knees hurt.",
+      "santali": "ᱩᱱᱤᱭᱟᱜ ᱜᱩᱱᱴᱷᱮ ᱨᱮ ᱦᱟᱥᱩ ᱞᱮᱱᱟ ᱾",
+      "back_en": "He suffered an injury to his knee.",
+      "score": 0.184
+    },
+    {
+      "id": "p20",
+      "kind": "phrase",
+      "original_en": "Correct answer.",
+      "santali": "ᱡᱚᱛᱷᱟᱛ ᱛᱮᱞᱟ ᱮᱢ ᱢᱮ ᱾",
+      "back_en": "Come up with an appropriate response.",
+      "score": 0.192
+    },
+    {
+      "id": "p09",
+      "kind": "phrase",
+      "original_en": "Repeat after me.",
+      "santali": "ᱤᱧ ᱛᱟᱭᱚᱢ ᱵᱟᱨ ᱫᱷᱟᱣ ᱢᱮ ᱾",
+      "back_en": "Give it to me a couple of times next time.",
+      "score": 0.2
+    },
+    {
+      "id": "p21",
+      "kind": "phrase",
+      "original_en": "Never mind, it is all right.",
+      "santali": "ᱛᱤᱥᱦᱚᱸ ᱟᱞᱚᱢ ᱩᱭᱦᱟᱹᱨᱟ ᱡᱮ ᱥᱟᱱᱟᱢᱟᱜ ᱜᱮ ᱴᱷᱤᱠ ᱜᱮᱭᱟ ᱾",
+      "back_en": "Don 't ever assume that everything is perfect.",
+      "score": 0.216
+    },
+    {
+      "id": "p12",
+      "kind": "phrase",
+      "original_en": "Write your name.",
+      "santali": "ᱟᱢᱟᱜ ᱧᱩᱛᱩᱢ ᱚᱞ ᱢᱮ ᱾",
+      "back_en": "Input the name of the person you are interviewing.",
+      "score": 0.236
+    },
+    {
+      "id": "p22",
+      "kind": "phrase",
+      "original_en": "Did you understand?",
+      "santali": "ᱟᱢ ᱪᱮᱫ ᱮᱢ ᱵᱩᱡᱷᱟᱹᱣ ᱟᱠᱟᱫᱟ",
+      "back_en": "What do you mean?",
+      "score": 0.278
+    },
+    {
+      "id": "p14",
+      "kind": "phrase",
+      "original_en": "Raise your hand.",
+      "santali": "ᱛᱤ ᱨᱟᱠᱟᱵ ᱢᱮ ᱾",
+      "back_en": "Hold up one of your hands.",
+      "score": 0.286
+    },
+    {
+      "id": "p10",
+      "kind": "phrase",
+      "original_en": "Listen carefully.",
+      "santali": "ᱥᱚᱱᱛᱚᱨ ᱠᱟᱛᱮ ᱟᱸᱡᱚᱢ ᱢᱮ ᱾",
+      "back_en": "Listen to it with a sense of foreboding.",
+      "score": 0.293
+    },
+    {
+      "id": "p23",
+      "kind": "phrase",
+      "original_en": "What is this?",
+      "santali": "ᱱᱚᱶᱟ ᱫᱚ ᱪᱮᱫ ᱠᱟᱱᱟ",
+      "back_en": "Here's what it is all about",
+      "score": 0.35
+    },
+    {
+      "id": "neema-dadi.l9",
+      "kind": "lesson",
+      "original_en": "Neema ran and fetched grandmother's slippers.",
+      "santali": "ᱱᱤᱢᱟ ᱫᱟᱹᱲ ᱠᱟᱛᱮ ᱜᱚᱲᱚᱢ ᱜᱚᱲᱚᱢ ᱠᱩᱲᱤᱭᱟᱜ ᱪᱟᱯᱚᱞᱮ ᱟᱹᱜᱩ ᱠᱮᱫᱟ ᱾",
+      "back_en": "Nima ran to get the slippers for her grandchildren.",
+      "score": 0.351
+    },
+    {
+      "id": "p11",
+      "kind": "phrase",
+      "original_en": "Speak loudly.",
+      "santali": "ᱡᱳᱨᱛᱮ ᱨᱚᱲ ᱢᱮ ᱾",
+      "back_en": "Speak in a firm tone.",
+      "score": 0.36
+    },
+    {
+      "id": "p19",
+      "kind": "phrase",
+      "original_en": "Well done!",
+      "santali": "ᱟᱹᱰᱤ ᱱᱟᱯᱟᱭ ᱠᱚᱨᱟᱣ ᱦᱩᱭ ᱟᱠᱟᱱᱟ ᱾",
+      "back_en": "It has been done very well.",
+      "score": 0.362
+    },
+    {
+      "id": "p38",
+      "kind": "phrase",
+      "original_en": "Are you all right?",
+      "santali": "ᱟᱢ ᱪᱮᱫ ᱴᱷᱤᱠ ᱟᱢ?",
+      "back_en": "Are you sure you are doing the right thing?",
+      "score": 0.362
+    },
+    {
+      "id": "neema-dadi.l10",
+      "kind": "lesson",
+      "original_en": "Then the two of them set off towards the playground.",
+      "santali": "ᱚᱱᱟ ᱛᱟᱭᱚᱢ ᱩᱱᱠᱤᱱ ᱵᱟᱱᱟ ᱦᱚᱲ ᱠᱷᱮᱞᱳᱰ ᱴᱷᱟᱶ ᱥᱮᱫ ᱠᱚ ᱞᱟᱦᱟ ᱞᱮᱱᱟ ᱾",
+      "back_en": "The two men then walked out onto the field.",
+      "score": 0.368
+    },
+    {
+      "id": "p40",
+      "kind": "phrase",
+      "original_en": "Practise at home.",
+      "santali": "ᱚᱲᱟᱜ ᱨᱮ ᱥᱚᱲᱠᱚ ᱢᱮ ᱾",
+      "back_en": "Do the exercises at home as well.",
+      "score": 0.38
+    },
+    {
+      "id": "p15",
+      "kind": "phrase",
+      "original_en": "Please be quiet.",
+      "santali": "ᱫᱟᱭᱟ ᱠᱟᱛᱮ ᱛᱷᱤᱨ ᱛᱟᱦᱮᱱ ᱢᱮ ᱾",
+      "back_en": "Please, please, please, please be still.",
+      "score": 0.381
+    },
+    {
+      "id": "p39",
+      "kind": "phrase",
+      "original_en": "Drink some water.",
+      "santali": "ᱱᱟᱥᱮ ᱫᱟᱜ ᱧᱩᱭ ᱢᱮ ᱾",
+      "back_en": "Make sure to drink a little bit of water.",
+      "score": 0.384
+    },
+    {
+      "id": "p25",
+      "kind": "phrase",
+      "original_en": "Who will tell me?",
+      "santali": "ᱚᱠᱚᱭ ᱠᱚ ᱞᱟᱹᱭᱼᱟ ᱢᱮᱹ",
+      "back_en": "Tell me who is going to say it.",
+      "score": 0.396
+    },
+    {
+      "id": "p17",
+      "kind": "phrase",
+      "original_en": "Try once more.",
+      "santali": "ᱟᱨᱦᱚᱸ ᱢᱤᱫ ᱫᱷᱟᱣ ᱨᱤᱠᱟᱹᱭ ᱢᱮ ᱾",
+      "back_en": "Repeat one more time.",
+      "score": 0.398
+    },
+    {
+      "id": "p08",
+      "kind": "phrase",
+      "original_en": "Pick up your pencil.",
+      "santali": "ᱟᱢᱟᱜ ᱯᱮᱱᱥᱤᱞ ᱨᱟᱠᱟᱵ ᱢᱮ ᱾",
+      "back_en": "Hold up one of your pencils.",
+      "score": 0.417
+    },
+    {
+      "id": "p16",
+      "kind": "phrase",
+      "original_en": "Sit in pairs.",
+      "santali": "ᱡᱩᱴᱤ ᱠᱟᱛᱮ ᱫᱩᱲᱩᱵ ᱢᱮ ᱾",
+      "back_en": "Sit down in a pair of shoes.",
+      "score": 0.417
+    },
+    {
+      "id": "p31",
+      "kind": "phrase",
+      "original_en": "Count these and tell me.",
+      "santali": "ᱱᱚᱶᱟ ᱠᱚ ᱞᱮᱠᱷᱟ ᱢᱮ ᱟᱨ ᱤᱧ ᱞᱟᱹᱭ ᱤᱧᱢᱮ ᱾",
+      "back_en": "Count them all out and let me know.",
+      "score": 0.472
+    },
+    {
+      "id": "p07",
+      "kind": "phrase",
+      "original_en": "Close your book.",
+      "santali": "ᱟᱢᱟᱜ ᱯᱚᱛᱚᱵ ᱵᱚᱱᱫᱚ ᱢᱮ ᱾",
+      "back_en": "Close up of the book that you are reading.",
+      "score": 0.474
+    },
+    {
+      "id": "p06",
+      "kind": "phrase",
+      "original_en": "Open your book.",
+      "santali": "ᱟᱢᱟᱜ ᱯᱚᱛᱚᱵ ᱡᱷᱤᱡ ᱢᱮ ᱾",
+      "back_en": "Open up the book that you are reading.",
+      "score": 0.476
+    },
+    {
+      "id": "neema-dadi.l5",
+      "kind": "lesson",
+      "original_en": "She waits eagerly for Neema.",
+      "santali": "ᱩᱱᱤ ᱫᱚ ᱩᱫᱜᱟᱹᱣ ᱥᱟᱞᱟᱜ ᱱᱤᱢᱟ ᱞᱟᱹᱜᱤᱫᱼᱮ ᱛᱟᱸᱜᱤ ᱞᱮᱱᱟ ᱾",
+      "back_en": "He eagerly waits for Nima to arrive.",
+      "score": 0.484
+    },
+    {
+      "id": "p37",
+      "kind": "phrase",
+      "original_en": "Repeat this sentence.",
+      "santali": "ᱱᱚᱣᱟ ᱵᱷᱟᱥᱚᱱ ᱫᱚ ᱫᱚᱲᱦᱟᱛᱮ ᱞᱟᱹᱭ ᱢᱮ ᱾",
+      "back_en": "Repeat the same for the rest of the sentence.",
+      "score": 0.503
+    },
+    {
+      "id": "p03",
+      "kind": "phrase",
+      "original_en": "What will we learn today?",
+      "santali": "ᱛᱮᱦᱮᱧ ᱟᱞᱮ ᱪᱮᱫᱢ ᱥᱮᱲᱟᱭᱟ",
+      "back_en": "What are we going to teach you today?",
+      "score": 0.505
+    },
+    {
+      "id": "neema-dadi.l2",
+      "kind": "lesson",
+      "original_en": "At that time only her grandmother is at home.",
+      "santali": "ᱚᱱᱟ ᱚᱠᱛᱚ ᱥᱩᱢᱩᱝ ᱟᱡ ᱜᱚᱲᱚᱢ ᱟᱭᱳ ᱚᱲᱟᱜ ᱨᱮ ᱛᱟᱦᱮᱱᱟ ᱾",
+      "back_en": "At that time, only her grandparents were living in the house.",
+      "score": 0.518
+    },
+    {
+      "id": "p01",
+      "kind": "phrase",
+      "original_en": "Hello children.",
+      "santali": "ᱦᱚᱞᱳ ᱜᱤᱫᱽᱨᱟᱹᱠᱚ ᱾",
+      "back_en": "Hello there, my dear children.",
+      "score": 0.533
+    },
+    {
+      "id": "p26",
+      "kind": "phrase",
+      "original_en": "Do you have a question?",
+      "santali": "ᱟᱢᱟᱜ ᱠᱤ ᱡᱟᱦᱟᱱ ᱠᱩᱠᱞᱤ ᱢᱮᱱᱟᱜᱼᱟ",
+      "back_en": "Do you have any questions?",
+      "score": 0.594
+    },
+    {
+      "id": "p30",
+      "kind": "phrase",
+      "original_en": "Which number is bigger?",
+      "santali": "ᱚᱠᱟ ᱮᱞ ᱫᱚ ᱢᱟᱨᱟᱝ ᱠᱟᱱᱟ",
+      "back_en": "Which number is the largest?",
+      "score": 0.623
+    },
+    {
+      "id": "p24",
+      "kind": "phrase",
+      "original_en": "What is your name?",
+      "santali": "ᱟᱢᱟᱜ ᱧᱩᱛᱩᱢ ᱫᱚ ᱪᱮᱫ",
+      "back_en": "What's your name?",
+      "score": 0.624
+    },
+    {
+      "id": "neema-dadi.l8",
+      "kind": "lesson",
+      "original_en": "One day grandmother said, my time does not pass.",
+      "santali": "ᱢᱤᱫ ᱫᱤᱱ ᱜᱚᱲᱚᱢ ᱟᱭᱳᱭ ᱞᱟᱹᱭ ᱠᱮᱫᱟ, ᱤᱧᱟᱹᱜ ᱚᱠᱛᱚ ᱫᱚ ᱵᱟᱝ ᱯᱟᱨᱚᱢᱚᱜᱼᱟ ᱾",
+      "back_en": "One day Grandma told me that my time would not pass.",
+      "score": 0.63
+    },
+    {
+      "id": "p04",
+      "kind": "phrase",
+      "original_en": "Let us begin the class.",
+      "santali": "ᱟᱞᱮ ᱠᱞᱟᱥ ᱮᱛᱚᱦᱚᱵ ᱢᱮ ᱾",
+      "back_en": "Let us get on with the class.",
+      "score": 0.635
+    },
+    {
+      "id": "neema-dadi.c2",
+      "kind": "check",
+      "original_en": "Where does grandmother have pain?",
+      "santali": "ᱜᱚᱲᱚᱢ ᱟᱭᱳᱣᱟᱜ ᱫᱚ ᱚᱠᱟ ᱨᱮ ᱦᱟᱹᱥᱩ ᱢᱮᱱᱟᱜ - ᱟ ᱾",
+      "back_en": "Where in the world is the grandmother in pain?",
+      "score": 0.642
+    },
+    {
+      "id": "neema-dadi.c1",
+      "kind": "check",
+      "original_en": "Who is at home at that time?",
+      "santali": "ᱚᱱᱟ ᱚᱠᱛᱚ ᱚᱲᱟᱜ ᱨᱮ ᱚᱠᱚᱭ ᱢᱮᱱᱟᱜ - ᱟ",
+      "back_en": "Who is in the house at the time?",
+      "score": 0.65
+    },
+    {
+      "id": "p36",
+      "kind": "phrase",
+      "original_en": "Tell me in your own language.",
+      "santali": "ᱟᱢᱟᱜ ᱯᱟᱹᱨᱥᱤ ᱛᱮ ᱞᱟᱹᱭ ᱤᱧᱢᱮ ᱾",
+      "back_en": "Let me know in your own language.",
+      "score": 0.669
+    },
+    {
+      "id": "neema-dadi.l6",
+      "kind": "lesson",
+      "original_en": "Every day, while eating, Neema tells her about school.",
+      "santali": "ᱫᱤᱱᱟᱹᱢ ᱡᱚᱢ ᱚᱠᱛᱚ ᱱᱤᱢᱟ ᱩᱱᱤ ᱵᱤᱨᱫᱟᱹᱜᱟᱲ ᱵᱟᱨᱮᱛᱮᱭ ᱞᱟᱹᱭᱟ ᱾",
+      "back_en": "Every day at dinner, Nima tells her about the school.",
+      "score": 0.675
+    },
+    {
+      "id": "neema-dadi.c3",
+      "kind": "check",
+      "original_en": "Where did Neema and grandmother go at the end?",
+      "santali": "ᱢᱩᱪᱟᱹᱫ ᱨᱮ ᱱᱮᱢᱟ ᱟᱨ ᱜᱚᱲᱚᱢ ᱟᱭᱳ ᱫᱚ ᱚᱠᱟᱨᱮ ᱪᱟᱞᱟᱣ ᱮᱱᱟ",
+      "back_en": "Where did Nema and Grandma go in the end?",
+      "score": 0.687
+    },
+    {
+      "id": "p32",
+      "kind": "phrase",
+      "original_en": "Read this letter.",
+      "santali": "ᱱᱚᱶᱟ ᱪᱤᱴᱷᱤ ᱫᱚ ᱯᱟᱲᱦᱟᱣ ᱢᱮ ᱾",
+      "back_en": "Have a read of this letter.",
+      "score": 0.72
+    },
+    {
+      "id": "p27",
+      "kind": "phrase",
+      "original_en": "Count from one to ten.",
+      "santali": "ᱢᱤᱫ ᱠᱷᱚᱱ ᱜᱮᱞ ᱫᱷᱟᱹᱵᱤᱡ ᱞᱮᱠᱷᱟ ᱢᱮ ᱾",
+      "back_en": "Let's count down from one to ten.",
+      "score": 0.733
+    },
+    {
+      "id": "p13",
+      "kind": "phrase",
+      "original_en": "Look at the picture.",
+      "santali": "ᱪᱤᱛᱟᱹᱨ ᱫᱚ ᱧᱮᱞ ᱢᱮ ᱾",
+      "back_en": "Take a look at the picture.",
+      "score": 0.759
+    },
+    {
+      "id": "p28",
+      "kind": "phrase",
+      "original_en": "How many are there?",
+      "santali": "ᱛᱤᱱᱟᱹᱜ ᱜᱟᱱ ᱢᱮᱱᱟᱜ - ᱟ",
+      "back_en": "How many of them are there?",
+      "score": 0.788
+    },
+    {
+      "id": "neema-dadi.l7",
+      "kind": "lesson",
+      "original_en": "In the evening Neema goes out to play.",
+      "santali": "ᱥᱤᱸᱜᱟᱹᱲ ᱨᱮ ᱱᱤᱢᱟ ᱠᱷᱮᱞᱳᱰ ᱞᱟᱹᱜᱤᱫ ᱮ ᱪᱟᱞᱟᱜᱼᱟ ᱾",
+      "back_en": "In the evening, Nima goes out to play.",
+      "score": 0.807
+    },
+    {
+      "id": "neema-dadi.l3",
+      "kind": "lesson",
+      "original_en": "Grandmother does not go anywhere.",
+      "santali": "ᱜᱚᱲᱚᱢ ᱟᱭᱳ ᱫᱚ ᱚᱠᱟᱨᱮᱦᱚᱸ ᱵᱟᱭ ᱪᱟᱞᱟᱜᱼᱟ ᱾",
+      "back_en": "The great-grandmother does not go anywhere.",
+      "score": 0.834
+    },
+    {
+      "id": "p18",
+      "kind": "phrase",
+      "original_en": "Very good!",
+      "santali": "ᱟᱹᱰᱤ ᱱᱟᱯᱟᱭ ᱾",
+      "back_en": "It is very good.",
+      "score": 0.846
+    },
+    {
+      "id": "neema-dadi.l1",
+      "kind": "lesson",
+      "original_en": "Neema comes home from school at two in the afternoon.",
+      "santali": "ᱱᱤᱢᱟ ᱫᱚ ᱛᱤᱠᱤᱱ ᱵᱟᱨ ᱴᱟᱲᱟᱝ ᱨᱮ ᱵᱤᱨᱫᱟᱹᱜᱟᱲ ᱠᱷᱚᱱ ᱚᱲᱟᱜ ᱮ ᱦᱤᱡᱩᱜᱼᱟ ᱾",
+      "back_en": "Nima comes home from school at two in the afternoon.",
+      "score": 0.861
+    },
+    {
+      "id": "p29",
+      "kind": "phrase",
+      "original_en": "What is two plus three?",
+      "santali": "ᱵᱟᱨ ᱥᱮᱞᱮᱫ ᱯᱮ ᱫᱚ ᱪᱮᱫ",
+      "back_en": "what is two plus three",
+      "score": 0.989
+    },
+    {
+      "id": "p34",
+      "kind": "phrase",
+      "original_en": "What is the first sound in this word?",
+      "santali": "ᱱᱚᱶᱟ ᱟᱹᱲᱟᱹ ᱨᱮ ᱯᱩᱭᱞᱩ ᱟᱲᱟᱝ ᱫᱚ ᱪᱮᱫ ᱠᱟᱱᱟ",
+      "back_en": "what is the first sound in this word",
+      "score": 0.993
+    },
+    {
+      "id": "p05",
+      "kind": "phrase",
+      "original_en": "It is time to go home.",
+      "santali": "ᱚᱲᱟᱜ ᱪᱟᱞᱟᱜ ᱚᱠᱛᱚ ᱦᱩᱭ ᱟᱠᱟᱱᱟ ᱾",
+      "back_en": "It is time to go home.",
+      "score": 1.0
+    },
+    {
+      "id": "p35",
+      "kind": "phrase",
+      "original_en": "Listen to the story.",
+      "santali": "ᱠᱟᱹᱦᱱᱤ ᱫᱚ ᱟᱸᱡᱚᱢ ᱢᱮ ᱾",
+      "back_en": "Listen to the story.",
+      "score": 1.0
+    }
+  ]
+}

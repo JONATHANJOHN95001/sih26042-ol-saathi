@@ -1,0 +1,59 @@
+{
+  "_note": "The Hindi a teacher actually says in an FLN classroom. This is the input to tools/build_pack.mjs, which sends each line to Bhashini for translation and audio. Keep it small and real: a bounded phrasebook that is correct beats an open translator that is wrong. Add a line here, rerun the generator, and it appears in the app.",
+  "_nipun": {
+    "FL-OL": "Foundational Literacy, oral language",
+    "FL-RD": "Foundational Literacy, reading",
+    "FL-WR": "Foundational Literacy, writing",
+    "FN-NS": "Foundational Numeracy, number sense",
+    "FN-OP": "Foundational Numeracy, operations",
+    "ROUTINE": "Classroom management, outside the NIPUN outcome framework"
+  },
+  "phrases": [
+    { "id": "p01", "hi": "नमस्ते बच्चों।", "en": "Hello children.", "nipun": "ROUTINE" },
+    { "id": "p02", "hi": "सब बैठ जाओ।", "en": "Everyone sit down.", "nipun": "ROUTINE" },
+    { "id": "p03", "hi": "आज हम क्या सीखेंगे?", "en": "What will we learn today?", "nipun": "ROUTINE" },
+    { "id": "p04", "hi": "कक्षा शुरू करते हैं।", "en": "Let us begin the class.", "nipun": "ROUTINE" },
+    { "id": "p05", "hi": "अब छुट्टी का समय है।", "en": "It is time to go home.", "nipun": "ROUTINE" },
+
+    { "id": "p06", "hi": "किताब खोलो।", "en": "Open your book.", "nipun": "ROUTINE" },
+    { "id": "p07", "hi": "किताब बंद करो।", "en": "Close your book.", "nipun": "ROUTINE" },
+    { "id": "p08", "hi": "पेंसिल उठाओ।", "en": "Pick up your pencil.", "nipun": "ROUTINE" },
+    { "id": "p09", "hi": "मेरे पीछे दोहराओ।", "en": "Repeat after me.", "nipun": "FL-OL" },
+    { "id": "p10", "hi": "ध्यान से सुनो।", "en": "Listen carefully.", "nipun": "FL-OL" },
+    { "id": "p11", "hi": "ज़ोर से बोलो।", "en": "Speak loudly.", "nipun": "FL-OL" },
+    { "id": "p12", "hi": "अपना नाम लिखो।", "en": "Write your name.", "nipun": "FL-WR" },
+    { "id": "p13", "hi": "चित्र देखो।", "en": "Look at the picture.", "nipun": "FL-RD" },
+    { "id": "p14", "hi": "हाथ उठाओ।", "en": "Raise your hand.", "nipun": "ROUTINE" },
+    { "id": "p15", "hi": "शांत हो जाओ।", "en": "Please be quiet.", "nipun": "ROUTINE" },
+    { "id": "p16", "hi": "जोड़ी में बैठो।", "en": "Sit in pairs.", "nipun": "ROUTINE" },
+    { "id": "p17", "hi": "एक बार फिर कोशिश करो।", "en": "Try once more.", "nipun": "ROUTINE" },
+
+    { "id": "p18", "hi": "बहुत अच्छा!", "en": "Very good!", "nipun": "ROUTINE" },
+    { "id": "p19", "hi": "शाबाश!", "en": "Well done!", "nipun": "ROUTINE" },
+    { "id": "p20", "hi": "सही जवाब।", "en": "Correct answer.", "nipun": "ROUTINE" },
+    { "id": "p21", "hi": "कोई बात नहीं।", "en": "Never mind, it is all right.", "nipun": "ROUTINE" },
+
+    { "id": "p22", "hi": "क्या तुम समझ गए?", "en": "Did you understand?", "nipun": "FL-OL" },
+    { "id": "p23", "hi": "यह क्या है?", "en": "What is this?", "nipun": "FL-OL" },
+    { "id": "p24", "hi": "तुम्हारा नाम क्या है?", "en": "What is your name?", "nipun": "FL-OL" },
+    { "id": "p25", "hi": "कौन बताएगा?", "en": "Who will tell me?", "nipun": "FL-OL" },
+    { "id": "p26", "hi": "क्या तुम्हें कोई सवाल है?", "en": "Do you have a question?", "nipun": "FL-OL" },
+
+    { "id": "p27", "hi": "एक से दस तक गिनो।", "en": "Count from one to ten.", "nipun": "FN-NS" },
+    { "id": "p28", "hi": "कितने हैं?", "en": "How many are there?", "nipun": "FN-NS" },
+    { "id": "p29", "hi": "दो और तीन कितने होते हैं?", "en": "What is two plus three?", "nipun": "FN-OP" },
+    { "id": "p30", "hi": "कौन सी संख्या बड़ी है?", "en": "Which number is bigger?", "nipun": "FN-NS" },
+    { "id": "p31", "hi": "इन्हें गिनकर बताओ।", "en": "Count these and tell me.", "nipun": "FN-NS" },
+
+    { "id": "p32", "hi": "यह अक्षर पढ़ो।", "en": "Read this letter.", "nipun": "FL-RD" },
+    { "id": "p33", "hi": "यह शब्द पढ़ो।", "en": "Read this word.", "nipun": "FL-RD" },
+    { "id": "p34", "hi": "इस शब्द की पहली ध्वनि क्या है?", "en": "What is the first sound in this word?", "nipun": "FL-RD" },
+    { "id": "p35", "hi": "कहानी सुनो।", "en": "Listen to the story.", "nipun": "FL-OL" },
+    { "id": "p36", "hi": "अपनी भाषा में बताओ।", "en": "Tell me in your own language.", "nipun": "FL-OL" },
+    { "id": "p37", "hi": "यह वाक्य दोहराओ।", "en": "Repeat this sentence.", "nipun": "FL-OL" },
+
+    { "id": "p38", "hi": "क्या तुम ठीक हो?", "en": "Are you all right?", "nipun": "ROUTINE" },
+    { "id": "p39", "hi": "पानी पी लो।", "en": "Drink some water.", "nipun": "ROUTINE" },
+    { "id": "p40", "hi": "घर पर अभ्यास करना।", "en": "Practise at home.", "nipun": "ROUTINE" }
+  ]
+}

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ol Saathi</string>
+
+    <!-- Lesson List -->
+    <string name="lessons_title">Hindi Lessons</string>
+    <string name="tap_lesson">Pick a lesson to walk through line by line</string>
+    <string name="lesson_format">%1$s</string>
+
+    <!-- Classroom (Teach screen) -->
+    <string name="classroom_title">Teach</string>
+    <string name="hold_to_speak">Hold to Speak Hindi</string>
+    <string name="listening">Listening…</string>
+    <string name="ready">Ready</string>
+    <string name="type_hint">Type a Hindi phrase…</string>
+    <string name="btn_translate">Translate</string>
+    <!-- %1$s is the target language name; set in code from the loaded pack. -->
+    <string name="btn_play">▶ Play</string>
+    <string name="btn_play_format">▶ Play %1$s</string>
+    <string name="btn_worksheet">📄 Worksheet</string>
+    <string name="provenance_verified">Verified translation</string>
+    <string name="provenance_translit">Transliterated, not a translation</string>
+    <string name="provenance_unavailable">No verified translation offline</string>
+    <string name="target_label">Translation</string>
+    <!-- %1$s language, %2$s script, e.g. "Santali (Ol Chiki)". -->
+    <string name="target_label_format">%1$s (%2$s)</string>
+    <string name="source_label">Hindi</string>
+    <string name="language_label">Language</string>
+    <string name="worksheet_intro_default">Pick a lesson, then generate a bilingual worksheet to write on or a sheet of flashcards to cut out.</string>
+    <string name="worksheet_intro_format">Pick a lesson, then generate a bilingual worksheet to write on or a sheet of flashcards to cut out. Both carry Hindi and %1$s on every item.</string>
+    <string name="latency_format">Lookup: %1$d ms</string>
+    <string name="error_speech_not_available">Speech recognition not available on this device</string>
+    <string name="error_no_match">No match found in the phrase pack</string>
+
+    <!-- Lesson Player -->
+    <string name="player_title">Lesson Player</string>
+    <string name="next_line">Next →</string>
+    <string name="next_question">Next question →</string>
+    <string name="go_to_questions">Questions →</string>
+    <string name="finish">Finish ✓</string>
+    <string name="back">← Back</string>
+    <string name="not_in_pack">Not in the offline pack</string>
+
+    <!-- Worksheet -->
+    <string name="worksheet_title">Bilingual Worksheet</string>
+    <string name="btn_share">Share PDF</string>
+    <string name="btn_import_pdf">Import a lesson PDF (पाठ PDF जोड़ें)</string>
+    <string name="btn_add_lesson_pdf">Add a lesson PDF (पाठ PDF जोड़ें)</string>
+    <string name="btn_speed_format">Speed %1$s×</string>
+    <string name="recognising">Recognising…</string>
+    <string name="hold_to_speak_hint">Hold the button and speak Hindi, then let go.</string>
+    <string name="mic_allowed_hold">Microphone allowed. Hold the button and speak.</string>
+    <string name="btn_read_aloud">🔊 Read aloud</string>
+    <string name="btn_save_as_pdf">Save as PDF (PDF सहेजें)</string>
+    <string name="btn_generate_flashcards">Generate Flashcards</string>
+    <string name="no_voice_for_line">No voice for this language here. Connect to the internet for a live voice.</string>
+    <string name="btn_print">Print</string>
+    <string name="worksheet_heading_format">Bilingual Worksheet — Hindi &amp; %1$s</string>
+    <string name="name_label">Name: _______________</string>
+    <string name="date_label">Date: _______________</string>
+    <string name="footer_nipun">NIPUN Bharat — Foundational Literacy &amp; Numeracy</string>
+    <string name="sample_pack_warning">SAMPLE DATA — this is not real Santali. Run tools/build_pack.mjs with Bhashini credentials.</string>
+
+    <!-- Worksheet type grid (Task 1) -->
+    <string name="worksheet_type_label">2. WORKSHEET TYPE (कार्यपत्रक प्रकार)</string>
+    <string name="activity_count_label">3. ACTIVITIES (गतिविधि संख्या)</string>
+    <string name="preview_label">LIVE A4 PREVIEW</string>
+    <string name="preview_generating">Rendering preview…</string>
+    <string name="preview_unavailable">Preview unavailable: %1$s</string>
+    <string name="preview_lesson_required">Pick a lesson to see the preview. Flashcards from the phrase deck have no preview.</string>
+
+    <!-- Audio status -->
+    <string name="no_target_voice_format">No %1$s voice on this device. Audio comes from the pack.</string>
+    <string name="no_target_voice_no_pack_format">No %1$s voice on this device and no recording in the pack. Connect to the internet for a live voice.</string>
+    <string name="show_class_close">✕</string>
+    <string name="show_class_play">Play</string>
+    <string name="btn_show_class">Show the class</string>
+    <string name="btn_save">Save a copy (सहेजें)</string>
+    <string name="autoplay_label">Speak after I talk</string>
+</resources>

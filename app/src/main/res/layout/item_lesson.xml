@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  A lesson card.
+
+  This replaced android.R.layout.simple_list_item_2, the stock Android
+  two-line row. The design system puts the mother tongue first: it is the
+  thing being taught and the thing nobody in the room can already read, so
+  it leads the card and Hindi sits underneath as the gloss.
+
+  The line shown is the first real phrase of the lesson, not an invented
+  title. Nothing here is written in a target script by hand.
+-->
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginBottom="12dp"
+    android:minHeight="56dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- The anchor. Indic scripts need the line height, so 1.55 is the
+             floor the system sets for any target-language text. -->
+        <TextView
+            android:id="@+id/textTarget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:lineSpacingMultiplier="1.6"
+            android:textColor="@color/md_theme_secondary"
+            android:visibility="gone"
+            tools:text="ᱡᱚᱦᱟᱨ ᱜᱤᱫᱽᱨᱟᱹᱠᱚ ᱾"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/textHindi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textSize="15sp"
+            android:textColor="@color/md_theme_onSurfaceVariant"
+            android:visibility="gone"
+            tools:text="नमस्ते बच्चों।"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/md_theme_onSurface"
+            tools:text="Classroom Phrases" />
+
+        <TextView
+            android:id="@+id/textSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textSize="13sp"
+            android:textColor="@color/md_theme_onSurfaceVariant"
+            tools:text="40 phrases" />
+
+        <!-- The published NIPUN outcome this lesson is aligned to. A bare
+             code is not checkable, so the outcome text rides with it on the
+             worksheet; here there is only room for the code. -->
+        <TextView
+            android:id="@+id/textNipun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
+            android:background="@drawable/bg_nipun_chip"
+            android:textSize="11sp"
+            android:textColor="@color/nipun_chip_ink"
+            android:visibility="gone"
+            tools:text="NIPUN ECL2 4.1a"
+            tools:visibility="visible" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/md_theme_background">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/md_theme_primary"
+        app:title="Ol Saathi"
+        app:titleTextColor="@color/md_theme_onPrimary"
+        app:navigationIconTint="@color/md_theme_onPrimary"
+        app:menu="@menu/overflow_menu" />
+
+    <!-- Language picker. Shared with the worksheet screen so both
+         agree on what the teacher chose. -->
+    <include
+        android:id="@+id/languageBar"
+        layout="@layout/view_language_bar" />
+
+    <!-- Main content area -->
+    <ScrollView
+        android:id="@+id/scrollTranslation"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <!-- Hindi source — smaller -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/source_label"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/md_theme_onSurfaceVariant" />
+
+            <TextView
+                android:id="@+id/textSource"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/md_theme_onSurface"
+                android:paddingTop="4dp"
+                android:paddingBottom="12dp"
+                android:text="" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/md_theme_outlineVariant" />
+
+            <!-- Santali target — LARGEST element on screen -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textTargetLabel"
+                android:text="@string/target_label"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/md_theme_onSurfaceVariant"
+                android:paddingTop="12dp" />
+
+            <TextView
+                android:id="@+id/textTarget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:textColor="@color/md_theme_secondary"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:text="" />
+
+            <!-- Provenance label -->
+            <TextView
+                android:id="@+id/textProvenance"
+                android:layout_marginTop="14dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/md_theme_onSurfaceVariant"
+                android:paddingTop="4dp"
+                android:text="" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Action buttons -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnPlayAudio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/btn_play"
+        android:textSize="16sp"
+        android:enabled="false"
+        style="@style/Widget.Material3.Button.TonalButton"
+        android:minHeight="56dp"
+    />
+
+    <!-- Playback speed, cycling 0.5x, 0.75x, 1x, 1.25x. Slower is for a
+         child hearing each syllable; it applies to every voice source. -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSpeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:minHeight="48dp"
+        android:textSize="14sp"
+        style="@style/Widget.Material3.Button.TextButton" />
+
+    <!-- Where the voice comes from. Kept separate from the text label above,
+         because the two can disagree: a line can be machine translated and
+         then read aloud by a Santali speaker, which makes the audio the more
+         trustworthy of the two. -->
+    <TextView
+        android:id="@+id/textAudioProvenance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/md_theme_onSurfaceVariant"
+        android:textAlignment="center"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="4dp"
+        android:text=""
+        android:visibility="gone" />
+
+<TextView
+        android:id="@+id/textAudioStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="12sp"
+        android:textColor="@color/md_theme_onSurfaceVariant"
+        android:textAlignment="center"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="4dp"
+        android:visibility="gone" />
+
+    <!-- Voice input button -->
+    <!-- Turn the tablet around. Hidden until a lookup succeeds, because
+         a miss has nothing a child could read. -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnShowClass"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/btn_show_class"
+        android:textSize="16sp"
+        android:visibility="gone"
+        style="@style/Widget.Material3.Button"
+        android:minHeight="56dp"
+    />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnVoiceInput"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginBottom="4dp"
+        android:text="🎤 Hold to Speak Hindi"
+        android:textSize="16sp"
+        style="@style/Widget.Material3.Button"
+        android:minHeight="56dp"
+    />
+
+    <!-- Type input -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp"
+        android:paddingBottom="8dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editHindiInput"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:hint="@string/type_hint"
+            android:textSize="16sp"
+            android:inputType="text"
+            android:singleLine="true"
+            android:imeOptions="actionSend"
+            android:background="@android:color/transparent"
+            android:paddingHorizontal="12dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnManualTranslate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/btn_translate"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:minHeight="56dp"
+        />
+    </LinearLayout>
+
+    <!-- Bottom navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_theme_surface"
+        app:menu="@menu/bottom_nav_menu"
+        app:labelVisibilityMode="labeled" />
+
+</LinearLayout>

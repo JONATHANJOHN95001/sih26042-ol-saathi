@@ -1,0 +1,2 @@
+bhashini-client-sdk==0.2.5
+audioop-lts; python_version >= "3.13"

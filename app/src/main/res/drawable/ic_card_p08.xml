@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fluent Emoji Flat, MIT. Fetched from Iconify at build time by
+     tools/fetch_flashcard_icons.py. Do not edit by hand. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="32"
+    android:viewportHeight="32">
+    <path
+        android:fillColor="#FF822D"
+        android:pathData="m16.635 7.585l4.51 2.535l2.561 4.537L9.37 28.993l-4.862-2.57l-2.21-4.5z" />
+    <path
+        android:fillColor="#FFCE7C"
+        android:pathData="m1.39 28.065l.582 1.312l1.255.525l6.13-.925l-7.042-7.042z" />
+    <path
+        android:fillColor="#402A32"
+        android:pathData="m1.063 30.229l.326-2.164l1.838 1.837z" />
+    <path
+        android:fillColor="#F92F60"
+        android:pathData="M22.276 1.944a2 2 0 0 1 2.829 0l4.242 4.243a2 2 0 0 1 0 2.828l-3.535 3.536l-4.527-2.264L18.74 5.48z" />
+    <path
+        android:fillColor="#D3D3D3"
+        android:pathData="m18.74 5.48l7.072 7.071l-2.122 2.121l-7.07-7.07z" />
+</vector>

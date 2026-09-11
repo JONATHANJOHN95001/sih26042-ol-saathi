@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Pill behind a provenance label. Deliberately untinted here: the fill is set
+    in code from the provenance colour, because the whole point of this badge is
+    that its colour carries meaning. A fixed colour in the drawable would be a
+    second source of truth for something the pack decides.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#FFFFFF" />
+    <corners android:radius="999dp" />
+</shape>
