@@ -159,6 +159,7 @@ Every one of these was in a previous attempt. None is graded. Together they are 
 Team members:
 
 - Jonathan John ([@JONATHANJOHN95001](https://github.com/JONATHANJOHN95001))
+- Shinjini Pal ([@Shinjini06](https://github.com/Shinjini06))
 
 Credits:
 
