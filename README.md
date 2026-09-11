@@ -163,6 +163,7 @@ Team members:
 - shaiksuhana-630 ([@shaiksuhana-630](https://github.com/shaiksuhana-630))
 - SUBANGIVIGNESH30 ([@SUBANGIVIGNESH30](https://github.com/SUBANGIVIGNESH30))
 - varshiniT221 ([@varshiniT221](https://github.com/varshiniT221))
+- sujinanair ([@sujinanair](https://github.com/sujinanair))
 
 Credits:
 
