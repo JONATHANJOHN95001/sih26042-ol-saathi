@@ -66,6 +66,9 @@ class LessonListActivity : AppCompatActivity() {
         binding.btnAddPdf.setOnClickListener {
             startActivity(Intent(this, ImportLessonActivity::class.java))
         }
+        binding.btnProof.setOnClickListener {
+            startActivity(Intent(this, CheckAndProofActivity::class.java))
+        }
 
         rebuildLessonList()
 

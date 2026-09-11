@@ -48,6 +48,18 @@
         android:textSize="16sp"
         style="@style/Widget.Material3.Button.OutlinedButton" />
 
+    <!-- One tap from the first screen to the requirement-by-requirement proof. -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnProof"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
+        android:minHeight="56dp"
+        android:text="✓ SIH26042 proof for judges"
+        android:textSize="16sp"
+        style="@style/Widget.Material3.Button.TonalButton" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerLessons"
         android:layout_width="match_parent"

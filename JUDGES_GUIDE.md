@@ -26,6 +26,15 @@ folder and clickable in VS Code.
 Full requirement-by-requirement evidence, including what is **not** done:
 [PROBLEM_STATEMENT_TRACEABILITY_MATRIX.md](PROBLEM_STATEMENT_TRACEABILITY_MATRIX.md).
 
+### See it proved on the tablet
+
+On the Lessons tab, press **"✓ SIH26042 proof for judges"**. The screen shows
+one card per requirement, each with a live status read from the device and a
+button that runs the check in front of you: play a Santali line with its
+audio, a timed offline and a timed live voice run, generate a NIPUN worksheet
+and flashcards, and an airplane-mode proof that passes only if the network
+counter does not move. Code: [CheckAndProofActivity.kt](app/src/main/java/app/olsaathi/ui/CheckAndProofActivity.kt).
+
 ---
 
 ## 2. The pipelines
