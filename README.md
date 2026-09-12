@@ -152,6 +152,13 @@ Every one of these was in a previous attempt. None is graded. Together they are 
 
 ---
 
+## Demo videos
+
+- [SIH_REQUIREMENT_5_DEMO_VIDEO.mp4](demo/SIH_REQUIREMENT_5_DEMO_VIDEO.mp4): the demo video for the submission
+- [SIH_APP_SCREEN_DEMO.mp4](demo/SIH_APP_SCREEN_DEMO.mp4): a screen recording of the app in use
+
+---
+
 ## Team and credits
 
 **Team INNOV8** — JAIN Deemed-to-be University, Bengaluru
