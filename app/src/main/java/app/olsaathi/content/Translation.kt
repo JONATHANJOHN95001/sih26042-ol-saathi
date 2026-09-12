@@ -106,6 +106,13 @@ enum class Provenance(val label: String) {
      */
     ONLINE_MACHINE("Machine translation, live"),
 
+    /**
+     * Translated on the tablet itself by the downloaded IndicTrans2 model, with
+     * no network. Machine translation like the other two, and like live output
+     * it skipped the build-time script guard, so it says where it came from.
+     */
+    ON_DEVICE_MACHINE("Machine translation, on this tablet"),
+
     /** Hindi text respelled in the target script — not a translation. */
     TRANSLITERATED("Transliterated, not a translation"),
 
@@ -164,6 +171,13 @@ data class Translation(
      */
     val audioServiceName: String = "",
 ) {
+    /**
+     * A second answer that replaces the pack miss shown first: live Bhashini
+     * or the on-device model. The screen treats both the same way.
+     */
+    val isFollowUp: Boolean get() =
+        provenance == Provenance.ONLINE_MACHINE || provenance == Provenance.ON_DEVICE_MACHINE
+
     /** True when the pack had an entry for this source. */
     val isAvailable: Boolean get() =
         provenance == Provenance.VERIFIED ||
@@ -187,7 +201,8 @@ data class Translation(
      */
     val provenanceLabel: String get() =
         if ((provenance == Provenance.VERIFIED ||
-                provenance == Provenance.ONLINE_MACHINE) && serviceName.isNotEmpty())
+                provenance == Provenance.ONLINE_MACHINE ||
+                provenance == Provenance.ON_DEVICE_MACHINE) && serviceName.isNotEmpty())
             "${provenance.label} · $serviceName"
         else
             provenance.label

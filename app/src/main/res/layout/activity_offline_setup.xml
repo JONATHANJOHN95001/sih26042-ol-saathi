@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  "Get ready to teach offline", after the screen E design: the three
+  things that make the classroom work with no internet, each with its real
+  state on this tablet. No storage or battery figures, no invented councils:
+  only what the app itself can check.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F4F8F5"
+    android:theme="@style/ThemeOverlay.Teach">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@drawable/bg_teach_header"
+        app:title="Get ready to teach offline"
+        app:titleTextColor="#FFFFFF"
+        app:titleTextAppearance="@style/TextAppearance.Teach.Title"
+        app:navigationIconTint="#FFFFFF" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="24dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxWidth="920dp"
+                android:background="@drawable/bg_showclass_card"
+                android:orientation="vertical"
+                android:padding="28dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Get ready to teach offline"
+                            android:textSize="28sp"
+                            android:textStyle="bold"
+                            android:textColor="#0F3822" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ऑफ़लाइन पढ़ाने की तैयारी करें"
+                            android:textSize="18sp"
+                            android:textColor="#44403C" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Do this once while you have Wi-Fi. After that, teach with no internet."
+                            android:textSize="16sp"
+                            android:textColor="#44403C" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textSetupSummary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:background="@drawable/bg_lang_audio_yes"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="8dp"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="#14532D" />
+                </LinearLayout>
+
+                <!-- 1. Lesson pack -->
+                <include
+                    android:id="@+id/rowPack"
+                    layout="@layout/item_setup_step" />
+
+                <!-- 2. Offline Hindi speech -->
+                <include
+                    android:id="@+id/rowSpeech"
+                    layout="@layout/item_setup_step" />
+
+                <!-- 3. Offline translator -->
+                <include
+                    android:id="@+id/rowTranslator"
+                    layout="@layout/item_setup_step" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Downloads come over the internet once. Teaching after that makes no network calls, which Check and Proof counts."
+                        android:textSize="13sp"
+                        android:textColor="#57534E" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSetupLater"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:minHeight="56dp"
+                        android:text="Not now"
+                        android:textColor="#292524" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSetupDone"
+                        style="@style/Teach.Pill.Translate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:minHeight="56dp"
+                        android:text="Done" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

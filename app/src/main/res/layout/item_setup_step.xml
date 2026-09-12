@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One step of "Get ready to teach offline". Filled in from code. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="18dp"
+    android:background="@drawable/bg_setup_step"
+    android:orientation="horizontal"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/textStepIcon"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:background="@drawable/bg_mat_icon_mint"
+        android:gravity="center"
+        android:textSize="26sp"
+        tools:text="📦" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="18dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/textStepTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                android:textColor="#1C1917"
+                tools:text="Lesson pack · on this tablet" />
+
+            <TextView
+                android:id="@+id/textStepChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/bg_lang_tag"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="2dp"
+                android:textSize="13sp"
+                android:textColor="#44403C"
+                tools:text="61 MB" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textStepDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textSize="15sp"
+            android:textColor="#44403C"
+            tools:text="53 Santali lines, 53 with recorded audio." />
+
+        <ProgressBar
+            android:id="@+id/progressStep"
+            style="@android:style/Widget.Material.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_marginTop="10dp"
+            android:max="100"
+            android:progressTint="#D0531D"
+            android:progressBackgroundTint="#E7E5E4"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical"
+        android:gravity="end">
+
+        <TextView
+            android:id="@+id/textStepStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:text="✓ Ready" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnStep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:minHeight="52dp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#0F3822"
+            android:visibility="gone"
+            tools:text="Download" />
+    </LinearLayout>
+</LinearLayout>

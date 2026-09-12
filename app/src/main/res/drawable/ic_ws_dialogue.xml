@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp" android:height="48dp"
+    android:viewportWidth="48" android:viewportHeight="48">
+    <!-- Classroom Dialogues: two children, each with a speech bubble. -->
+    <path android:pathData="M8,28 a7,7 0 1,0 14,0 a7,7 0 1,0 -14,0 Z" android:fillColor="#FFD8B8" />
+    <path android:pathData="M9,25 C10,20 20,20 21,25" android:fillColor="#451A03" android:strokeColor="#451A03" android:strokeWidth="2.5" android:strokeLineCap="round" />
+    <path android:pathData="M12.6,27.5 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0 Z" android:fillColor="#1E293B" />
+    <path android:pathData="M15.6,27.5 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0 Z" android:fillColor="#1E293B" />
+    <path android:pathData="M13.5,30 Q15,32 16.5,30" android:strokeColor="#DC2626" android:strokeWidth="1" android:strokeLineCap="round" />
+    <path android:pathData="M10,14 C10,10 22,10 22,14 C22,17 16,17 14,20 L13,17 C10,17 10,14 10,14 Z" android:fillColor="#34D399" />
+    <path android:pathData="M26,28 a7,7 0 1,0 14,0 a7,7 0 1,0 -14,0 Z" android:fillColor="#FFDDBB" />
+    <path android:pathData="M27,26 C28,19 38,19 39,26" android:fillColor="#1F2937" android:strokeColor="#1F2937" android:strokeWidth="2.5" android:strokeLineCap="round" />
+    <path android:pathData="M30.6,27.5 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0 Z" android:fillColor="#1E293B" />
+    <path android:pathData="M33.6,27.5 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0 Z" android:fillColor="#1E293B" />
+    <path android:pathData="M31.5,30 Q33,32 34.5,30" android:strokeColor="#DC2626" android:strokeWidth="1" android:strokeLineCap="round" />
+    <path android:pathData="M38,14 C38,10 26,10 26,14 C26,17 32,17 34,20 L35,17 C38,17 38,14 38,14 Z" android:fillColor="#FFDD80" />
+</vector>

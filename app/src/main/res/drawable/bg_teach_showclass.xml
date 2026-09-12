@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Show the class: terracotta, the design system colour for the
+     child-facing action. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true"><shape><solid android:color="#9C441D" /><corners android:radius="999dp" /></shape></item>
+    <item><shape><solid android:color="#C05621" /><corners android:radius="999dp" /></shape></item>
+</selector>

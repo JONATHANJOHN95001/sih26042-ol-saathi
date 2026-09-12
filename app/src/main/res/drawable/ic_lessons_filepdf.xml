@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Mint disc with a document-plus glyph. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="28dp" android:height="28dp"
+    android:viewportWidth="28" android:viewportHeight="28">
+    <path android:pathData="M0,14 a14,14 0 1,0 28,0 a14,14 0 1,0 -28,0 Z" android:fillColor="#D1FAE5" />
+    <path android:pathData="M10,7 h6 l4,4 v10 a1,1 0 0,1 -1,1 h-9 a1,1 0 0,1 -1,-1 v-13 a1,1 0 0,1 1,-1 Z" android:fillColor="#065F46" />
+    <path android:pathData="M14.5,13 v5 M12,15.5 h5" android:strokeColor="#D1FAE5" android:strokeWidth="1.6" android:strokeLineCap="round" />
+</vector>

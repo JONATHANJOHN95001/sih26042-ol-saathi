@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Inter, from the Lessons design (SIL Open Font License). Latin only: Devanagari and Ol Chiki fall back per glyph to the Noto faces. -->
+<font-family xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <font android:fontStyle="normal" android:fontWeight="400" android:font="@font/inter_400" app:fontStyle="normal" app:fontWeight="400" app:font="@font/inter_400" />
+    <font android:fontStyle="normal" android:fontWeight="500" android:font="@font/inter_500" app:fontStyle="normal" app:fontWeight="500" app:font="@font/inter_500" />
+    <font android:fontStyle="normal" android:fontWeight="600" android:font="@font/inter_600" app:fontStyle="normal" app:fontWeight="600" app:font="@font/inter_600" />
+    <font android:fontStyle="normal" android:fontWeight="700" android:font="@font/inter_700" app:fontStyle="normal" app:fontWeight="700" app:font="@font/inter_700" />
+</font-family>

@@ -122,8 +122,40 @@ class ClassroomActivity : AppCompatActivity() {
         }
 
         // Toolbar
-        binding.toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
-        binding.toolbar.setNavigationOnClickListener { finish() }
+        // The launcher now, so a back arrow here would only close the app.
+        if (!isTaskRoot) {
+            binding.toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
+            binding.toolbar.setNavigationOnClickListener { finish() }
+        }
+        // First run: the three-step introduction, over a working screen.
+        if (savedInstanceState == null && !OnboardingActivity.hasSeen(this)) {
+            startActivity(Intent(this, OnboardingActivity::class.java))
+        }
+        // Amber ⋮ on the forest header, as in the redesign; the light
+        // theme's dark default vanished against it.
+        binding.toolbar.overflowIcon?.mutate()?.setTint(0xFFE9B872.toInt())
+        if (binding.textHeroTitle == null) {
+            binding.languageBar.root.setBackgroundResource(R.drawable.bg_teach_langbar)
+        }
+
+        // Get the offline Hindi speech model onto the tablet while it still
+        // has a network, so hold-to-speak keeps working in airplane mode.
+        // Silent when it is already there; says so when it starts a download
+        // or when this tablet cannot recognise Hindi offline at all.
+        app.olsaathi.speech.OfflineHindiModel.ensure(this, download = false) { status ->
+            offlineSpeechStatus = status
+            refreshOfflineCard()
+            if (status == app.olsaathi.speech.OfflineHindiModel.Status.MISSING) offerOfflineSetup()
+            val note = when (status) {
+                app.olsaathi.speech.OfflineHindiModel.Status.UNSUPPORTED ->
+                    "This tablet cannot recognise Hindi offline. Type the Hindi when there is no internet."
+                else -> null
+            }
+            note?.let { Toast.makeText(this, it, Toast.LENGTH_LONG).show() }
+        }
+
+        if (!app.olsaathi.mt.OfflineTranslator.isInstalled(this)) offerOfflineSetup()
+        else app.olsaathi.mt.OfflineTranslator.warmUp(this)
 
         // Overflow menu â†’ Check & Proof
         autoplayEnabled = getSharedPreferences("olsaathi", MODE_PRIVATE)
@@ -184,9 +216,11 @@ class ClassroomActivity : AppCompatActivity() {
             haveTargetVoice = targetVoice?.hasVoice(pack.languageCode) == true
             updateAudioStatus()
             applyTargetTypeface()
+            refreshHome()
             val showing = binding.textSource.text?.toString() ?: ""
             if (showing.isNotBlank()) translateAndDisplay(showing)
         }
+        setupHome()
 
         // Manual text input
         binding.btnManualTranslate.setOnClickListener {
@@ -216,6 +250,7 @@ class ClassroomActivity : AppCompatActivity() {
                     // provenance by design, so anything it plays has to have
                     // been vouched for before it gets there.
                     audio = if (t.hasAudio) pack.audioPath(t) else null,
+                    gloss = t.en,
                 )
             )
         }
@@ -247,6 +282,7 @@ class ClassroomActivity : AppCompatActivity() {
         }
 
         // ── Bottom nav ────────────────────────────────────────────
+        BottomNavIcons.apply(binding.bottomNav)
         binding.bottomNav.selectedItemId = R.id.nav_teach
         binding.bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -505,6 +541,12 @@ class ClassroomActivity : AppCompatActivity() {
                 getString(R.string.target_label_format, name, option.scriptNote)
             else name
         binding.btnPlayAudio.text = getString(R.string.btn_play_format, name)
+        binding.textHeroTitle?.text = "Speak Hindi, the class hears $name"
+        binding.toolbar.subtitle = "Hindi to " + binding.textTargetLabel.text
+        // The badge names the script the line is written in, like the
+        // design's "OL CHIKI" chip, and follows the language picked.
+        binding.textTargetBadge.text =
+            "≡ " + (option?.scriptLabel?.ifBlank { null } ?: name).uppercase()
     }
 
     private fun translateAndDisplay(hindi: String, spokenAtMs: Long = 0) {
@@ -516,7 +558,7 @@ class ClassroomActivity : AppCompatActivity() {
             if (requestId != translateSeq) return@translate
             
             // Measure offline lookup latency on first (offline) callback only
-            if (translation.provenance != Provenance.ONLINE_MACHINE) {
+            if (!translation.isFollowUp) {
                 val elapsed = System.currentTimeMillis() - startMs
                 // Two different numbers, kept apart. This one is the offline lookup and
                 // lands near zero. The voice-to-voice span, which is the one the
@@ -536,7 +578,7 @@ class ClassroomActivity : AppCompatActivity() {
                 // utterance arriving: anything synthesised for the previous
                 // one is now wrong and must not be reachable by the play
                 // button.
-                if (translation.provenance != Provenance.ONLINE_MACHINE) {
+                if (!translation.isFollowUp) {
                     liveAudio = null
                 }
 
@@ -570,6 +612,23 @@ class ClassroomActivity : AppCompatActivity() {
                     translation.provenanceLabel,
                     provenanceColour(this, translation.provenance)
                 )
+                // Where the line came from, at a glance: over the network, or
+                // on this tablet with none.
+                val icon = when (translation.provenance) {
+                    Provenance.ONLINE_MACHINE -> R.drawable.ic_prov_wifi
+                    Provenance.ON_DEVICE_MACHINE -> R.drawable.ic_prov_offline
+                    else -> 0
+                }
+                binding.textProvenance.setCompoundDrawablesRelativeWithIntrinsicBounds(icon, 0, 0, 0)
+                binding.textProvenance.compoundDrawablePadding =
+                    (6 * resources.displayMetrics.density).toInt()
+                // The panel is a scroll view squeezed by the controls below
+                // it, and a two-line answer pushed its provenance label out of
+                // sight. Scroll the target heading to the top so the answer
+                // and where it came from are both on screen.
+                binding.scrollTranslation.post {
+                    binding.scrollTranslation.smoothScrollTo(0, (binding.textTargetLabel.parent as View).top)
+                }
 
                 // Show reviewer name for HUMAN_VERIFIED
                 if (translation.provenance == Provenance.HUMAN_VERIFIED &&
@@ -593,7 +652,7 @@ class ClassroomActivity : AppCompatActivity() {
                 // can already speak is left alone, so nothing plays twice.
                 // The router itself refuses without a key or a network.
                 if (translation.target.isNotBlank() &&
-                    (translation.provenance == Provenance.ONLINE_MACHINE ||
+                    (translation.isFollowUp ||
                         !binding.btnPlayAudio.isEnabled)) {
                     requestLiveVoice(translation, requestId, spokenAtMs)
                 }
@@ -604,7 +663,250 @@ class ClassroomActivity : AppCompatActivity() {
     private var playbackSpeed = 1f
     private var holdStarter: Runnable? = null
     private var holdActive = false
+    /** The current hold is using Android's recogniser, not Bhashini. */
+    private var holdOffline = false
     private var bhashiniInput: BhashiniSpeechInput? = null
+
+    private var offeredSetup = false
+
+    /**
+     * Offer "Get ready to teach offline" when something the classroom needs
+     * offline is missing: the Hindi speech model or the on-device translator.
+     *
+     * Only when it could help (a network to download over) and at most once a
+     * session; a "not now" keeps it quiet for three days. The downloads
+     * themselves happen on the setup screen, with progress, where the teacher
+     * chose to start them.
+     */
+    private fun offerOfflineSetup() {
+        if (offeredSetup || !app.olsaathi.util.NetworkGuard.isOnline(this)) return
+        val prefs = getSharedPreferences("olsaathi", MODE_PRIVATE)
+        val declinedAt = prefs.getLong(PREF_MT_DECLINED_AT, 0L)
+        if (System.currentTimeMillis() - declinedAt < 3L * 24 * 60 * 60 * 1000) return
+        // Name only what is actually missing on this tablet.
+        val missing = mutableListOf<String>()
+        if (offlineSpeechStatus == app.olsaathi.speech.OfflineHindiModel.Status.MISSING) {
+            missing.add("offline Hindi speech")
+        }
+        val mt = app.olsaathi.mt.OfflineTranslator
+        if (!mt.isInstalled(this) && mt.deviceCanRun(this)) {
+            missing.add("the offline translator (about ${mt.DOWNLOAD_MB} MB)")
+        }
+        if (missing.isEmpty()) return
+        offeredSetup = true
+        com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
+            .setTitle("Get ready to teach offline?")
+            .setMessage(
+                "To teach with no internet, this tablet still needs " +
+                    missing.joinToString(" and ") + ". Set it up now while there " +
+                    "is a network. Best on Wi-Fi."
+            )
+            .setPositiveButton("Set up") { _, _ ->
+                startActivity(Intent(this, OfflineSetupActivity::class.java))
+            }
+            .setNegativeButton("Not now") { _, _ ->
+                prefs.edit().putLong(PREF_MT_DECLINED_AT, System.currentTimeMillis()).apply()
+            }
+            .show()
+    }
+
+    /** Latest answer from OfflineHindiModel, for the home's offline card. */
+    private var offlineSpeechStatus: app.olsaathi.speech.OfflineHindiModel.Status? = null
+
+    private var pulse: android.animation.AnimatorSet? = null
+
+    /**
+     * The hold-to-speak state text. The home layout draws the button as a
+     * round mic with a caption under it, so the text goes to the caption there
+     * and onto the button everywhere else; listening also starts the pulse.
+     */
+    private fun setMicLabel(label: String) {
+        val caption = binding.textMicCaption
+        if (caption != null) caption.text = label else binding.btnVoiceInput.text = label
+        val active = label == getString(R.string.listening)
+        if (active) startPulse() else stopPulse()
+    }
+
+    private fun startPulse() {
+        val rings = listOfNotNull(binding.viewPulse1, binding.viewPulse2)
+        if (rings.isEmpty() || pulse != null) return
+        pulse = android.animation.AnimatorSet().apply {
+            playTogether(rings.mapIndexed { i, v ->
+                android.animation.ObjectAnimator.ofPropertyValuesHolder(
+                    v,
+                    android.animation.PropertyValuesHolder.ofFloat(View.ALPHA, 0.9f, 0f),
+                    android.animation.PropertyValuesHolder.ofFloat(View.SCALE_X, 0.8f, 1.25f),
+                    android.animation.PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.8f, 1.25f),
+                ).apply {
+                    duration = 1200
+                    startDelay = i * 400L
+                    repeatCount = android.animation.ValueAnimator.INFINITE
+                }
+            })
+            start()
+        }
+    }
+
+    private fun stopPulse() {
+        pulse?.cancel()
+        pulse = null
+        listOfNotNull(binding.viewPulse1, binding.viewPulse2).forEach { it.alpha = 0f }
+    }
+
+    // ── Home dashboard (tablet landscape only) ────────────────────────────
+
+    /** Wire the home-only views. A no-op in the phone and portrait layouts. */
+    private fun setupHome() {
+        if (binding.textHeroTitle == null) return
+        // The language bar sits in a white chip in the header here; its
+        // spinner is laid out for a full-width row, so size it to its text.
+        (binding.languageBar.spinnerLanguage.layoutParams as? android.widget.LinearLayout.LayoutParams)?.let {
+            it.width = android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+            it.weight = 0f
+            binding.languageBar.spinnerLanguage.layoutParams = it
+        }
+        binding.languageBar.root.background = null
+        // The chip is small; the language name alone says it. Without this the
+        // "Language" label pushed the greeting off the header upright.
+        ((binding.languageBar.root as android.view.ViewGroup).getChildAt(0) as? android.view.ViewGroup)
+            ?.getChildAt(0)?.visibility = View.GONE
+        binding.languageBar.textLanguageNote.visibility = View.GONE
+
+        fun materials(type: app.olsaathi.worksheet.WorksheetType) {
+            startActivity(Intent(this, WorksheetActivity::class.java)
+                .putExtra(WorksheetActivity.EXTRA_TYPE, type.name))
+        }
+        binding.tileHomeTrace?.setOnClickListener { materials(app.olsaathi.worksheet.WorksheetType.TRACE_AND_CONNECT) }
+        binding.tileHomeStrips?.setOnClickListener { materials(app.olsaathi.worksheet.WorksheetType.WORD_FLASH_STRIPS) }
+        binding.tileHomeTracing?.setOnClickListener { materials(app.olsaathi.worksheet.WorksheetType.SCRIPT_TRACING) }
+        binding.tileHomeDialogues?.setOnClickListener { materials(app.olsaathi.worksheet.WorksheetType.CLASSROOM_DIALOGUES) }
+        binding.btnHomeAddPdf?.setOnClickListener { startActivity(Intent(this, ImportLessonActivity::class.java)) }
+        binding.btnHomeProof?.setOnClickListener { startActivity(Intent(this, CheckAndProofActivity::class.java)) }
+        binding.cardHomeOffline?.setOnClickListener { startActivity(Intent(this, OfflineSetupActivity::class.java)) }
+        refreshHome()
+    }
+
+    /** Redraw what depends on the language: tabs, lesson rows, offline card. */
+    private fun refreshHome() {
+        if (binding.textHeroTitle == null) return
+        val app = application as OlSaathiApplication
+        binding.textMaterialsLang?.text = (app.currentLanguageOption()?.english ?: pack.languageEnglish).uppercase()
+        refreshLanguageTabs()
+        refreshContinue()
+        refreshOfflineCard()
+    }
+
+    /** A few one-tap languages, Santali first and recorded audio next. */
+    private fun refreshLanguageTabs() {
+        val row = binding.rowLanguageTabs ?: return
+        val app = application as OlSaathiApplication
+        val options = app.languages
+        row.removeAllViews()
+        val quick = options.sortedWith(compareBy({ it.code != "sat" }, { !it.hasAudio }, { it.english })).take(7)
+        val dp = resources.displayMetrics.density
+        fun tab(label: String, selected: Boolean, onClick: () -> Unit) {
+            row.addView(android.widget.TextView(this).apply {
+                text = label
+                textSize = 15f
+                setTypeface(typeface, android.graphics.Typeface.BOLD)
+                setTextColor(if (selected) 0xFFFFFFFF.toInt() else 0xFF292524.toInt())
+                setBackgroundResource(R.drawable.bg_home_lang_tab)
+                isSelected = selected
+                setPadding((16 * dp).toInt(), (8 * dp).toInt(), (16 * dp).toInt(), (8 * dp).toInt())
+                setOnClickListener { onClick() }
+            }, android.widget.LinearLayout.LayoutParams(
+                android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+                android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            ).apply { marginEnd = (8 * dp).toInt() })
+        }
+        for (o in quick) {
+            tab(o.english + if (o.hasAudio) "  🔊" else "", o.code == app.currentLanguage) {
+                val i = options.indexOfFirst { it.code == o.code }
+                if (i >= 0) binding.languageBar.spinnerLanguage.setSelection(i)
+            }
+        }
+        if (options.size > quick.size) {
+            tab("+${options.size - quick.size} more", false) {
+                LanguagePicker.openSheet(this, binding.languageBar.spinnerLanguage)
+            }
+        }
+    }
+
+    /** The phrase deck and the lessons in the loaded pack, as tappable rows. */
+    private fun refreshContinue() {
+        val box = binding.layoutContinue ?: return
+        box.removeAllViews()
+        val phrases = pack.entries().count { it.kind == "phrase" }
+        val lessons = pack.lessonIds()
+        binding.textContinueCount?.text =
+            "${lessons.size + (if (phrases > 0) 1 else 0)} ready"
+        fun row(icon: String, title: String, sub: String, action: String, onClick: () -> Unit) {
+            val v = layoutInflater.inflate(R.layout.item_home_continue, box, false)
+            v.findViewById<android.widget.TextView>(R.id.textContIcon).text = icon
+            v.findViewById<android.widget.TextView>(R.id.textContTitle).text = title
+            v.findViewById<android.widget.TextView>(R.id.textContSub).text = sub
+            v.findViewById<android.widget.TextView>(R.id.btnContGo).apply {
+                text = action
+                setOnClickListener { onClick() }
+            }
+            v.setOnClickListener { onClick() }
+            box.addView(v)
+        }
+        if (phrases > 0) {
+            row("💬", "Classroom Phrases", "$phrases daily phrases", "Open") {
+                startActivity(Intent(this, LessonListActivity::class.java))
+            }
+        }
+        for (id in lessons.take(if (phrases > 0) 1 else 2)) {
+            val lines = pack.entries(id).count { it.kind == "lesson" }
+            val qs = pack.entries(id).count { it.kind == "check" }
+            val title = id.replace("-", " ").replaceFirstChar { it.uppercase() }
+            row("📖", title, "$lines sentences · $qs questions", "Continue  →") {
+                startActivity(Intent(this, LessonPlayerActivity::class.java)
+                    .putExtra(LessonPlayerActivity.EXTRA_LESSON_ID, id)
+                    .putExtra(LessonPlayerActivity.EXTRA_LESSON_TITLE, title))
+            }
+        }
+    }
+
+    /** Offline readiness, read from the tablet, never assumed. */
+    private fun refreshOfflineCard() {
+        if (binding.textOffPack == null) return
+        val olApp = application as OlSaathiApplication
+        val name = olApp.currentLanguageOption()?.english ?: pack.languageEnglish
+        val lines = pack.entries().size
+        val audio = pack.audioCount
+        binding.textOffPack?.text = "✓ $name pack on this tablet · $lines lines" +
+            when {
+                audio == 0 -> ", text only"
+                audio >= lines -> ", all with audio"
+                else -> ", $audio with audio"
+            }
+        val speechReady = offlineSpeechStatus == app.olsaathi.speech.OfflineHindiModel.Status.INSTALLED
+        binding.textOffSpeech?.text = when (offlineSpeechStatus) {
+            app.olsaathi.speech.OfflineHindiModel.Status.INSTALLED -> "✓ Offline Hindi speech ready"
+            app.olsaathi.speech.OfflineHindiModel.Status.DOWNLOAD_REQUESTED,
+            app.olsaathi.speech.OfflineHindiModel.Status.PENDING -> "… Offline Hindi speech downloading"
+            null -> "… Checking offline Hindi speech"
+            app.olsaathi.speech.OfflineHindiModel.Status.MISSING ->
+                "○ Offline Hindi speech not downloaded · tap to set up"
+            else -> "✗ Hindi speech needs internet on this tablet"
+        }
+        val mt = app.olsaathi.mt.OfflineTranslator
+        val mtReady = mt.isInstalled(this)
+        binding.textOffTranslator?.text = when {
+            mtReady -> "✓ Offline translator ready (IndicTrans2)"
+            !mt.deviceCanRun(this) -> "✗ Offline translator: needs more memory"
+            else -> "○ Offline translator not downloaded · tap to set up"
+        }
+        val ready = 1 + (if (speechReady) 1 else 0) + (if (mtReady) 1 else 0)
+        binding.textOfflineScore?.text = "$ready of 3"
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refreshOfflineCard()
+    }
 
     private fun showSpeed() {
         val label = if (playbackSpeed == playbackSpeed.toInt().toFloat())
@@ -615,6 +917,7 @@ class ClassroomActivity : AppCompatActivity() {
     private fun onVoiceTouch(v: View, ev: android.view.MotionEvent): Boolean {
         when (ev.actionMasked) {
             android.view.MotionEvent.ACTION_DOWN -> {
+                holdOffline = false
                 holdActive = false
                 val r = Runnable { holdActive = true; beginHold() }
                 holdStarter = r
@@ -624,7 +927,7 @@ class ClassroomActivity : AppCompatActivity() {
                 holdStarter?.let { v.removeCallbacks(it) }
                 holdStarter = null
                 if (holdActive) {
-                    bhashiniInput?.stop()
+                    if (holdOffline) speechInput?.stopListening() else bhashiniInput?.stop()
                 } else if (ev.actionMasked == android.view.MotionEvent.ACTION_UP) {
                     v.performClick()
                     onVoiceTap()
@@ -673,17 +976,21 @@ class ClassroomActivity : AppCompatActivity() {
                 },
                 onStateChanged = { state ->
                     runOnUiThread {
-                        binding.btnVoiceInput.text = when (state) {
+                        setMicLabel(when (state) {
                             BhashiniSpeechInput.State.RECORDING -> getString(R.string.listening)
                             BhashiniSpeechInput.State.TRANSCRIBING -> getString(R.string.recognising)
                             BhashiniSpeechInput.State.IDLE -> getString(R.string.hold_to_speak)
-                        }
+                        })
                     }
                 },
             ).also { bhashiniInput = it }
             input.start()
         } else {
-            holdActive = false
+            // Stays a hold: letting go ends the recording. This used to set
+            // holdActive = false, so the release was taken for a quick tap,
+            // and in a debug build a quick tap feeds a random sample line,
+            // which replaced what the teacher had just said offline.
+            holdOffline = true
             startVoiceInput()
         }
     }
@@ -716,13 +1023,13 @@ class ClassroomActivity : AppCompatActivity() {
                 onError = { err ->
                     runOnUiThread {
                         Toast.makeText(this, err, Toast.LENGTH_SHORT).show()
-                        binding.btnVoiceInput.text = getString(R.string.hold_to_speak)
+                        setMicLabel(getString(R.string.hold_to_speak))
                     }
                 },
                 onListeningChanged = { listening ->
                     runOnUiThread {
-                        binding.btnVoiceInput.text = if (listening) getString(R.string.listening)
-                        else getString(R.string.hold_to_speak)
+                        setMicLabel(if (listening) getString(R.string.listening)
+                        else getString(R.string.hold_to_speak))
                     }
                 }
             )
@@ -754,6 +1061,7 @@ class ClassroomActivity : AppCompatActivity() {
 
     companion object {
         private const val PREF_AUTOPLAY = "autoplay_enabled"
+        private const val PREF_MT_DECLINED_AT = "offline_translator_declined_at"
         /** Shared with ShowClassActivity, so the read-out uses the same speed. */
         const val PREF_SPEED = "playback_speed"
         val SPEEDS = floatArrayOf(0.5f, 0.75f, 1f, 1.25f)
@@ -766,6 +1074,11 @@ class ClassroomActivity : AppCompatActivity() {
             "किताब खोलो।",
             "बहुत अच्छा!",
             "हाथ उठाओ।",
+            // Not in any pack: these exercise the translation of a new
+            // sentence (Bhashini online, the on-device model offline).
+            "आज बारिश हो रही है।",
+            "तुम्हारा नाम क्या है?",
+            "मुझे पानी चाहिए।",
         )
     }
 }

@@ -28,16 +28,18 @@
         android:theme="@style/Theme.OlSaathi"
         tools:targetApi="34">
 
-        <!-- Launcher: Lessons hub -->
+        <!--
+            Orientation: every screen follows the tablet. The Teach/Home and
+            Materials screens have their own landscape layouts and rebuild on
+            rotation; the others keep running and simply re-lay out, so a
+            lesson in progress is not restarted by turning the tablet.
+        -->
+
+        <!-- Lessons hub -->
         <activity
             android:name=".ui.LessonListActivity"
-            android:exported="true"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden" />
 
         <!-- Teach screen (phrase lookup) -->
         <activity
@@ -45,22 +47,27 @@
             android:exported="false"
             android:label="@string/app_name" />
 
+        <!-- Launcher: Teach, drawn as the home dashboard on a tablet held
+             landscape (layout-sw600dp-land). -->
         <activity
             android:name=".ui.ClassroomActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <!-- Lesson player (line-by-line walker) -->
         <activity
             android:name=".ui.LessonPlayerActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden" />
 
         <!-- Worksheet -->
         <activity
             android:name=".ui.WorksheetActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+            android:exported="false" />
 
         <!-- The child-facing view. Deliberately NOT portrait-locked: a
              teacher turning the tablet to face a class turns it landscape. -->
@@ -74,13 +81,19 @@
         <activity
             android:name=".ui.CheckAndProofActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden" />
+
+        <!-- Get ready to teach offline: the one-time downloads -->
+        <activity
+            android:name=".ui.OfflineSetupActivity"
+            android:exported="false"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden" />
 
         <!-- Import lesson PDF -->
         <activity
             android:name=".ui.ImportLessonActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Home, a tablet held upright: the landscape Home (layout-sw600dp-land, which
+  has the full notes) as one scrolling column. Speak card, then the result
+  card, then the three cards stacked full width. Same views and ids.
+
+  This is the Teach screen laid out as the app's home: speak or type on the
+  left, the line for the class on the right, and underneath three cards that
+  lead to the rest of the app (lessons, materials, offline readiness). Phones
+  and tablets held upright keep layout/ and layout-land/.
+
+  Every id the other two Teach layouts have is here too, or ViewBinding makes
+  it nullable and ClassroomActivity stops compiling. The home-only views
+  (cards, pulse rings, language tabs) exist only here, so the activity treats
+  them as optional.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FBF8F1"
+    android:theme="@style/ThemeOverlay.Teach">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:background="@drawable/bg_teach_header"
+        app:title="Johar, Guruji"
+        app:titleTextColor="#FFFFFF"
+        app:subtitleTextColor="#C8EEDB"
+        app:titleTextAppearance="@style/TextAppearance.Materials.Title"
+        app:navigationIconTint="#FFFFFF"
+        app:menu="@menu/overflow_menu">
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_gravity="start|center_vertical"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bg_teach_dot_amber" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/textOfflineChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_mat_offline_chip"
+                android:drawableStart="@drawable/bg_mat_dot_green_small"
+                android:drawablePadding="8dp"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="7dp"
+                android:text="Offline pack ready"
+                android:textSize="14sp"
+                android:textColor="#C8EEDB" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/bg_home_chip_white"
+                android:paddingHorizontal="6dp">
+
+                <include
+                    android:id="@+id/languageBar"
+                    layout="@layout/view_language_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+        </LinearLayout>
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <!-- ── Speak (top) and the line for the class (below it) ───────── -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_home_hero"
+            android:orientation="vertical"
+            android:clipChildren="false"
+            android:paddingHorizontal="26dp"
+            android:paddingVertical="20dp">
+
+            <TextView
+                android:id="@+id/textHeroTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/fredoka"
+                android:text="Speak Hindi, the class hears Santali"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Hold the mic and speak Hindi, then let go."
+                android:textSize="14sp"
+                android:textColor="#A7D3BD" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="6dp"
+                android:clipChildren="false">
+
+                <View
+                    android:id="@+id/viewPulse2"
+                    android:layout_width="132dp"
+                    android:layout_height="132dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_home_pulse"
+                    android:alpha="0" />
+
+                <View
+                    android:id="@+id/viewPulse1"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_home_pulse"
+                    android:alpha="0" />
+
+                <!-- The same hold-to-speak button as the other layouts, drawn
+                     as a round mic; its state text goes to textMicCaption. -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnVoiceInput"
+                    android:layout_width="88dp"
+                    android:layout_height="88dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_home_mic"
+                    android:contentDescription="@string/hold_to_speak"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    android:stateListAnimator="@null"
+                    app:backgroundTint="@null"
+                    app:icon="@drawable/ic_home_mic_white"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconSize="40dp"
+                    app:iconTint="@null" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/textMicCaption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/hold_to_speak"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textColor="#E9B872" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Or type Hindi:"
+                android:textSize="13sp"
+                android:textColor="#C8EEDB" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/bg_home_input"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="4dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editHindiInput"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/type_hint"
+                    android:imeOptions="actionSend"
+                    android:inputType="text"
+                    android:paddingHorizontal="16dp"
+                    android:singleLine="true"
+                    android:textColor="#292524"
+                    android:textColorHint="#A8A29E"
+                    android:textSize="16sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnManualTranslate"
+                    style="@style/Teach.Pill.Translate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:text="Translate  →" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="420dp"
+            android:background="@drawable/bg_showclass_card"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- Quick language tabs; "+N more" opens the full sheet. -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/rowLanguageTabs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_home_result"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/textTargetBadge"
+                        style="@style/Teach.BadgeHindi"
+                        tools:text="OL CHIKI SCRIPT" />
+
+                    <TextView
+                        android:id="@+id/textTargetLabel"
+                        style="@style/Teach.LabelText"
+                        android:textSize="13sp"
+                        android:text="@string/target_label" />
+
+                    <TextView
+                        android:id="@+id/textProvenance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="6dp"
+                        android:textSize="13sp"
+                        android:textColor="#78716C"
+                        android:text="" />
+                </LinearLayout>
+
+                <ScrollView
+                    android:id="@+id/scrollTranslation"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="6dp"
+                    android:fillViewport="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textTarget"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:lineSpacingMultiplier="1.45"
+                            android:text=""
+                            android:textColor="#0F3822"
+                            android:textSize="36sp" />
+
+                        <TextView
+                            android:id="@+id/textSource"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text=""
+                            android:textColor="#44403C"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+                </ScrollView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textAudioProvenance"
+                        style="@style/Teach.Note"
+                        android:gravity="start"
+                        android:paddingStart="0dp"
+                        android:text=""
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/textAudioStatus"
+                        style="@style/Teach.Note"
+                        android:gravity="start"
+                        android:paddingStart="0dp"
+                        android:drawableStart="@drawable/ic_teach_speaker"
+                        android:drawablePadding="6dp"
+                        android:text=""
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSpeed"
+                    style="@style/Teach.SpeedChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPlayAudio"
+                    style="@style/Teach.Pill.Play"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:paddingHorizontal="22dp"
+                    android:enabled="false"
+                    android:text="Play" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnShowClass"
+                    style="@style/Teach.Pill.ShowClass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:paddingHorizontal="24dp"
+                    android:text="⛶  Show the class"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- ── Three cards into the rest of the app, stacked ─────────────── -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Continue teaching: filled from the pack in code. -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_showclass_card"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <View
+                    android:layout_width="9dp"
+                    android:layout_height="9dp"
+                    android:background="@drawable/bg_mat_dot_orange" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/fredoka"
+                    android:text="Continue teaching"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:textColor="#0F3822" />
+
+                <TextView
+                    android:id="@+id/textContinueCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="#B84310"
+                    tools:text="2 lessons" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutContinue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical" />
+        </LinearLayout>
+
+        <!-- Make classroom materials -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            android:background="@drawable/bg_showclass_card"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <View
+                    android:layout_width="9dp"
+                    android:layout_height="9dp"
+                    android:background="@drawable/bg_teach_dot_amber" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/fredoka"
+                    android:text="Make classroom materials"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:textColor="#0F3822" />
+
+                <TextView
+                    android:id="@+id/textMaterialsLang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#57534E"
+                    tools:text="SANTALI" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView android:id="@+id/tileHomeTrace" style="@style/Home.MatTile"
+                    android:drawableTop="@drawable/ic_ws_trace" android:text="Trace &amp;\nConnect" />
+                <TextView android:id="@+id/tileHomeStrips" style="@style/Home.MatTile"
+                    android:drawableTop="@drawable/ic_ws_strips" android:text="Flash\nStrips" />
+                <TextView android:id="@+id/tileHomeTracing" style="@style/Home.MatTile"
+                    android:drawableTop="@drawable/ic_ws_tracing" android:text="Script\nTracing" />
+                <TextView android:id="@+id/tileHomeDialogues" style="@style/Home.MatTile"
+                    android:drawableTop="@drawable/ic_ws_dialogue" android:text="Dialogues" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/btnHomeAddPdf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:minHeight="44dp"
+                android:background="@drawable/bg_mat_dashed"
+                android:gravity="center"
+                android:text="📄  Add a lesson PDF (पाठ PDF जोड़ें)"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#B84310"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+
+        <!-- Ready to teach offline: real status, opens the setup screen. -->
+        <LinearLayout
+            android:id="@+id/cardHomeOffline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_showclass_card"
+            android:foreground="?attr/selectableItemBackground"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/fredoka"
+                    android:text="Ready to teach offline"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:textColor="#0F3822" />
+
+                <TextView
+                    android:id="@+id/textOfflineScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_lang_audio_yes"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="3dp"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#14532D"
+                    tools:text="3 of 3" />
+            </LinearLayout>
+
+            <TextView android:id="@+id/textOffPack" style="@style/Home.OfflineRow" tools:text="✓ Santali pack on this tablet · 53 lines" />
+            <TextView android:id="@+id/textOffSpeech" style="@style/Home.OfflineRow" tools:text="✓ Offline Hindi speech ready" />
+            <TextView android:id="@+id/textOffTranslator" style="@style/Home.OfflineRow" tools:text="✓ Offline translator ready (IndicTrans2)" />
+
+            <TextView
+                android:id="@+id/btnHomeProof"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:minHeight="44dp"
+                android:background="@drawable/bg_lessons_proof"
+                android:gravity="center"
+                android:text="✓  SIH26042 proof for judges"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#292524"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+    </LinearLayout>
+
+    </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        app:menu="@menu/bottom_nav_menu"
+        app:labelVisibilityMode="labeled" />
+
+</LinearLayout>

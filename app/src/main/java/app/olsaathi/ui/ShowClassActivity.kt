@@ -77,6 +77,9 @@ class ShowClassActivity : AppCompatActivity() {
         binding.textTarget.typeface =
             if (pack.font.isNotEmpty()) ScriptFonts.forTarget(this, pack.font) else olChikiTypeface()
         binding.textSource.text = source
+        val gloss = intent.getStringExtra(EXTRA_GLOSS).orEmpty()
+        binding.textGloss.text = "“$gloss”"
+        binding.textGloss.visibility = if (gloss.isBlank()) View.GONE else View.VISIBLE
 
         showPicture(image)
         wirePlayback(audio, target, pack.languageCode)
@@ -115,11 +118,24 @@ class ShowClassActivity : AppCompatActivity() {
         val player = PackAudioPlayer(this)
         audioPlayer = player
         val packClip = assetPath?.takeIf { it.isNotEmpty() && player.hasAudio(it) }
-        val speed = getSharedPreferences("olsaathi", MODE_PRIVATE)
-            .getFloat(ClassroomActivity.PREF_SPEED, 1f)
+        val prefs = getSharedPreferences("olsaathi", MODE_PRIVATE)
+        var speed = prefs.getFloat(ClassroomActivity.PREF_SPEED, 1f)
+        // The speed chip cycles the same steps as the Teach screen and saves
+        // to the same preference, so a slower pace set here carries back.
+        fun showSpeed() {
+            val label = if (speed == speed.toInt().toFloat()) speed.toInt().toString() else speed.toString()
+            binding.btnSpeed.text = getString(R.string.btn_speed_format, label)
+        }
+        showSpeed()
+        binding.btnSpeed.setOnClickListener {
+            val steps = ClassroomActivity.SPEEDS
+            speed = steps[(steps.indexOfFirst { it == speed }.coerceAtLeast(0) + 1) % steps.size]
+            prefs.edit().putFloat(ClassroomActivity.PREF_SPEED, speed).apply()
+            showSpeed()
+        }
         voice = TargetVoice(this)
 
-        binding.btnPlay.text = getString(R.string.btn_read_aloud)
+        binding.btnPlay.text = "🔊  Read aloud"
         binding.btnPlay.visibility = View.VISIBLE
         binding.btnPlay.setOnClickListener {
             binding.btnPlay.isEnabled = false
@@ -180,6 +196,7 @@ class ShowClassActivity : AppCompatActivity() {
         private const val EXTRA_TARGET = "target"
         private const val EXTRA_IMAGE = "image"
         private const val EXTRA_AUDIO = "audio"
+        private const val EXTRA_GLOSS = "gloss"
 
         /**
          * Build the intent. Callers pass what the child needs to see and
@@ -192,11 +209,14 @@ class ShowClassActivity : AppCompatActivity() {
             target: String,
             image: String? = null,
             audio: String? = null,
+            /** The pack's English meaning, shown small under the Hindi. */
+            gloss: String? = null,
         ): Intent = Intent(context, ShowClassActivity::class.java).apply {
             putExtra(EXTRA_SOURCE, source)
             putExtra(EXTRA_TARGET, target)
             putExtra(EXTRA_IMAGE, image)
             putExtra(EXTRA_AUDIO, audio)
+            putExtra(EXTRA_GLOSS, gloss)
         }
     }
 }

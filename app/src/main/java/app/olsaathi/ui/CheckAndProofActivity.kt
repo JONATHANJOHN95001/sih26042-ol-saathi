@@ -903,6 +903,7 @@ class CheckAndProofActivity : AppCompatActivity() {
     // ══════════════════════════════════════════════════════════════════
 
     private fun setupBottomNav() {
+        BottomNavIcons.apply(binding.bottomNav)
         binding.bottomNav.selectedItemId = R.id.nav_teach
         binding.bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {

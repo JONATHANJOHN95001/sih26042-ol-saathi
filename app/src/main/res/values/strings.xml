@@ -16,7 +16,7 @@
     <string name="btn_translate">Translate</string>
     <!-- %1$s is the target language name; set in code from the loaded pack. -->
     <string name="btn_play">▶ Play</string>
-    <string name="btn_play_format">▶ Play %1$s</string>
+    <string name="btn_play_format">Play %1$s</string>
     <string name="btn_worksheet">📄 Worksheet</string>
     <string name="provenance_verified">Verified translation</string>
     <string name="provenance_translit">Transliterated, not a translation</string>

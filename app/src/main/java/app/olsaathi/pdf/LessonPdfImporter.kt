@@ -7,6 +7,7 @@ import app.olsaathi.content.VerifiedContentPack
 import com.tom_roush.pdfbox.android.PDFBoxResourceLoader
 import com.tom_roush.pdfbox.pdmodel.PDDocument
 import com.tom_roush.pdfbox.text.PDFTextStripper
+import com.tom_roush.pdfbox.text.TextPosition
 import java.io.IOException
 
 /**
@@ -24,6 +25,8 @@ data class ImportedLine(
     /** True when [translation] came from Bhashini at import time rather than
      *  from the offline pack. Shown on screen and printed on the sheet. */
     val live: Boolean = false,
+    /** True when [translation] came from the on-device IndicTrans2 model. */
+    val onDevice: Boolean = false,
 ) {
     val isCovered: Boolean get() = translation != null
 }
@@ -37,6 +40,12 @@ data class ImportResult(
     val lines: List<ImportedLine>,
     val languageCode: String,
     val languageEnglish: String,
+    /** Lines left out because they are not in Devanagari, so not Hindi. */
+    val skipped: Int = 0,
+    /** The script most skipped lines were in, e.g. "Tamil", for the message. */
+    val skippedScript: String = "",
+    /** Words whose spelling the PDF's font map broke and [HindiRepair] fixed. */
+    val repairedWords: Int = 0,
 ) {
     val covered: List<ImportedLine> get() = lines.filter { it.isCovered }
     val uncovered: List<ImportedLine> get() = lines.filter { !it.isCovered }
@@ -79,7 +88,7 @@ class LessonPdfImporter(private val context: Context) {
      *         caller can say "this is not a readable PDF" rather than showing
      *         an empty result that looks like an empty document.
      */
-    fun import(uri: Uri, pack: VerifiedContentPack): ImportResult {
+    fun import(uri: Uri, pack: VerifiedContentPack, ncert: Boolean = false): ImportResult {
         // PdfBox-Android needs its resources unpacked once per process before
         // any document is opened, or font loading fails at parse time.
         PDFBoxResourceLoader.init(context.applicationContext)
@@ -90,11 +99,32 @@ class LessonPdfImporter(private val context: Context) {
             if (input == null) throw IOException("Could not open the selected file.")
             PDDocument.load(input).use { doc ->
                 pages = doc.numberOfPages
-                text = PDFTextStripper().getText(doc)
+                val all = PDFTextStripper().getText(doc)
+                text = if (ncert) {
+                    // NCERT sets the lesson in the regular face; headings,
+                    // credits, page numbers and the notes for the teacher are
+                    // bold or italic. If the regular face holds too little,
+                    // this is not that layout, and everything is kept.
+                    val regular = RegularTextStripper().getText(doc)
+                    if (devanagariLetters(regular) * 10 >= devanagariLetters(all) * 3) regular else all
+                } else all
             }
         }
 
-        val lines = segment(text).mapIndexed { i, hindi ->
+        // Fix what the font map broke, then keep only real sentences.
+        val words = HindiRepair.Words.load(context)
+        var repaired = 0
+        val sentences = tidy(segment(HindiRepair.normalize(text)), ncert).map { s ->
+            val (fixed, n) = HindiRepair.repairLine(s, words)
+            repaired += n
+            fixed
+        }
+
+        // Only Hindi goes on. A Tamil or English chapter sent to a Hindi
+        // model comes back as confident nonsense, labelled as a translation;
+        // on the tablet a Tamil textbook imported into Sarangi did exactly that.
+        val (hindiLines, otherLines) = sentences.partition { isDevanagari(it) }
+        val lines = hindiLines.mapIndexed { i, hindi ->
             // Keep on pack.lookup() rather than TranslationRouter. This reports which
             // lines are honestly "not in offline pack" so the uncovered list can be
             // sent to the build pipeline. Online translations would dishonestly inflate
@@ -114,16 +144,30 @@ class LessonPdfImporter(private val context: Context) {
         }
 
         Log.i(TAG, "Imported $pages page(s), ${lines.size} lines, " +
-                "${lines.count { it.isCovered }} matched in ${pack.languageCode}")
+                "${lines.count { it.isCovered }} matched in ${pack.languageCode}, " +
+                "${otherLines.size} skipped as not Hindi")
 
         return ImportResult(
             pageCount = pages,
             lines = lines,
             languageCode = pack.languageCode,
             languageEnglish = pack.languageEnglish,
+            skipped = otherLines.size,
+            skippedScript = otherLines.map { mainScript(it) }.filter { it.isNotEmpty() }
+                .groupingBy { it }.eachCount().maxByOrNull { it.value }?.key ?: "",
+            repairedWords = repaired,
         )
     }
 
+
+    /** Text in the regular face only, the way NCERT sets its lessons. */
+    private class RegularTextStripper : PDFTextStripper() {
+        override fun writeString(text: String?, textPositions: MutableList<TextPosition>?) {
+            val face = textPositions?.firstOrNull()?.font?.name.orEmpty()
+            if (face.contains("Bold", ignoreCase = true) || face.contains("Italic", ignoreCase = true)) return
+            super.writeString(text, textPositions)
+        }
+    }
 
     companion object {
         private const val TAG = "LessonPdfImporter"
@@ -154,6 +198,79 @@ class LessonPdfImporter(private val context: Context) {
             return flattened.split(Regex("(?<=[।॥?!.])"))
                 .map { it.trim() }
                 .filter { it.length >= MIN_SENTENCE_CHARS && it.any { c -> c.isLetter() } }
+        }
+
+        /**
+         * Sentences as a teacher would print them. A closing quote the split
+         * left at the start of the next sentence goes back to its own, and
+         * Hindi that is not a sentence is dropped: fill-in-the-blank stubs
+         * ("और ....."), single words, letter tables from an activity, and
+         * lines the font map turned into Latin letters. From NCERT, a page
+         * number run into a sentence goes too; in a teacher's own PDF a
+         * leading numeral may be the sentence, so there it stays.
+         * Lines in another script pass through, to be counted as skipped.
+         */
+        internal fun tidy(parts: List<String>, ncert: Boolean): List<String> {
+            val out = ArrayList<String>()
+            for (raw in parts) {
+                var p = raw
+                val quote = CLOSING_QUOTE.find(p)
+                if (quote != null && out.isNotEmpty()) {
+                    out[out.size - 1] = out.last() + quote.value.trim()
+                    p = p.substring(quote.range.last + 1)
+                }
+                if (ncert) p = p.replace(PAGE_NUMBER, "")
+                p = p.trim()
+                if (p.isNotEmpty()) out.add(p)
+            }
+            return out.filter { p ->
+                if (!isDevanagari(p)) return@filter true
+                val words = DEVANAGARI_WORD.findAll(p).map { it.value }.toList()
+                p.length >= MIN_SENTENCE_CHARS && words.size >= 2 &&
+                    !BLANK.containsMatchIn(p) &&
+                    words.count { it.length == 1 } * 10 <= words.size * 3 &&
+                    !LATIN_DAMAGE.containsMatchIn(p)
+            }
+        }
+
+        private val CLOSING_QUOTE = Regex("^[”’]+\\s*")
+        private val PAGE_NUMBER = Regex("^\\d{1,2}\\s+(?=[ऀ-ॿ])")
+        private val DEVANAGARI_WORD = Regex("[ऀ-ॿ]+")
+        private val BLANK = Regex("\\s\\.$|\\.\\.|_|…")
+        private val LATIN_DAMAGE = Regex("[À-ɏ]")
+
+        private fun devanagariLetters(s: String) = s.count { it in 'ऀ'..'ॿ' }
+
+        /**
+         * True when most of the line's letters are Devanagari. Hindi lines
+         * carry the odd English word or numeral, so it is a majority, not all.
+         * Text from a legacy Hindi font with no Unicode map extracts as Latin
+         * gibberish, and is caught here too.
+         */
+        fun isDevanagari(line: String): Boolean {
+            val counts = scriptCounts(line)
+            val total = counts.values.sum()
+            return total >= 2 && (counts[Character.UnicodeScript.DEVANAGARI] ?: 0) * 10 >= total * 6
+        }
+
+        /** The script most of the line's letters are in, as a name for people. */
+        fun mainScript(line: String): String {
+            val top = scriptCounts(line).maxByOrNull { it.value }?.key ?: return ""
+            return when (top) {
+                Character.UnicodeScript.LATIN -> "English (Latin letters)"
+                Character.UnicodeScript.DEVANAGARI -> "Devanagari"
+                else -> top.name.lowercase().replaceFirstChar { it.uppercase() }
+            }
+        }
+
+        private fun scriptCounts(line: String): Map<Character.UnicodeScript, Int> {
+            val out = HashMap<Character.UnicodeScript, Int>()
+            line.codePoints().forEach { cp ->
+                val s = Character.UnicodeScript.of(cp)
+                if (s != Character.UnicodeScript.COMMON && s != Character.UnicodeScript.INHERITED &&
+                    s != Character.UnicodeScript.UNKNOWN) out[s] = (out[s] ?: 0) + 1
+            }
+            return out
         }
 
         /**

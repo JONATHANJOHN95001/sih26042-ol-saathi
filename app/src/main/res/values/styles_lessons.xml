@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Lessons screen (activity_lesson_list.xml and item_lesson.xml), after the
+     "vernacular classroom" design: Inter for all Latin text. Devanagari
+     and Ol Chiki still come from the bundled Noto faces. -->
+<resources>
+    <style name="ThemeOverlay.Lessons" parent="">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="fontFamily">@font/inter</item>
+    </style>
+</resources>

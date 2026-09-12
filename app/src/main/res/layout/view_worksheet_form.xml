@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The Materials form, shared by portrait and landscape.
+
+  One file, so the two orientations cannot drift apart: a view id missing from
+  one of them used to break ViewBinding at inflation. Portrait puts it under
+  the live A4 preview in one scroll; landscape puts it in the left pane.
+
+  Laid out after the "Materials" design as four numbered steps and an
+  action stack. Where the mockup carried numbers the app cannot back up
+  ("Unit 1 of 8", "10 Cards Deck", "Primary Classes 1-3"), the screen shows
+  what it can count instead: lines in the lesson, NIPUN outcomes, and the cards
+  the flashcard sheet will actually hold. Worksheet-type names, Hindi subtitles
+  and NIPUN codes are still set in code from the WorksheetType enum.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Introduction -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/bg_mat_intro"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_mat_card"
+            android:gravity="center"
+            android:rotation="-4"
+            android:text="📝"
+            android:textSize="22sp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="14dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textIntroKicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.06"
+                android:textColor="#91620B"
+                tools:text="✨ BILINGUAL CLASSROOM KIT • HINDI + SANTALI" />
+
+            <TextView
+                android:id="@+id/textWorksheetIntro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/worksheet_intro_default"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:lineSpacingMultiplier="1.15"
+                android:textColor="#5C3E04" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 1. Lesson -->
+    <LinearLayout
+        style="@style/Materials.StepRow">
+
+        <TextView
+            style="@style/Materials.StepNumber"
+            android:text="1" />
+
+        <TextView
+            style="@style/Materials.StepTitle"
+            android:text="LESSON (पाठ चयन)" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/bg_mat_card"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="14dp"
+        android:paddingEnd="6dp"
+        android:paddingVertical="10dp">
+
+        <TextView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_mat_icon_mint"
+            android:gravity="center"
+            android:text="📖"
+            android:textSize="22sp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:orientation="vertical">
+
+            <Spinner
+                android:id="@+id/spinnerLesson"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:contentDescription="Lesson" />
+
+            <TextView
+                android:id="@+id/textLessonSubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="8dp"
+                android:textSize="12sp"
+                android:textColor="#527464"
+                tools:text="10 lesson lines · 9 NIPUN outcomes" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 2. Worksheet type, a 2x2 grid -->
+    <LinearLayout
+        style="@style/Materials.StepRow">
+
+        <TextView
+            style="@style/Materials.StepNumber"
+            android:text="2" />
+
+        <TextView
+            style="@style/Materials.StepTitle"
+            android:text="WORKSHEET TYPE (कार्यपत्रक प्रकार)" />
+
+        <TextView
+            style="@style/Materials.StepHint"
+            android:text="1 of 4 formats" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/gridWorksheetTypes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
+
+        <!-- Questions: assessment prompts made from the selected material. -->
+        <LinearLayout
+            android:id="@+id/typeContainerQuestions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_mat_tile"
+            android:foreground="?attr/selectableItemBackground"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="14dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                style="@style/Materials.TypeIcon"
+                android:background="@drawable/bg_mat_icon_mint"
+                android:src="@drawable/ic_ws_questions" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="14dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/typeNameQuestions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#183526"
+                        tools:text="Questions" />
+
+                    <TextView
+                        android:id="@+id/typeHindiQuestions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:textSize="14sp"
+                        android:textColor="#5A7A6B"
+                        tools:text="प्रश्नोत्तर" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Choose the translation · fill the blank · the lesson's own questions · answer key"
+                    android:textSize="12sp"
+                    android:textColor="#1E583C" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="end">
+
+                <TextView
+                    android:id="@+id/typeCodeQuestions"
+                    style="@style/Materials.TypeCode"
+                    tools:text="ECL1 4.6" />
+
+                <TextView
+                    android:id="@+id/typeSelectedQuestions"
+                    style="@style/Materials.TypeSelected" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+            <LinearLayout
+                android:id="@+id/typeContainerTraceConnect"
+                style="@style/Materials.TypeTile"
+                android:layout_marginEnd="6dp">
+
+                <LinearLayout style="@style/Materials.TypeTileTop">
+
+                    <ImageView
+                        style="@style/Materials.TypeIcon"
+                        android:background="@drawable/bg_mat_icon_yellow"
+                        android:src="@drawable/ic_ws_trace" />
+
+                    <Space style="@style/Materials.Spacer" />
+
+                    <TextView
+                        android:id="@+id/typeCodeTraceConnect"
+                        style="@style/Materials.TypeCode"
+                        tools:text="ECL2 4.5" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/typeNameTraceConnect"
+                    style="@style/Materials.TypeName"
+                    tools:text="Trace &amp; Connect" />
+
+                <TextView
+                    android:id="@+id/typeHindiTraceConnect"
+                    style="@style/Materials.TypeHindi"
+                    tools:text="चित्र-वाक्य मिलान" />
+
+                <Space style="@style/Materials.VSpacer" />
+
+                <ImageView style="@style/Materials.Divider" />
+
+                <LinearLayout style="@style/Materials.TypeFooter">
+
+                    <TextView
+                        style="@style/Materials.TypeCaption"
+                        android:text="●━●  Match Hindi to its translation"
+                        android:textColor="#8A6A2B" />
+
+                    <TextView
+                        android:id="@+id/typeSelectedTraceConnect"
+                        style="@style/Materials.TypeSelected" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/typeContainerWordStrips"
+                style="@style/Materials.TypeTile"
+                android:layout_marginStart="6dp">
+
+                <LinearLayout style="@style/Materials.TypeTileTop">
+
+                    <ImageView
+                        style="@style/Materials.TypeIcon"
+                        android:background="@drawable/bg_mat_icon_coral"
+                        android:src="@drawable/ic_ws_strips" />
+
+                    <Space style="@style/Materials.Spacer" />
+
+                    <TextView
+                        android:id="@+id/typeCodeWordStrips"
+                        style="@style/Materials.TypeCode"
+                        tools:text="ECL1 4.8" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/typeNameWordStrips"
+                    style="@style/Materials.TypeName"
+                    tools:text="Word Flash Strips" />
+
+                <TextView
+                    android:id="@+id/typeHindiWordStrips"
+                    style="@style/Materials.TypeHindi"
+                    tools:text="कट-आउट शब्द पट्टियां" />
+
+                <Space style="@style/Materials.VSpacer" />
+
+                <ImageView style="@style/Materials.Divider" />
+
+                <LinearLayout style="@style/Materials.TypeFooter">
+
+                    <TextView
+                        style="@style/Materials.TypeCaption"
+                        android:text="✂ Cut-out strips, Hindi beside the translation"
+                        android:textColor="#B85B3B" />
+
+                    <TextView
+                        android:id="@+id/typeSelectedWordStrips"
+                        style="@style/Materials.TypeSelected" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+            <LinearLayout
+                android:id="@+id/typeContainerScriptTracing"
+                style="@style/Materials.TypeTile"
+                android:layout_marginEnd="6dp">
+
+                <LinearLayout style="@style/Materials.TypeTileTop">
+
+                    <ImageView
+                        style="@style/Materials.TypeIcon"
+                        android:background="@drawable/bg_mat_icon_blue"
+                        android:src="@drawable/ic_ws_tracing" />
+
+                    <Space style="@style/Materials.Spacer" />
+
+                    <TextView
+                        android:id="@+id/typeCodeScriptTracing"
+                        style="@style/Materials.TypeCode"
+                        tools:text="ECL2 4.5" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/typeNameScriptTracing"
+                    style="@style/Materials.TypeName"
+                    tools:text="Script Tracing" />
+
+                <TextView
+                    android:id="@+id/typeHindiScriptTracing"
+                    style="@style/Materials.TypeHindi"
+                    tools:text="अक्षर अभ्यास" />
+
+                <Space style="@style/Materials.VSpacer" />
+
+                <ImageView style="@style/Materials.Divider" />
+
+                <LinearLayout style="@style/Materials.TypeFooter">
+
+                    <TextView
+                        style="@style/Materials.TypeCaption"
+                        android:text="〰 Print, trace, then write your own"
+                        android:textColor="#2C75A8" />
+
+                    <TextView
+                        android:id="@+id/typeSelectedScriptTracing"
+                        style="@style/Materials.TypeSelected" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/typeContainerDialogues"
+                style="@style/Materials.TypeTile"
+                android:layout_marginStart="6dp">
+
+                <LinearLayout style="@style/Materials.TypeTileTop">
+
+                    <ImageView
+                        style="@style/Materials.TypeIcon"
+                        android:background="@drawable/bg_mat_icon_mint"
+                        android:src="@drawable/ic_ws_dialogue" />
+
+                    <Space style="@style/Materials.Spacer" />
+
+                    <TextView
+                        android:id="@+id/typeCodeDialogues"
+                        style="@style/Materials.TypeCode"
+                        tools:text="ECL2 4.1a" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/typeNameDialogues"
+                    style="@style/Materials.TypeName"
+                    tools:text="Classroom Dialogues" />
+
+                <TextView
+                    android:id="@+id/typeHindiDialogues"
+                    style="@style/Materials.TypeHindi"
+                    tools:text="संवाद अभ्यास" />
+
+                <Space style="@style/Materials.VSpacer" />
+
+                <ImageView style="@style/Materials.Divider" />
+
+                <LinearLayout style="@style/Materials.TypeFooter">
+
+                    <TextView
+                        style="@style/Materials.TypeCaption"
+                        android:text="🗨 Teacher's line, then the class practises"
+                        android:textColor="#1E583C" />
+
+                    <TextView
+                        android:id="@+id/typeSelectedDialogues"
+                        style="@style/Materials.TypeSelected"
+                        tools:visibility="visible" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 3. How many questions or activities the sheet carries. -->
+    <LinearLayout
+        style="@style/Materials.StepRow">
+
+        <TextView
+            style="@style/Materials.StepNumber"
+            android:text="3" />
+
+        <TextView
+            style="@style/Materials.StepTitle"
+            android:text="NUMBER OF QUESTIONS (प्रश्नों की संख्या)" />
+
+        <TextView
+            style="@style/Materials.StepHint"
+            android:text="A new set every time you tap Generate" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/rowActivityCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView android:id="@+id/chipCount5" style="@style/Materials.CountChip" android:text="5" />
+        <TextView android:id="@+id/chipCount10" style="@style/Materials.CountChip" android:text="10" />
+        <TextView android:id="@+id/chipCount15" style="@style/Materials.CountChip" android:text="15" />
+        <TextView android:id="@+id/chipCount20" style="@style/Materials.CountChip" android:text="20" />
+
+        <EditText
+            android:id="@+id/editCount"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1.3"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/bg_mat_tile"
+            android:gravity="center"
+            android:hint="Other"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:maxLength="2"
+            android:textColor="#2D4D3D"
+            android:textColorHint="#8A9A90"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textCountNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="12sp"
+        android:textColor="#527464"
+        tools:text="This lesson can make up to 33 questions." />
+
+    <!-- 4. NIPUN Bharat outcome -->
+    <LinearLayout
+        style="@style/Materials.StepRow">
+
+        <TextView
+            style="@style/Materials.StepNumber"
+            android:text="4" />
+
+        <TextView
+            style="@style/Materials.StepTitle"
+            android:text="NIPUN BHARAT OUTCOME (निपुण भारत लक्ष्य)" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/cardNipun"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/bg_mat_card"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupNipun"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:chipSpacingHorizontal="6dp"
+                app:chipSpacingVertical="2dp" />
+
+            <ImageView
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_mat_icon_yellow"
+                android:padding="8dp"
+                android:rotation="6"
+                android:src="@drawable/ic_mat_medal"
+                android:importantForAccessibility="no" />
+        </LinearLayout>
+
+        <ImageView
+            style="@style/Materials.Divider"
+            android:layout_marginTop="12dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="9dp"
+                android:layout_height="9dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/bg_mat_dot_orange" />
+
+            <TextView
+                android:id="@+id/textNipunOutcome"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#183928"
+                tools:text="This lesson spans 9 outcomes." />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textNipunSource"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:paddingStart="17dp"
+            android:text="Published outcome, CBSE Class 1 mapping"
+            android:textSize="12sp"
+            android:textColor="#5B7A6C" />
+    </LinearLayout>
+
+    <!-- Action stack -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnGenerate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="64dp"
+        android:layout_marginBottom="12dp"
+        android:text="📄   Generate Worksheet  ·  A4"
+        android:fontFamily="@font/fredoka"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        app:backgroundTint="#1E4B38"
+        app:strokeColor="#2B6D51"
+        app:strokeWidth="2dp"
+        app:cornerRadius="16dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnFlashcards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="60dp"
+        android:layout_marginBottom="12dp"
+        android:text="@string/btn_generate_flashcards"
+        android:fontFamily="@font/fredoka"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#93381E"
+        app:backgroundTint="#FFEDE6"
+        app:strokeColor="#F7BAAA"
+        app:strokeWidth="2dp"
+        app:cornerRadius="16dp"
+        app:rippleColor="#33C05621" />
+
+    <!-- Was reachable only from the overflow menu, which on phones that draw
+         under the status bar was not reachable at all. Dashed, so it reads as
+         a different kind of action from the two Generate buttons. -->
+    <TextView
+        android:id="@+id/btnImportPdf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="56dp"
+        android:background="@drawable/bg_mat_dashed"
+        android:gravity="center"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
+        android:text="📂  Import a lesson PDF (पाठ PDF जोड़ें)"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="#23533E"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <TextView
+        android:id="@+id/textStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/md_theme_onSurfaceVariant"
+        android:paddingVertical="16dp"
+        android:textSize="14sp"
+        android:text="" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="56dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/btn_save"
+        android:visibility="gone"
+        style="@style/Widget.Material3.Button.TonalButton" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnShare"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="56dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/btn_share"
+        android:visibility="gone"
+        style="@style/Widget.Material3.Button.TonalButton" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnPrint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="56dp"
+        android:text="@string/btn_print"
+        android:visibility="gone"
+        style="@style/Widget.Material3.Button.OutlinedButton" />
+
+</LinearLayout>

@@ -31,5 +31,17 @@ enum class WorksheetType(
         displayName = "Classroom Dialogues",
         hindiSubtitle = "संवाद अभ्यास",
         nipunCode = "ECL2 4.1a"
+    ),
+    /**
+     * Assessment prompts built from the selected material: choose the right
+     * translation, choose the Hindi meaning, fill the missing word, and the
+     * lesson's own comprehension questions. ECL1 4.6 is the code the packs
+     * already give their comprehension checks; the sheet's NIPUN box also
+     * lists the codes of every line it uses.
+     */
+    QUESTIONS(
+        displayName = "Questions",
+        hindiSubtitle = "प्रश्नोत्तर",
+        nipunCode = "ECL1 4.6"
     )
 }

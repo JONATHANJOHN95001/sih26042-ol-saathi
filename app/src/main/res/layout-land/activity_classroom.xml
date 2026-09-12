@@ -2,14 +2,11 @@
 <!--
   Landscape Teach screen: the dual-pane split the design system calls for.
 
-  The deployment tablet is a Lenovo M8 held landscape at 1280x800, and in that
-  orientation a single scrolling column wastes half the width while pushing the
-  Santali output below the fold. Split instead: the teacher's controls on the
-  left, the line being taught on the right, so speaking and reading out never
-  scroll each other off screen.
-
-  Portrait keeps the original single column in res/layout, which is the right
-  shape for a phone and for a tablet held upright.
+  A tablet held landscape wastes half its width on a single scrolling column
+  and pushes the target language below the fold. Split instead: the teacher's
+  controls on the left, the line being taught on the right, so speaking and
+  reading out never scroll each other off screen. Styled after the
+  "Ol Saathi UI redesign", like the portrait layout.
 
   Every id in the portrait layout appears here too. ViewBinding generates one
   class from both, and a missing id would turn the field nullable and break
@@ -20,17 +17,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/md_theme_background">
+    android:background="#FBF8F1"
+    android:theme="@style/ThemeOverlay.Teach">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/md_theme_primary"
+        android:layout_height="56dp"
+        android:background="@drawable/bg_teach_header"
         app:title="Ol Saathi"
-        app:titleTextColor="@color/md_theme_onPrimary"
-        app:navigationIconTint="@color/md_theme_onPrimary"
-        app:menu="@menu/overflow_menu" />
+        app:titleTextColor="#FFFFFF"
+        app:subtitleTextColor="#C8EEDB"
+        app:titleTextAppearance="@style/TextAppearance.Teach.Title"
+        app:navigationIconTint="#FFFFFF"
+        app:menu="@menu/overflow_menu">
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_gravity="start|center_vertical"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/bg_teach_dot_amber" />
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <include
         android:id="@+id/languageBar"
@@ -41,7 +49,8 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:padding="12dp">
+        android:baselineAligned="false"
+        android:padding="16dp">
 
         <!-- ── Left, 40%: what the teacher does ──────────────────────── -->
         <LinearLayout
@@ -49,207 +58,194 @@
             android:layout_height="match_parent"
             android:layout_weight="40"
             android:orientation="vertical"
-            android:paddingEnd="12dp">
+            android:paddingEnd="16dp">
 
-            <!-- Primary capture. 64dp because it is held down while speaking,
-                 often one-handed with the other hand steadying the tablet. -->
+            <!-- Primary capture, held down while speaking. -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnVoiceInput"
+                style="@style/Teach.Pill.Speak"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="64dp"
-                android:text="🎤 Hold to Speak Hindi"
-                android:textSize="16sp"
-                style="@style/Widget.Material3.Button" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/type_hint"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:textColor="@color/md_theme_onSurfaceVariant" />
+                android:minHeight="60dp"
+                android:text="@string/hold_to_speak" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editHindiInput"
+                style="@style/Teach.Input"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="4dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
                 android:hint="@string/type_hint"
-                android:textSize="16sp"
                 android:inputType="text"
                 android:singleLine="true"
-                android:imeOptions="actionSend"
-                android:background="@color/md_theme_surfaceContainer"
-                android:paddingHorizontal="12dp" />
+                android:imeOptions="actionSend" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnManualTranslate"
+                style="@style/Teach.Pill.Translate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="56dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/btn_translate"
-                style="@style/Widget.Material3.Button.TonalButton" />
+                android:minHeight="48dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/btn_translate" />
 
-            <!-- Turn the tablet around. Bottom of the teacher's column, so it
-                 is the last thing reached and never mistaken for Translate. -->
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
+            <!-- Turn the tablet around. Bottom of the teacher's column, so it
+                 is the last thing reached and never mistaken for Translate. -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnShowClass"
+                style="@style/Teach.Pill.ShowClass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="64dp"
+                android:minHeight="60dp"
                 android:text="@string/btn_show_class"
-                android:textSize="16sp"
-                android:visibility="gone"
-                style="@style/Widget.Material3.Button" />
+                android:visibility="gone" />
 
         </LinearLayout>
 
         <!-- ── Right, 60%: the line being taught ─────────────────────── -->
-        <com.google.android.material.card.MaterialCardView
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="60">
+            android:layout_weight="60"
+            android:background="@drawable/bg_teach_workspace"
+            android:orientation="vertical"
+            android:padding="20dp">
 
-            <LinearLayout
+            <ScrollView
+                android:id="@+id/scrollTranslation"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:fillViewport="true">
 
-                <ScrollView
-        android:id="@+id/scrollTranslation"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:fillViewport="true">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/source_label"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/md_theme_onSurfaceVariant" />
+                            style="@style/Teach.BadgeHindi"
+                            android:text="अ HINDI" />
 
                         <TextView
-                            android:id="@+id/textSource"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="18sp"
-                            android:textColor="@color/md_theme_onSurface"
-                            android:paddingTop="4dp"
-                            android:paddingBottom="12dp"
-                            android:text="" />
+                            style="@style/Teach.LabelText"
+                            android:text="Hindi" />
+                    </LinearLayout>
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/md_theme_outlineVariant" />
+                    <TextView
+                        android:id="@+id/textSource"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="19sp"
+                        android:textColor="#1C1917"
+                        android:paddingTop="8dp"
+                        android:text="" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_marginVertical="16dp"
+                        android:src="@drawable/ic_teach_divider"
+                        android:scaleType="fitCenter"
+                        android:importantForAccessibility="no" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/textTargetBadge"
+                            style="@style/Teach.BadgeTarget" />
 
                         <TextView
                             android:id="@+id/textTargetLabel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/target_label"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/md_theme_onSurfaceVariant"
-                            android:paddingTop="12dp" />
-
-                        <!-- The dominant element. Indic scripts need the line
-                             height; 1.55 is the system's floor. -->
-                        <TextView
-                            android:id="@+id/textTarget"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="34sp"
-                            android:lineSpacingMultiplier="1.6"
-                            android:textColor="@color/md_theme_secondary"
-                            android:paddingTop="4dp"
-                            android:paddingBottom="4dp"
-                            android:text="" />
-
-                        <TextView
-                            android:id="@+id/textProvenance"
-                android:layout_marginTop="14dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="12sp"
-                            android:textColor="@color/md_theme_onSurfaceVariant"
-                            android:paddingTop="4dp"
-                            android:text="" />
-
+                            style="@style/Teach.LabelText"
+                            android:text="@string/target_label" />
                     </LinearLayout>
-                </ScrollView>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnPlayAudio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="64dp"
-                    android:layout_marginTop="12dp"
-                    android:text="@string/btn_play"
-                    android:textSize="16sp"
-                    android:enabled="false"
-                    style="@style/Widget.Material3.Button.TonalButton" />
+                    <!-- The dominant element. Indic scripts need the line
+                         height; 1.55 is the system's floor. -->
+                    <TextView
+                        android:id="@+id/textTarget"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="34sp"
+                        android:lineSpacingMultiplier="1.6"
+                        android:textColor="#B84310"
+                        android:paddingTop="8dp"
+                        android:text="" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnSpeed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:minHeight="48dp"
-                    android:textSize="14sp"
-                    style="@style/Widget.Material3.Button.TextButton" />
+                    <TextView
+                        android:id="@+id/textProvenance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:textSize="12sp"
+                        android:textColor="#78716C"
+                        android:text="" />
 
-                <!-- Kept apart from the text provenance above: a line can be
-                     machine translated and still read aloud by a Santali
-                     speaker, which makes the audio the more trustworthy half. -->
-                <TextView
-                    android:id="@+id/textAudioProvenance"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:textColor="@color/md_theme_onSurfaceVariant"
-                    android:textAlignment="center"
-                    android:paddingTop="6dp"
-                    android:text=""
-                    android:visibility="gone" />
+                </LinearLayout>
+            </ScrollView>
 
-<TextView
-                    android:id="@+id/textAudioStatus"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:textColor="@color/md_theme_onSurfaceVariant"
-                    android:textAlignment="center"
-                    android:paddingTop="4dp"
-                    android:text=""
-                    android:visibility="gone" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPlayAudio"
+                style="@style/Teach.Pill.Play"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:enabled="false"
+                android:text="Play" />
 
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSpeed"
+                style="@style/Teach.SpeedChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp" />
 
+            <!-- Kept apart from the text provenance above: a line can be
+                 machine translated and still read aloud by a Santali
+                 speaker, which makes the audio the more trustworthy half. -->
+            <TextView
+                android:id="@+id/textAudioProvenance"
+                style="@style/Teach.Note"
+                android:layout_marginTop="6dp"
+                android:text=""
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/textAudioStatus"
+                style="@style/Teach.Note"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:drawableStart="@drawable/ic_teach_speaker"
+                android:drawablePadding="6dp"
+                android:text=""
+                android:visibility="gone" />
+
+        </LinearLayout>
     </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/md_theme_surface"
+        android:background="#FAF7F0"
         app:menu="@menu/bottom_nav_menu"
         app:labelVisibilityMode="labeled" />
 

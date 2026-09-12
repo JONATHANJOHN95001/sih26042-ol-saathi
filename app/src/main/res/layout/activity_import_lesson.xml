@@ -115,6 +115,20 @@
                     style="@style/Widget.Material3.Button.TonalButton" />
             </LinearLayout>
 
+            <!-- The chapter is saved; Materials picks the count and makes a
+                 new set on every tap. -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnOpenMaterials"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:minHeight="56dp"
+                android:text="Open in Materials: choose how many, new set every tap"
+                android:textSize="15sp"
+                android:visibility="gone"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                tools:visibility="visible" />
+
             <!-- The generated sheet, full width, with Save and Share under it. -->
             <LinearLayout
                 android:id="@+id/resultSection"

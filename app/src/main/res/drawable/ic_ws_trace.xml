@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp" android:height="48dp"
+    android:viewportWidth="48" android:viewportHeight="48">
+    <!-- Trace & Connect: a path from one dot to another, and a pencil. -->
+    <path android:pathData="M8,36 C14,16 22,40 38,14" android:strokeColor="#E29E16" android:strokeWidth="2.5" android:strokeLineCap="round" android:strokeAlpha="0.7" />
+    <path android:pathData="M4,36 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0 Z" android:fillColor="#FF7A59" android:strokeColor="#FFFFFF" android:strokeWidth="1.5" />
+    <path android:pathData="M33.5,14 a4.5,4.5 0 1,0 9,0 a4.5,4.5 0 1,0 -9,0 Z" android:fillColor="#1E4B38" android:strokeColor="#FFFFFF" android:strokeWidth="1.5" />
+    <path android:pathData="M36,14 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0 Z" android:fillColor="#BDEDD3" />
+    <group android:rotation="-35" android:translateX="20" android:translateY="22">
+        <path android:pathData="M0,0 h5 v16 h-5 Z" android:fillColor="#F59E0B" android:strokeColor="#B45309" android:strokeWidth="0.8" />
+        <path android:pathData="M0,16 L5,16 L2.5,21 Z" android:fillColor="#FDE68A" android:strokeColor="#B45309" android:strokeWidth="0.8" />
+        <path android:pathData="M1.5,19.5 L3.5,19.5 L2.5,21 Z" android:fillColor="#1E293B" />
+        <path android:pathData="M0,-3 h5 v3 h-5 Z" android:fillColor="#F43F5E" />
+    </group>
+    <path android:pathData="M32.5,8 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0 Z" android:fillColor="#F59E0B" />
+    <path android:pathData="M13,20 a1,1 0 1,0 2,0 a1,1 0 1,0 -2,0 Z" android:fillColor="#10B981" />
+</vector>

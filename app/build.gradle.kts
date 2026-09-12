@@ -34,6 +34,13 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
+        // ONNX Runtime (on-device translation) ships native code per CPU type,
+        // about 35 MB each. Real tablets are ARM; x86_64 is kept for the
+        // emulator. 32-bit x86 matches no device this app targets.
+        ndk {
+            abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86_64")
+        }
+
         // Bhashini, read from local.properties like the signing config above and
         // gitignored the same way. Only the inference key reaches the APK: the
         // user id and Udyat key exist to call a handshake the app does not need,
@@ -116,6 +123,12 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+        // Compress the native libraries in the APK. Uncompressed (the default)
+        // the ONNX Runtime libraries made the APK over 120 MB, too big to send
+        // to a teacher over WhatsApp; Android unpacks them once at install.
+        jniLibs {
+            useLegacyPackaging = true
+        }
     }
 }
 
@@ -153,6 +166,10 @@ dependencies {
     // is deliberate and measured rather than accidental: see the size note in
     // PROBLEM_STATEMENT_TRACEABILITY_MATRIX.md.
     implementation("com.tom-roush:pdfbox-android:2.0.27.0")
+
+    // On-device Hindi to Santali translation (IndicTrans2 int8 ONNX). The
+    // model itself is downloaded once at setup, not shipped in the APK.
+    implementation("com.microsoft.onnxruntime:onnxruntime-android:1.29.0")
 
     // Testing
     testImplementation("junit:junit:4.13.2")

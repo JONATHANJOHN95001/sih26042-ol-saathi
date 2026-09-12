@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- "Add a lesson PDF": dashed mint pill, Lessons design. -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="#1F134333">
+    <item>
+        <shape>
+            <solid android:color="#B3ECFDF5" />
+            <stroke android:width="2dp" android:color="#66059669" android:dashWidth="7dp" android:dashGap="5dp" />
+            <corners android:radius="999dp" />
+        </shape>
+    </item>
+</ripple>

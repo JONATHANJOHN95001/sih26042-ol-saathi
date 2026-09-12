@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Teach screen (activity_classroom.xml, both orientations), after the
+     "Ol Saathi UI redesign": forest and terracotta pills on warm
+     ivory, Plus Jakarta Sans throughout. Own file so it cannot leak into the
+     other screens. -->
+<resources>
+
+    <!-- Root of the dotted names below; carries nothing itself. -->
+    <style name="Teach" />
+
+    <style name="ThemeOverlay.Teach" parent="">
+        <item name="android:fontFamily">@font/plus_jakarta_sans</item>
+        <item name="fontFamily">@font/plus_jakarta_sans</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.Materials.Label</item>
+    </style>
+
+    <style name="TextAppearance.Teach.Title" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:fontFamily">@font/plus_jakarta_sans</item>
+        <item name="fontFamily">@font/plus_jakarta_sans</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <!-- A pill button whose look comes entirely from its drawable. -->
+    <style name="Teach.Pill" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@null</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:minHeight">52dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="iconTint">@null</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">10dp</item>
+        <item name="rippleColor">#22FFFFFF</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <style name="Teach.Pill.Play">
+        <item name="android:background">@drawable/bg_teach_play</item>
+        <item name="android:textColor">#292524</item>
+        <item name="icon">@drawable/ic_teach_play</item>
+        <item name="iconSize">20dp</item>
+        <item name="rippleColor">#14000000</item>
+    </style>
+
+    <style name="Teach.Pill.Speak">
+        <item name="android:background">@drawable/bg_teach_speak</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="icon">@drawable/ic_teach_mic</item>
+        <item name="iconSize">26dp</item>
+    </style>
+
+    <style name="Teach.Pill.Translate">
+        <item name="android:background">@drawable/bg_teach_translate</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:paddingStart">22dp</item>
+        <item name="android:paddingEnd">22dp</item>
+    </style>
+
+    <style name="Teach.Pill.ShowClass">
+        <item name="android:background">@drawable/bg_teach_showclass</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <!-- The Speed control is a small pill chip, not a full-width button. -->
+    <style name="Teach.SpeedChip" parent="Widget.Material3.Button.TextButton">
+        <item name="backgroundTint">@null</item>
+        <item name="android:background">@drawable/bg_teach_speed</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:minHeight">32dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">#0F3822</item>
+    </style>
+
+    <style name="Teach.Input">
+        <item name="android:background">@drawable/bg_teach_input</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#292524</item>
+        <item name="android:textColorHint">#A8A29E</item>
+    </style>
+
+    <style name="Teach.BadgeHindi">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_teach_badge_hindi</item>
+        <item name="android:paddingStart">9dp</item>
+        <item name="android:paddingEnd">9dp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:textColor">#D0531D</item>
+    </style>
+
+    <style name="Teach.BadgeTarget" parent="Teach.BadgeHindi">
+        <item name="android:background">@drawable/bg_teach_badge_target</item>
+        <item name="android:textColor">#0F3822</item>
+    </style>
+
+    <style name="Teach.LabelText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#44403C</item>
+    </style>
+
+    <style name="Teach.Note">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#78716C</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+    </style>
+</resources>

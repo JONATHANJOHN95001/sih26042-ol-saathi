@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One NCERT textbook on the Lessons tab's shelf. Filled from
+     assets/ncert/textbooks_class1_5_2026_27.json. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="230dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="12dp"
+    android:background="@drawable/bg_showclass_card"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textBookCover"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:background="@drawable/bg_book_cover"
+        android:gravity="center"
+        android:textSize="34sp"
+        tools:text="📘" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/textBookSubject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.06"
+            android:textColor="#9C441D"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="ENGLISH" />
+
+        <TextView
+            android:id="@+id/textBookTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:textColor="#1C1917"
+            tools:text="Santoor" />
+
+        <TextView
+            android:id="@+id/textBookHindi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="#57534E"
+            android:minLines="2"
+            tools:text="Hindi medium: गणित मेला" />
+
+        <TextView
+            android:id="@+id/textBookStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="#15803D"
+            android:visibility="gone"
+            tools:visibility="visible"
+            tools:text="✓ 2 chapters in Materials" />
+
+        <TextView
+            android:id="@+id/btnBookOpen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:minHeight="44dp"
+            android:background="@drawable/bg_home_tile"
+            android:gravity="center"
+            android:text="📖  NCERT e-book (online)"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="#0F3822"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <TextView
+            android:id="@+id/btnBookChapter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:minHeight="44dp"
+            android:background="@drawable/bg_teach_translate"
+            android:gravity="center"
+            android:text="⬇  Download a chapter"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:clickable="true"
+            android:focusable="true" />
+    </LinearLayout>
+</LinearLayout>

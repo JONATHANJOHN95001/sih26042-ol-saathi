@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Materials, landscape: parameters left (~40%), live A4 preview right (~60%).
+  Materials, landscape: the form left (~40%), live A4 preview right (~60%).
 
   Every view id here must exist in the portrait layout too, or ViewBinding
-  throws at inflation on whichever orientation was forgotten. The id sets are
-  kept identical on purpose; verify parity when touching either file.
+  throws at inflation on whichever orientation was forgotten. The form is the
+  shared view_worksheet_form.xml, so only the frame around it lives here:
+  toolbar, language card, preview pane, bottom navigation.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -12,21 +13,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/md_theme_background">
+    android:background="#F6F8F4"
+    android:theme="@style/ThemeOverlay.Materials">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/md_theme_primary"
+        android:layout_height="56dp"
+        android:background="#1E4B38"
         app:title="Materials"
-        app:titleTextColor="@color/md_theme_onPrimary"
-        app:navigationIconTint="@color/md_theme_onPrimary"
-        app:menu="@menu/overflow_menu" />
-
-    <include
-        android:id="@+id/languageBar"
-        layout="@layout/view_language_bar" />
+        app:titleTextColor="#FFFFFF"
+        app:titleTextAppearance="@style/TextAppearance.Materials.Title"
+        app:navigationIconTint="#FFFFFF"
+        app:menu="@menu/overflow_menu">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/bg_mat_offline_chip"
+            android:drawableStart="@drawable/bg_mat_dot_green_small"
+            android:drawablePadding="6dp"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
+            android:text="Offline pack ready"
+            android:textSize="11sp"
+            android:textColor="#C8EEDB" />
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,7 +48,7 @@
         android:orientation="horizontal"
         android:baselineAligned="false">
 
-        <!-- ── Left: parameters, ~40% ─────────────────────────────── -->
+        <!-- ── Left: language and form, ~40% ─────────────────────── -->
         <ScrollView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -48,436 +61,36 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <TextView
-                    android:id="@+id/textWorksheetIntro"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/worksheet_intro_default"
-                    android:textColor="@color/md_theme_onSurfaceVariant"
-                    android:paddingBottom="16dp"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="1. LESSON (पाठ चयन)"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:letterSpacing="0.08"
-                    android:textColor="@color/md_theme_onSurfaceVariant"
-                    android:paddingBottom="6dp" />
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp">
-
-                    <Spinner
-                        android:id="@+id/spinnerLesson"
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:paddingHorizontal="12dp" />
-                </com.google.android.material.card.MaterialCardView>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/worksheet_type_label"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:letterSpacing="0.08"
-                    android:textColor="@color/md_theme_onSurfaceVariant"
-                    android:paddingBottom="6dp" />
-
                 <LinearLayout
-                    android:id="@+id/gridWorksheetTypes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="16dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:id="@+id/typeContainerTraceConnect"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginEnd="6dp"
-                            android:background="@drawable/bg_param_tile"
-                            android:orientation="vertical"
-                            android:padding="10dp"
-                            android:gravity="center_horizontal"
-                            android:clickable="true"
-                            android:focusable="true">
-
-                            <TextView
-                                android:id="@+id/typeNameTraceConnect"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="13sp"
-                                android:textStyle="bold"
-                                android:textColor="@color/md_theme_onSurface"
-                                tools:text="Trace and Connect" />
-
-                            <TextView
-                                android:id="@+id/typeHindiTraceConnect"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="11sp"
-                                android:textColor="@color/md_theme_onSurfaceVariant"
-                                tools:text="चित्र-वाक्य मिलान" />
-
-                            <TextView
-                                android:id="@+id/typeCodeTraceConnect"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:background="@drawable/bg_nipun_chip"
-                                android:paddingHorizontal="8dp"
-                                android:paddingVertical="3dp"
-                                android:textSize="10sp"
-                                android:textStyle="bold"
-                                android:textColor="@color/nipun_chip_ink"
-                                tools:text="ECL2 4.5" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/typeContainerWordStrips"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginStart="6dp"
-                            android:background="@drawable/bg_param_tile"
-                            android:orientation="vertical"
-                            android:padding="10dp"
-                            android:gravity="center_horizontal"
-                            android:clickable="true"
-                            android:focusable="true">
-
-                            <TextView
-                                android:id="@+id/typeNameWordStrips"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="13sp"
-                                android:textStyle="bold"
-                                android:textColor="@color/md_theme_onSurface"
-                                tools:text="Word Flash Strips" />
-
-                            <TextView
-                                android:id="@+id/typeHindiWordStrips"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="11sp"
-                                android:textColor="@color/md_theme_onSurfaceVariant"
-                                tools:text="कट-आउट शब्द पट्टियां" />
-
-                            <TextView
-                                android:id="@+id/typeCodeWordStrips"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:background="@drawable/bg_nipun_chip"
-                                android:paddingHorizontal="8dp"
-                                android:paddingVertical="3dp"
-                                android:textSize="10sp"
-                                android:textStyle="bold"
-                                android:textColor="@color/nipun_chip_ink"
-                                tools:text="ECL1 4.8" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="8dp">
-
-                        <LinearLayout
-                            android:id="@+id/typeContainerScriptTracing"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginEnd="6dp"
-                            android:background="@drawable/bg_param_tile"
-                            android:orientation="vertical"
-                            android:padding="10dp"
-                            android:gravity="center_horizontal"
-                            android:clickable="true"
-                            android:focusable="true">
-
-                            <TextView
-                                android:id="@+id/typeNameScriptTracing"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="13sp"
-                                android:textStyle="bold"
-                                android:textColor="@color/md_theme_onSurface"
-                                tools:text="Script Tracing" />
-
-                            <TextView
-                                android:id="@+id/typeHindiScriptTracing"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="11sp"
-                                android:textColor="@color/md_theme_onSurfaceVariant"
-                                tools:text="अक्षर अभ्यास" />
-
-                            <TextView
-                                android:id="@+id/typeCodeScriptTracing"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:background="@drawable/bg_nipun_chip"
-                                android:paddingHorizontal="8dp"
-                                android:paddingVertical="3dp"
-                                android:textSize="10sp"
-                                android:textStyle="bold"
-                                android:textColor="@color/nipun_chip_ink"
-                                tools:text="ECL2 4.5" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/typeContainerDialogues"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginStart="6dp"
-                            android:background="@drawable/bg_param_tile"
-                            android:orientation="vertical"
-                            android:padding="10dp"
-                            android:gravity="center_horizontal"
-                            android:clickable="true"
-                            android:focusable="true">
-
-                            <TextView
-                                android:id="@+id/typeNameDialogues"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="13sp"
-                                android:textStyle="bold"
-                                android:textColor="@color/md_theme_onSurface"
-                                tools:text="Classroom Dialogues" />
-
-                            <TextView
-                                android:id="@+id/typeHindiDialogues"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="11sp"
-                                android:textColor="@color/md_theme_onSurfaceVariant"
-                                tools:text="संवाद अभ्यास" />
-
-                            <TextView
-                                android:id="@+id/typeCodeDialogues"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:background="@drawable/bg_nipun_chip"
-                                android:paddingHorizontal="8dp"
-                                android:paddingVertical="3dp"
-                                android:textSize="10sp"
-                                android:textStyle="bold"
-                                android:textColor="@color/nipun_chip_ink"
-                                tools:text="ECL2 4.1a" />
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/activity_count_label"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:letterSpacing="0.08"
-                    android:textColor="@color/md_theme_onSurfaceVariant"
-                    android:paddingBottom="6dp" />
-
-                <LinearLayout
-                    android:id="@+id/rowActivityCount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/bg_mat_card"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="16dp">
+                    android:gravity="center_vertical"
+                    android:paddingStart="14dp"
+                    android:padding="6dp">
 
                     <TextView
-                        android:id="@+id/tileCount2"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_mat_icon_mint"
+                        android:gravity="center"
+                        android:text="🌐"
+                        android:textSize="18sp" />
+
+                    <include
+                        android:id="@+id/languageBar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginEnd="6dp"
-                        android:background="@drawable/bg_param_tile"
-                        android:gravity="center"
-                        android:minHeight="44dp"
-                        android:padding="10dp"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/md_theme_onSurface"
-                        android:clickable="true"
-                        android:focusable="true"
-                        tools:text="2" />
-
-                    <TextView
-                        android:id="@+id/tileCount3"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginStart="6dp"
-                        android:layout_marginEnd="6dp"
-                        android:background="@drawable/bg_param_tile"
-                        android:gravity="center"
-                        android:minHeight="44dp"
-                        android:padding="10dp"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/md_theme_onSurface"
-                        android:clickable="true"
-                        android:focusable="true"
-                        tools:text="3" />
-
-                    <TextView
-                        android:id="@+id/tileCount4"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginStart="6dp"
-                        android:background="@drawable/bg_param_tile"
-                        android:gravity="center"
-                        android:minHeight="44dp"
-                        android:padding="10dp"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/md_theme_onSurface"
-                        android:clickable="true"
-                        android:focusable="true"
-                        tools:text="4" />
+                        layout="@layout/view_language_bar" />
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="4. NIPUN BHARAT OUTCOME (निपुण भारत लक्ष्य)"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:letterSpacing="0.08"
-                    android:textColor="@color/md_theme_onSurfaceVariant"
-                    android:paddingBottom="6dp" />
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardNipun"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:visibility="gone"
-                    tools:visibility="visible">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="12dp">
-
-                        <TextView
-                            android:id="@+id/textNipunCode"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingHorizontal="10dp"
-                            android:paddingVertical="5dp"
-                            android:background="@drawable/bg_nipun_chip"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/nipun_chip_ink"
-                            tools:text="ECL2 4.1a" />
-
-                        <TextView
-                            android:id="@+id/textNipunOutcome"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:textSize="13sp"
-                            android:textColor="@color/md_theme_onSurface"
-                            tools:text="Listens to words, greetings, polite forms of expression, and responding in home language." />
-
-                        <TextView
-                            android:id="@+id/textNipunSource"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:textSize="11sp"
-                            android:textColor="@color/md_theme_onSurfaceVariant"
-                            android:text="Published outcome, CBSE Class 1 mapping" />
-
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnGenerate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="56dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="Generate Worksheet"
-                    android:textSize="15sp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnFlashcards"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:text="Generate Flashcards"
-                    android:textSize="15sp"
-                    style="@style/Widget.Material3.Button.TonalButton" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnImportPdf"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/btn_import_pdf"
-                    android:textSize="15sp"
-                    style="@style/Widget.Material3.Button.OutlinedButton" />
-
-                <TextView
-                    android:id="@+id/textStatus"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/md_theme_onSurfaceVariant"
-                    android:paddingVertical="12dp"
-                    android:textSize="13sp"
-                    android:text="" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnSave"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="56dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/btn_save"
-                    android:visibility="gone"
-                    style="@style/Widget.Material3.Button.TonalButton" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnShare"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/btn_share"
-                    android:visibility="gone"
-                    style="@style/Widget.Material3.Button.TonalButton" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnPrint"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:text="@string/btn_print"
-                    android:visibility="gone"
-                    style="@style/Widget.Material3.Button.OutlinedButton" />
+                <include
+                    android:id="@+id/form"
+                    layout="@layout/view_worksheet_form" />
 
             </LinearLayout>
         </ScrollView>
@@ -500,7 +113,7 @@
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:letterSpacing="0.08"
-                android:textColor="@color/md_theme_onSurfaceVariant"
+                android:textColor="#527464"
                 android:paddingBottom="6dp" />
 
             <FrameLayout
@@ -508,7 +121,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_card_surface_variant"
+                android:background="@drawable/bg_mat_card"
                 android:padding="8dp" />
 
             <TextView
@@ -517,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/preview_generating"
                 android:textSize="11sp"
-                android:textColor="@color/md_theme_onSurfaceVariant"
+                android:textColor="#527464"
                 android:paddingTop="6dp" />
 
             <com.google.android.material.button.MaterialButton
@@ -529,6 +142,7 @@
                 android:text="@string/btn_save_as_pdf"
                 android:textSize="15sp"
                 android:visibility="gone"
+                app:cornerRadius="16dp"
                 style="@style/Widget.Material3.Button" />
         </LinearLayout>
     </LinearLayout>

@@ -66,9 +66,19 @@ class HindiSpeechInput(
 
     private fun begin() {
         recognizer?.destroy()
-        recognizer = SpeechRecognizer.createSpeechRecognizer(context).apply {
+        // Offline, go straight to the on-device recogniser where Android has
+        // one (API 31+). That is the service OfflineHindiModel downloads the
+        // Hindi pack into; the default recogniser on a Galaxy Tab A8 is a
+        // network service that, in airplane mode, fell back to a speech pack
+        // with no Hindi in it and failed with error 13.
+        val onDevice = preferOffline &&
+            android.os.Build.VERSION.SDK_INT >= 31 &&
+            SpeechRecognizer.isOnDeviceRecognitionAvailable(context)
+        recognizer = (if (onDevice) SpeechRecognizer.createOnDeviceSpeechRecognizer(context)
+                      else SpeechRecognizer.createSpeechRecognizer(context)).apply {
             setRecognitionListener(createListener())
         }
+        Log.i(TAG, "Recognising Hindi " + if (onDevice) "on device" else "with the default service")
 
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
             putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
@@ -142,7 +152,11 @@ class HindiSpeechInput(
                 12 -> "Hindi offline speech is not installed on this tablet. " +
                       "Settings, then System, then Languages and input, then " +
                       "On-device speech recognition, and add Hindi."
-                13 -> "This device does not support Hindi speech recognition."
+                // 13 is "language pack missing", not "unsupported": on the
+                // Tab A8 the model simply had not been downloaded yet.
+                13 -> "Offline Hindi speech is not downloaded on this tablet yet. " +
+                      "Open Teach once with internet on and the app fetches it, " +
+                      "or type the Hindi instead."
                 else -> "Speech error: $error"
             }
             // N2: Surface the error, never swallow it.

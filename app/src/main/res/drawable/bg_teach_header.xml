@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Teach header redesign: forest gradient with a thin amber rule. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape><gradient android:angle="0" android:startColor="#0A2718" android:centerColor="#0F3822" android:endColor="#184E33" /></shape>
+    </item>
+    <item android:gravity="bottom" android:height="1dp">
+        <shape><solid android:color="#4DE9B872" /></shape>
+    </item>
+</layer-list>

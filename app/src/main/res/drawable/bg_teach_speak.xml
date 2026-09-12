@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hold to speak: forest gradient pill; terracotta while held. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape><gradient android:angle="0" android:startColor="#C05621" android:endColor="#B84310" /><corners android:radius="999dp" /></shape>
+    </item>
+    <item>
+        <shape><gradient android:angle="0" android:startColor="#0A2718" android:centerColor="#0F3822" android:endColor="#184E33" /><stroke android:width="1dp" android:color="#99184E33" /><corners android:radius="999dp" /></shape>
+    </item>
+</selector>

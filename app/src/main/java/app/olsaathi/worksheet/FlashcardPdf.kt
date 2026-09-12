@@ -67,6 +67,9 @@ class FlashcardPdf(private val context: Context) {
         strokeWidth = 0.8f
         pathEffect = DashPathEffect(floatArrayOf(4f, 4f), 0f)
         isAntiAlias = true
+        // Fractional advances: at 6 to 8 pt, whole-point rounding ate the spaces.
+        isSubpixelText = true
+        isLinearText = true
     }
 
     private val domainPaint = Paint().apply {
@@ -74,6 +77,9 @@ class FlashcardPdf(private val context: Context) {
         textSize = 7.5f
         typeface = Typeface.DEFAULT_BOLD
         isAntiAlias = true
+        // Fractional advances: at 6 to 8 pt, whole-point rounding ate the spaces.
+        isSubpixelText = true
+        isLinearText = true
     }
 
     private val hindiPaint = Paint().apply {
@@ -81,6 +87,9 @@ class FlashcardPdf(private val context: Context) {
         textSize = 17f
         typeface = devanagariTypeface
         isAntiAlias = true
+        // Fractional advances: at 6 to 8 pt, whole-point rounding ate the spaces.
+        isSubpixelText = true
+        isLinearText = true
     }
 
     /**
@@ -94,24 +103,83 @@ class FlashcardPdf(private val context: Context) {
         color = Color.rgb(20, 60, 130)
         textSize = 19f
         isAntiAlias = true
+        // Fractional advances: at 6 to 8 pt, whole-point rounding ate the spaces.
+        isSubpixelText = true
+        isLinearText = true
     }
 
     private val glossPaint = Paint().apply {
         color = Color.rgb(90, 90, 90)
         textSize = 9.5f
         isAntiAlias = true
+        // Fractional advances: at 6 to 8 pt, whole-point rounding ate the spaces.
+        isSubpixelText = true
+        isLinearText = true
     }
 
     private val provenancePaint = Paint().apply {
         color = Color.rgb(150, 150, 150)
         textSize = 6.5f
         isAntiAlias = true
+        // Fractional advances: at 6 to 8 pt, whole-point rounding ate the spaces.
+        isSubpixelText = true
+        isLinearText = true
     }
 
     private val rulePaint = Paint().apply {
         color = Color.rgb(210, 210, 210)
         strokeWidth = 0.6f
         isAntiAlias = true
+        // Fractional advances: at 6 to 8 pt, whole-point rounding ate the spaces.
+        isSubpixelText = true
+        isLinearText = true
+    }
+
+    private val taskFill = Paint().apply {
+        color = Color.rgb(236, 245, 239)
+        style = Paint.Style.FILL
+        isAntiAlias = true
+        // Fractional advances: at 6 to 8 pt, whole-point rounding ate the spaces.
+        isSubpixelText = true
+        isLinearText = true
+    }
+
+    private val taskEdge = Paint().apply {
+        color = Color.rgb(19, 67, 51)
+        style = Paint.Style.FILL
+        isAntiAlias = true
+        // Fractional advances: at 6 to 8 pt, whole-point rounding ate the spaces.
+        isSubpixelText = true
+        isLinearText = true
+    }
+
+    private val taskLabelPaint = Paint().apply {
+        color = Color.rgb(19, 67, 51)
+        textSize = 6.5f
+        typeface = Typeface.DEFAULT_BOLD
+        isAntiAlias = true
+        // Fractional advances: at 6 to 8 pt, whole-point rounding ate the spaces.
+        isSubpixelText = true
+        isLinearText = true
+    }
+
+    private val taskHindiPaint = Paint().apply {
+        color = Color.rgb(31, 41, 55)
+        textSize = 10.5f
+        typeface = devanagariTypeface
+        isAntiAlias = true
+        // Fractional advances: at 6 to 8 pt, whole-point rounding ate the spaces.
+        isSubpixelText = true
+        isLinearText = true
+    }
+
+    private val taskEnPaint = Paint().apply {
+        color = Color.rgb(75, 85, 99)
+        textSize = 8f
+        isAntiAlias = true
+        // Fractional advances: at 6 to 8 pt, whole-point rounding ate the spaces.
+        isSubpixelText = true
+        isLinearText = true
     }
 
     private val stampPaint = Paint().apply {
@@ -119,6 +187,59 @@ class FlashcardPdf(private val context: Context) {
         textSize = 11f
         typeface = Typeface.DEFAULT_BOLD
         isAntiAlias = true
+        // Fractional advances: at 6 to 8 pt, whole-point rounding ate the spaces.
+        isSubpixelText = true
+        isLinearText = true
+    }
+
+    /** What the last generate produced. */
+    data class CardResult(val file: File, val cards: Int, val pages: Int, val requested: Int, val capacity: Int, val setNo: Int)
+
+    var lastResult: CardResult? = null
+        private set
+
+    /**
+     * Flashcards from the selected material: [count] cards, chosen and ordered
+     * afresh from [seed], so each Generate gives a new deck. Each card keeps
+     * its picture, both scripts, the English gloss, its NIPUN Bharat domain
+     * and where its translation came from; each page carries the set number.
+     */
+    fun generate(material: SheetMaterial, pack: VerifiedContentPack, count: Int, seed: Long): File? {
+        targetPaint.typeface = ScriptFonts.forTarget(context, pack.font)
+        val rng = kotlin.random.Random(seed)
+        val setNo = QuestionGenerator.setNumber(seed)
+        val usable = material.lines.filter { it.kind != "check" && it.target.isNotBlank() }
+        val chosen = QuestionGenerator.pick(usable, count, rng)
+        if (chosen.isEmpty()) return null
+        val cards = chosen.map { l ->
+            VerifiedContentPack.PackEntry(
+                id = l.id, source = l.hindi, target = l.target, en = l.en,
+                nipun = l.nipun.ifEmpty { WorksheetType.WORD_FLASH_STRIPS.nipunCode },
+                nipunOutcome = l.nipunOutcome, nipunGoal = "", nipunDomain = l.nipunDomain,
+                kind = l.kind, service = l.serviceName, audio = null, audioProvenance = null,
+                image = l.image, lesson = material.title,
+            )
+        }
+        // Every card gets a classroom task, dealt afresh for each set, so a
+        // new Generate is a new deck even when the lesson has only as many
+        // lines as cards were asked for.
+        val tasks = CardTasks.assign(chosen, rng)
+        val taskCodes = tasks.map { it.nipun }.distinct().sorted().joinToString(", ")
+
+        // One file per set, named for it; the previous set of this material
+        // goes, so the cache holds one deck per material, not one per tap.
+        val prefix = "flashcards-" + material.key + "-set"
+        context.cacheDir.listFiles()?.forEach { f ->
+            if (f.name.startsWith(prefix) && f.name != "$prefix$setNo.pdf") f.delete()
+        }
+        val file = writeCards(
+            cards, "$prefix$setNo", pack,
+            footer = "${material.title} · Set $setNo · Tasks: NIPUN Bharat $taskCodes",
+            tasks = tasks,
+        ) { it.service } ?: return null
+        lastResult = CardResult(file, cards.size, (cards.size + CARDS_PER_PAGE - 1) / CARDS_PER_PAGE,
+            count, usable.size, setNo)
+        return file
     }
 
     /**
@@ -169,7 +290,11 @@ class FlashcardPdf(private val context: Context) {
                 nipunGoal = "",
                 nipunDomain = "",
                 kind = "imported",
-                service = if (line.live) "Bhashini (live)" else pack.serviceName,
+                service = when {
+                    line.live -> "Bhashini (live)"
+                    line.onDevice -> "IndicTrans2 (on this tablet)"
+                    else -> pack.serviceName
+                },
                 audio = null,
                 audioProvenance = null,
                 image = null,
@@ -184,6 +309,9 @@ class FlashcardPdf(private val context: Context) {
         cards: List<VerifiedContentPack.PackEntry>,
         name: String,
         pack: VerifiedContentPack,
+        footer: String = "",
+        /** One per card, in the same order; null prints cards without tasks. */
+        tasks: List<CardTask>? = null,
         serviceFor: (VerifiedContentPack.PackEntry) -> String,
     ): File? {
         val document = PdfDocument()
@@ -202,7 +330,15 @@ class FlashcardPdf(private val context: Context) {
             pageCards.forEachIndexed { i, entry ->
                 val left = MARGIN + (i % COLUMNS) * cardWidth
                 val top = MARGIN + (i / COLUMNS) * cardHeight
-                drawCard(canvas, entry, left, top, cardWidth, cardHeight, pack.isSample, serviceFor(entry))
+                val task = tasks?.getOrNull(pageIndex * CARDS_PER_PAGE + i)
+                drawCard(canvas, entry, left, top, cardWidth, cardHeight, pack.isSample, serviceFor(entry), task)
+            }
+            if (footer.isNotEmpty()) {
+                // In the margin under the cards, outside every cut line.
+                canvas.drawText(
+                    "OL SAATHI flashcards · $footer · Page ${pageIndex + 1}",
+                    MARGIN, PAGE_HEIGHT - MARGIN / 2f + 4f, provenancePaint
+                )
             }
 
             document.finishPage(page)
@@ -232,6 +368,7 @@ class FlashcardPdf(private val context: Context) {
         /** Read from the pack, so a card printed after a content swap names the
          *  service that actually produced the line rather than the last one. */
         serviceName: String,
+        task: CardTask? = null,
     ) {
         canvas.drawRect(left, top, left + width, top + height, cutPaint)
 
@@ -251,12 +388,22 @@ class FlashcardPdf(private val context: Context) {
             canvas,
             entry.image,
             left + width / 2f,
-            top + height * 0.30f,
-            height * 0.26f
+            top + height * (if (task != null) 0.265f else 0.30f),
+            height * (if (task != null) 0.21f else 0.26f)
         )
-        val hindiY = if (hasIcon) 0.53f else 0.34f
-        val olY = if (hasIcon) 0.68f else 0.56f
-        val glossY = if (hasIcon) 0.80f else 0.74f
+        val hindiY: Float
+        val olY: Float
+        val glossY: Float
+        if (task == null) {
+            hindiY = if (hasIcon) 0.53f else 0.34f
+            olY = if (hasIcon) 0.68f else 0.56f
+            glossY = if (hasIcon) 0.80f else 0.74f
+        } else {
+            hindiY = if (hasIcon) 0.47f else 0.30f
+            olY = if (hasIcon) 0.595f else 0.45f
+            glossY = if (hasIcon) 0.69f else 0.58f
+            drawTask(canvas, task, left + pad, innerWidth, top + height * 0.745f, top + height - pad - 9f)
+        }
 
         drawCentred(canvas, entry.source, left + pad, innerWidth, top + height * hindiY, hindiPaint)
         drawCentred(canvas, entry.target, left + pad, innerWidth, top + height * olY, targetPaint)
@@ -269,6 +416,31 @@ class FlashcardPdf(private val context: Context) {
             else -> "Machine translation"
         }
         canvas.drawText(label, left + pad, top + height - pad, provenancePaint)
+    }
+
+    /**
+     * The task band at the foot of a card: which outcome it practises, then
+     * the task in Hindi for the teacher to read out and in English under it.
+     */
+    private fun drawTask(canvas: Canvas, task: CardTask, left: Float, width: Float, top: Float, bottom: Float) {
+        val r = android.graphics.RectF(left, top, left + width, bottom)
+        canvas.drawRoundRect(r, 5f, 5f, taskFill)
+        canvas.drawRoundRect(android.graphics.RectF(left, top, left + 3f, bottom), 1.5f, 1.5f, taskEdge)
+        val inner = left + 9f
+        val innerWidth = width - 14f
+        canvas.drawText(
+            "TASK  ·  NIPUN ${task.nipun}  ·  ${task.domain.uppercase()}",
+            inner, top + 9.5f, taskLabelPaint
+        )
+        drawLeft(canvas, task.hindi, inner, innerWidth, top + 23f, taskHindiPaint)
+        drawLeft(canvas, task.english, inner, innerWidth, top + 34.5f, taskEnPaint)
+    }
+
+    /** Left-aligned text, shrunk until it fits [maxWidth]. */
+    private fun drawLeft(canvas: Canvas, text: String, left: Float, maxWidth: Float, y: Float, basePaint: Paint) {
+        val paint = Paint(basePaint)
+        while (paint.measureText(text) > maxWidth && paint.textSize > 6f) paint.textSize -= 0.5f
+        canvas.drawText(text, left, y, paint)
     }
 
     /**

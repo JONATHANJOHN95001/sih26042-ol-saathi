@@ -104,6 +104,27 @@ object LanguagePicker {
 
             override fun onNothingSelected(parent: AdapterView<*>?) = Unit
         }
+
+        // A tap opens the full "Teach in which language?" sheet instead of
+        // the bare dropdown. Choosing there selects the same spinner row, so
+        // the switch runs through the listener above and nothing else changes.
+        // Not performClick(): on a Spinner that opens the old dropdown too.
+        @Suppress("ClickableViewAccessibility")
+        spinner.setOnTouchListener { _, ev ->
+            if (ev.actionMasked == android.view.MotionEvent.ACTION_UP) openSheet(activity, spinner)
+            true
+        }
+        root.setOnClickListener { openSheet(activity, spinner) }
+    }
+
+    /** Open the language sheet for [spinner]; public so a header chip can too. */
+    fun openSheet(activity: Activity, spinner: Spinner) {
+        val app = activity.application as OlSaathiApplication
+        val options = app.languages
+        LanguageSheet.show(activity, options, app.currentLanguage) { chosen ->
+            val index = options.indexOfFirst { it.code == chosen.code }
+            if (index >= 0) spinner.setSelection(index)
+        }
     }
 
     private fun showNote(view: TextView, option: LanguageOption) {

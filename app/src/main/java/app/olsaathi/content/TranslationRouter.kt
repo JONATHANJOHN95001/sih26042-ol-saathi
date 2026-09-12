@@ -1,6 +1,7 @@
 package app.olsaathi.content
 
 import android.content.Context
+import app.olsaathi.mt.OfflineTranslator
 import app.olsaathi.net.BhashiniClient
 import app.olsaathi.util.NetworkGuard
 import java.util.concurrent.Executors
@@ -77,21 +78,47 @@ class TranslationRouter(
             onResult(local)
             return
         }
+        val code = pack.languageCode.ifEmpty { "sat" }
         if (mode() != Mode.ONLINE_AVAILABLE) {
+            // No network (or no key): the on-device model, when this tablet
+            // has it, answers the sentence the pack cannot. The miss is shown
+            // first so the screen is never blank while it works.
             onResult(local)
+            translateOnDevice(hindi, code, local, onResult)
             return
         }
         // Hand back the offline miss first so the screen is never blank while
         // the network is being waited on, then correct it if an answer comes.
         onResult(local)
         io.execute {
-            val target = bhashini.translate(hindi, pack.languageCode.ifEmpty { "sat" })
+            val target = bhashini.translate(hindi, code)
             if (!target.isNullOrBlank()) {
                 onResult(
                     local.copy(
                         target = target,
                         provenance = Provenance.ONLINE_MACHINE,
                         serviceName = "Bhashini",
+                    )
+                )
+            } else {
+                // Bhashini down or the network gone mid-call: fall back to
+                // the tablet rather than leave the miss on screen.
+                translateOnDevice(hindi, code, local, onResult)
+            }
+        }
+    }
+
+    private fun translateOnDevice(
+        hindi: String, code: String, local: Translation, onResult: (Translation) -> Unit,
+    ) {
+        if (!OfflineTranslator.available(context, code)) return
+        OfflineTranslator.translate(context, hindi, code) { target ->
+            if (!target.isNullOrBlank()) {
+                onResult(
+                    local.copy(
+                        target = target,
+                        provenance = Provenance.ON_DEVICE_MACHINE,
+                        serviceName = "IndicTrans2",
                     )
                 )
             }

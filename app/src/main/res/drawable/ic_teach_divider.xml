@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The three-diamond divider between Hindi and the target language. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="320dp" android:height="10dp"
+    android:viewportWidth="320" android:viewportHeight="10">
+    <path android:pathData="M0,5 H140" android:strokeWidth="1" android:strokeColor="#E2D8C9" />
+    <path android:pathData="M180,5 H320" android:strokeWidth="1" android:strokeColor="#E2D8C9" />
+    <path android:pathData="M150,2 L153,5 L150,8 L147,5 Z" android:fillColor="#D0531D" />
+    <path android:pathData="M160,2 L163,5 L160,8 L157,5 Z" android:fillColor="#DDA15E" />
+    <path android:pathData="M170,2 L173,5 L170,8 L167,5 Z" android:fillColor="#52796F" />
+</vector>

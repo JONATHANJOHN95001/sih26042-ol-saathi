@@ -1,19 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Lessons, the launcher screen. Laid out after the "vernacular
+  classroom" Lessons design: a forest header with the app mark above the
+  title, a cream language band, a dashed pill for adding a PDF, a peach pill
+  for the judges' proof, and lesson cards with a terracotta-to-forest edge.
+
+  The mockup's third lesson and its "Tribal Dialect Engine Active" status are
+  not here: there is no such lesson in the pack and no such engine, and this
+  screen lists only what the tablet actually holds.
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/md_theme_background">
+    android:background="#FAF7F0"
+    android:theme="@style/ThemeOverlay.Lessons">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/md_theme_primary"
-        app:title="Lessons"
-        app:titleTextColor="@color/md_theme_onPrimary"
-        app:menu="@menu/overflow_menu" />
+        android:layout_height="72dp"
+        android:background="#134333"
+        app:title=""
+        app:menu="@menu/overflow_menu">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="OL SAATHI"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.1"
+                    android:textColor="#6EE7B7" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:background="@drawable/bg_lessons_region"
+                    android:paddingHorizontal="4dp"
+                    android:text="JHARKHAND"
+                    android:textSize="9sp"
+                    android:textColor="#A7F3D0" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lessons"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <!--
         The same picker the Teach and Materials screens use. A teacher who
@@ -24,56 +76,144 @@
         android:id="@+id/languageBar"
         layout="@layout/view_language_bar" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/tap_lesson"
-        android:textColor="@color/md_theme_onSurfaceVariant"
-        android:paddingHorizontal="16dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="12dp"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        android:letterSpacing="0.06" />
-
-    <!-- Any lesson PDF becomes a worksheet and flashcards, NIPUN tagged. -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnAddPdf"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="8dp"
-        android:minHeight="56dp"
-        android:text="@string/btn_add_lesson_pdf"
-        android:textSize="16sp"
-        style="@style/Widget.Material3.Button.OutlinedButton" />
-
-    <!-- One tap from the first screen to the requirement-by-requirement proof. -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnProof"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="8dp"
-        android:minHeight="56dp"
-        android:text="✓ SIH26042 proof for judges"
-        android:textSize="16sp"
-        style="@style/Widget.Material3.Button.TonalButton" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerLessons"
+    <!--
+        Everything between the language bar and the tabs scrolls as one. With
+        the textbook shelf added, a landscape tablet (800 dp tall) left the
+        lesson list about 70 dp, and a short screen pushed the tabs off.
+    -->
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingBottom="8dp"
-        android:clipToPadding="false" />
+        android:fillViewport="true">
 
-    <!-- Bottom navigation -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tap_lesson"
+            android:textColor="#44403C"
+            android:paddingHorizontal="22dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="12dp"
+            android:textSize="13sp" />
+
+        <!-- Any lesson PDF becomes a worksheet and flashcards, NIPUN tagged. -->
+        <TextView
+            android:id="@+id/btnAddPdf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="12dp"
+            android:minHeight="52dp"
+            android:background="@drawable/bg_lessons_addpdf"
+            android:drawableStart="@drawable/ic_lessons_filepdf"
+            android:drawablePadding="10dp"
+            android:gravity="center"
+            android:paddingHorizontal="20dp"
+            android:text="@string/btn_add_lesson_pdf"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#134333"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <!-- One tap from the first screen to the requirement-by-requirement proof. -->
+        <TextView
+            android:id="@+id/btnProof"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="10dp"
+            android:minHeight="48dp"
+            android:background="@drawable/bg_lessons_proof"
+            android:gravity="center"
+            android:text="✓  SIH26042 proof for judges"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#292524"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <!-- NCERT textbooks for the class the teacher picks (2026-27 list). -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_showclass_card"
+            android:orientation="vertical"
+            android:paddingVertical="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="14dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="📚  NCERT textbooks (पाठ्यपुस्तकें) · 2026-27"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#0F3822" />
+
+                <LinearLayout
+                    android:id="@+id/rowClassChips"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textShelfNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="14dp"
+                android:paddingTop="4dp"
+                android:textSize="12sp"
+                android:textColor="#57534E" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:clipToPadding="false"
+                android:paddingHorizontal="14dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/rowTextbooks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerLessons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="8dp"
+            android:clipToPadding="false" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/md_theme_surface"
+        android:background="#FAF7F0"
         app:menu="@menu/bottom_nav_menu"
         app:labelVisibilityMode="labeled" />
 

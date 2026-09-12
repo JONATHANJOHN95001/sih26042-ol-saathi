@@ -46,6 +46,7 @@ fun provenanceColour(context: android.content.Context, provenance: Provenance): 
             Provenance.HUMAN_VERIFIED -> R.color.human_verified_blue
             Provenance.VERIFIED -> R.color.success_green
             Provenance.ONLINE_MACHINE -> R.color.online_machine_teal
+            Provenance.ON_DEVICE_MACHINE -> R.color.online_machine_teal
             Provenance.TRANSLITERATED -> R.color.warning_orange
             Provenance.UNAVAILABLE -> R.color.md_theme_outline
             Provenance.SAMPLE -> R.color.sample_red

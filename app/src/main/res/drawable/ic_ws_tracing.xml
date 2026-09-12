@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp" android:height="48dp"
+    android:viewportWidth="48" android:viewportHeight="48">
+    <!-- Script Tracing: ruled lines, a traced letter and a pen. -->
+    <path android:pathData="M6,12 H42 M6,36 H42" android:strokeColor="#93C5FD" android:strokeWidth="1" />
+    <path android:pathData="M6,24 H42" android:strokeColor="#60A5FA" android:strokeWidth="1.2" />
+    <path android:pathData="M14,24 C14,16 24,14 25,21 C26,27 15,28 25,34" android:strokeColor="#1D4ED8" android:strokeWidth="2.8" android:strokeLineCap="round" />
+    <path android:pathData="M23,34 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0 Z" android:fillColor="#3B82F6" />
+    <path android:pathData="M27,33 L29,35 L27,37 Z" android:fillColor="#1D4ED8" />
+    <group android:rotation="25" android:translateX="25" android:translateY="17">
+        <path android:pathData="M0,0 L8,-4 L10,12 L2,14 Z" android:fillColor="#0284C7" />
+        <path android:pathData="M0,0 L2,14 L-4,8 Z" android:fillColor="#38BDF8" />
+        <path android:pathData="M-5.5,8 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0 Z" android:fillColor="#F59E0B" />
+    </group>
+</vector>

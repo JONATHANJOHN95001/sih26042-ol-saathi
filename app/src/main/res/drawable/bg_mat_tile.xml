@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Materials screen: worksheet-type and activity-count tiles. Selected is a
+     mint card with the forest-green stroke; unselected is quiet paper. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <gradient android:angle="315" android:startColor="#EBF7F0" android:endColor="#DEF2E6" />
+            <stroke android:width="2dp" android:color="#1E4B38" />
+            <corners android:radius="16dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FDFDFC" />
+            <stroke android:width="2dp" android:color="#E2EAE0" />
+            <corners android:radius="16dp" />
+        </shape>
+    </item>
+</selector>

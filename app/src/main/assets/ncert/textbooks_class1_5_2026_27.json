@@ -1,0 +1,316 @@
+{
+  "title": "NCERT textbooks, Classes 1 to 5, academic year 2026-27 (NCF-SE 2023 series)",
+  "note": "Catalogue data only: titles, NCERT order codes and ISBNs. The books themselves are NCERT copyright and are not bundled; the app points teachers to NCERT's official free e-textbooks and lets them import a chapter PDF with 'Add a lesson PDF'.",
+  "sources": [
+    {
+      "name": "NCERT, 'List of NCERT Textbooks for Classes 1 to 12' (official rate list, codes)",
+      "url": "https://ncertbooks.ncert.gov.in/static/Latest%20rate%202025.xlsx.pdf"
+    },
+    {
+      "name": "Podar Education, 'NCERT Text Books 2026-27' booklist (ISBNs)",
+      "url": "https://www.podareducation.org/uploads/cbsedeclaration/ncertbooklist.pdf"
+    },
+    {
+      "name": "NCERT official free e-textbooks",
+      "url": "https://ncert.nic.in/textbook.php"
+    }
+  ],
+  "checked": "2026-09-11",
+  "classes": [
+    {
+      "class": 1,
+      "books": [
+        {
+          "subject": "English",
+          "title": "Mridang",
+          "full": "Mridang - Textbook of English for Class 1",
+          "code": 123,
+          "isbn": "978-93-5292-439-4"
+        },
+        {
+          "subject": "Hindi",
+          "title": "Sarangi",
+          "titleHi": "सारंगी",
+          "full": "Sarangi - Hindi Bhasha ki Pathyapustak 1",
+          "code": 122,
+          "isbn": "978-93-5292-423-3",
+          "ncert": "ahsr1"
+        },
+        {
+          "subject": "Mathematics",
+          "title": "Joyful Mathematics",
+          "full": "Joyful Mathematics - Class 1",
+          "code": 124,
+          "isbn": "978-93-5292-505-6",
+          "hindiMedium": {
+            "title": "Anandmay Ganita",
+            "titleHi": "आनंदमय गणित",
+            "full": "Anandmay Ganita - Kaksha 1",
+            "code": 125,
+            "ncert": "ahjm1"
+          }
+        }
+      ]
+    },
+    {
+      "class": 2,
+      "books": [
+        {
+          "subject": "English",
+          "title": "Mridang",
+          "full": "Mridang - Textbook of English for Class 2",
+          "code": 223,
+          "isbn": "978-93-5292-434-9"
+        },
+        {
+          "subject": "Hindi",
+          "title": "Sarangi",
+          "titleHi": "सारंगी",
+          "full": "Sarangi - Hindi Bhasha ki Pathyapustak 2",
+          "code": 222,
+          "isbn": "978-93-5292-438-7",
+          "ncert": "bhsr1"
+        },
+        {
+          "subject": "Mathematics",
+          "title": "Joyful Mathematics",
+          "full": "Joyful Mathematics - Class 2",
+          "code": 224,
+          "isbn": "978-93-5292-426-4",
+          "hindiMedium": {
+            "title": "Anandmay Ganita",
+            "titleHi": "आनंदमय गणित",
+            "full": "Anandmay Ganita - Kaksha 2",
+            "code": 225,
+            "ncert": "bhjm1"
+          }
+        }
+      ]
+    },
+    {
+      "class": 3,
+      "books": [
+        {
+          "subject": "English",
+          "title": "Santoor",
+          "full": "Santoor - Textbook of English for Class 3",
+          "code": 332,
+          "isbn": "978-93-5292-991-7"
+        },
+        {
+          "subject": "Hindi",
+          "title": "Veena 1",
+          "titleHi": "वीणा 1",
+          "full": "Veena 1 - Kaksha 3 ke liye Hindi ki Pathyapustak",
+          "code": 331,
+          "isbn": "978-93-5292-949-8",
+          "ncert": "chve1"
+        },
+        {
+          "subject": "Mathematics",
+          "title": "Maths Mela",
+          "full": "Maths Mela - Textbook of Mathematics for Class 3",
+          "code": 333,
+          "isbn": "978-93-5292-816-3",
+          "hindiMedium": {
+            "title": "Ganita Mela",
+            "titleHi": "गणित मेला",
+            "full": "Ganita Mela - Kaksha 3 ke liye Ganita ki Pathyapustak",
+            "code": 334,
+            "ncert": "chmm1"
+          }
+        },
+        {
+          "subject": "The World Around Us",
+          "title": "Our Wondrous World",
+          "full": "Our Wondrous World: The World Around Us - Textbook for Class 3",
+          "code": 335,
+          "isbn": "978-93-5292-863-7",
+          "hindiMedium": {
+            "title": "Hamara Adbhut Sansaar",
+            "titleHi": "हमारा अद्भुत संसार",
+            "full": "Hamara Adbhut Sansaar: Hamare Aas-paas ki Duniya - Kaksha 3",
+            "code": 336,
+            "ncert": "chev1"
+          }
+        },
+        {
+          "subject": "Arts",
+          "title": "Bansuri I",
+          "full": "Bansuri I - Textbook for Arts, Class 3",
+          "code": 337,
+          "isbn": "978-93-5292-464-6",
+          "hindiMedium": {
+            "title": "Bansuri I",
+            "titleHi": "बाँसुरी 1",
+            "full": "Bansuri I - Kaksha 3 ke liye Kala ki Pathyapustak",
+            "code": 338,
+            "ncert": "chbu1"
+          }
+        },
+        {
+          "subject": "Physical Education and Well-being",
+          "title": "Khel Yoga",
+          "full": "Khel Yoga: Physical Education and Well-being - Textbook for Class 3",
+          "code": 339,
+          "isbn": "978-93-5292-864-4",
+          "hindiMedium": {
+            "title": "Khel Yoga",
+            "titleHi": "खेल योग",
+            "full": "Khel Yoga: Sharirik Shiksha aur Arogya - Kaksha 3",
+            "code": 340,
+            "ncert": "chky1"
+          }
+        }
+      ]
+    },
+    {
+      "class": 4,
+      "books": [
+        {
+          "subject": "English",
+          "title": "Santoor",
+          "full": "Santoor - Textbook of English for Grade 4",
+          "code": 432,
+          "isbn": "978-93-5729-932-9"
+        },
+        {
+          "subject": "Hindi",
+          "title": "Veena",
+          "titleHi": "वीणा",
+          "full": "Veena - Kaksha 4 ke liye Hindi ki Pathyapustak",
+          "code": 431,
+          "isbn": "978-93-5729-337-2",
+          "ncert": "dhve1"
+        },
+        {
+          "subject": "Mathematics",
+          "title": "Maths Mela",
+          "full": "Maths Mela - Textbook of Mathematics for Grade 4",
+          "code": 433,
+          "isbn": "978-93-5729-703-5",
+          "hindiMedium": {
+            "title": "Ganita Mela",
+            "titleHi": "गणित मेला",
+            "full": "Ganita Mela - Kaksha 4 ke liye Ganita ki Pathyapustak",
+            "code": 434,
+            "ncert": "dhmm1"
+          }
+        },
+        {
+          "subject": "The World Around Us",
+          "title": "Our Wondrous World",
+          "full": "Our Wondrous World: The World Around Us - Textbook for Grade 4",
+          "code": 435,
+          "isbn": "978-93-5729-123-1",
+          "hindiMedium": {
+            "title": "Hamara Adbhut Sansaar",
+            "titleHi": "हमारा अद्भुत संसार",
+            "full": "Hamara Adbhut Sansaar: Hamare Aas-paas ki Duniya - Kaksha 4",
+            "code": 436,
+            "ncert": "dhev1"
+          }
+        },
+        {
+          "subject": "Arts",
+          "title": "Bansuri",
+          "full": "Bansuri - Textbook of Arts for Grade 4",
+          "code": 437,
+          "isbn": "978-93-5729-342-6",
+          "hindiMedium": {
+            "title": "Bansuri",
+            "titleHi": "बाँसुरी",
+            "full": "Bansuri - Kaksha 4 ke liye Kala ki Pathyapustak",
+            "code": 438,
+            "ncert": "dhbu1"
+          }
+        },
+        {
+          "subject": "Physical Education and Well-being",
+          "title": "Khel Yoga",
+          "full": "Khel Yoga: Physical Education and Well-being - Textbook for Class 4",
+          "code": 439,
+          "isbn": "978-93-5729-022-7",
+          "hindiMedium": {
+            "title": "Khel Yoga",
+            "titleHi": "खेल योग",
+            "full": "Khel Yoga: Sharirik Shiksha aur Arogya - Kaksha 4",
+            "code": 440,
+            "ncert": "dhky1"
+          }
+        }
+      ]
+    },
+    {
+      "class": 5,
+      "books": [
+        {
+          "subject": "English",
+          "title": "Santoor",
+          "full": "Santoor - Textbook of English for Grade 5",
+          "code": 532,
+          "isbn": "978-93-5729-062-3"
+        },
+        {
+          "subject": "Hindi",
+          "title": "Veena",
+          "titleHi": "वीणा",
+          "full": "Veena - Kaksha 5 ke liye Hindi ki Pathyapustak",
+          "code": 531,
+          "isbn": "978-93-5729-667-0",
+          "ncert": "ehve1"
+        },
+        {
+          "subject": "Mathematics",
+          "title": "Maths Mela",
+          "full": "Maths Mela - Textbook of Mathematics for Grade 5",
+          "code": 533,
+          "isbn": "978-93-5729-818-6",
+          "hindiMedium": {
+            "title": "Ganit Mela",
+            "titleHi": "गणित मेला",
+            "full": "Ganit Mela - Mathematics Textbook (Hindi), Class 5",
+            "code": 534,
+            "ncert": "ehmm1"
+          }
+        },
+        {
+          "subject": "The World Around Us",
+          "title": "Our Wondrous World",
+          "full": "Our Wondrous World: The World Around Us - Textbook for Grade 5",
+          "code": 535,
+          "isbn": "978-93-5729-030-2",
+          "hindiMedium": {
+            "title": "Hamara Adbhut Sansar",
+            "titleHi": "हमारा अद्भुत संसार",
+            "full": "Hamara Adbhut Sansar (EVS Textbook, Hindi), Class 5",
+            "code": 536,
+            "ncert": "ehev1"
+          }
+        },
+        {
+          "subject": "Arts",
+          "title": "Bansuri",
+          "full": "Bansuri - Textbook of Arts for Grade 5",
+          "code": 537,
+          "isbn": "978-93-5729-482-9",
+          "hindiMedium": {
+            "title": "Bansuri",
+            "titleHi": "बाँसुरी",
+            "full": "Bansuri - Kala Pathyapustak (Hindi), Class 5",
+            "code": 538,
+            "ncert": "ehbu1"
+          }
+        },
+        {
+          "subject": "Physical Education and Well-being",
+          "title": "Khel Yoga",
+          "full": "Khel Yoga: Physical Education and Well-being - Textbook for Class 5",
+          "code": 539,
+          "isbn": "978-93-5729-028-9"
+        }
+      ]
+    }
+  ],
+  "ncertPdf": "Chapter PDFs are https://ncert.nic.in/textbook/pdf/<ncert><NN>.pdf, NN from 01. Codes read from ncert.nic.in/textbook.php on 2026-09-11; chev1 and dhev1 are not in that page's menu but their files exist."
+}

@@ -29,6 +29,7 @@ import app.olsaathi.databinding.ActivityWorksheetBinding
 import app.olsaathi.worksheet.FlashcardPdf
 import app.olsaathi.worksheet.WorksheetPdf
 import app.olsaathi.worksheet.WorksheetType
+import app.olsaathi.worksheet.SheetMaterial
 import java.io.File
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicInteger
@@ -85,22 +86,29 @@ class WorksheetActivity : AppCompatActivity() {
             contentResolver.openOutputStream(uri)?.use { out ->
                 source.inputStream().use { it.copyTo(out) }
             } ?: throw IllegalStateException("no output stream")
-            binding.textStatus.text = "Saved a copy of " + source.name
+            binding.form.textStatus.text = "Saved a copy of " + source.name
         } catch (e: Exception) {
             // A failed save must say so. Silently doing nothing looks
             // identical to a successful save that went somewhere unexpected.
-            binding.textStatus.text = "Could not save: " + (e.message ?: e.javaClass.simpleName)
+            binding.form.textStatus.text = "Could not save: " + (e.message ?: e.javaClass.simpleName)
         }
     }
 
-    /** Parallel to the spinner. A null means the teaching-phrase deck. */
-    private var lessonIds = listOf<String?>()
+    /**
+     * Parallel to the spinner: "phrases", then the pack's lesson ids, then
+     * the teacher's imported chapters ("imported-..."). Whatever is selected
+     * is the material every question and card is made from.
+     */
+    private var materialKeys = listOf<String>()
 
     /** Selected worksheet type; the enum is the single source of the labels. */
-    private var selectedType = WorksheetType.CLASSROOM_DIALOGUES
+    private var selectedType = WorksheetType.QUESTIONS
 
-    /** Activities per sheet, 2-4. */
-    private var activityCount = 3
+    /** Questions (or activities) per sheet, from the chips or typed in. */
+    private var questionCount = 10
+
+    /** The selected material, built once per selection and language. */
+    private var materialCache: Pair<String, SheetMaterial>? = null
 
     /** The generation inputs the current preview was rendered from. */
     @Volatile
@@ -127,7 +135,8 @@ class WorksheetActivity : AppCompatActivity() {
         val container: View,
         val name: TextView,
         val hindi: TextView,
-        val code: TextView
+        val code: TextView,
+        val selectedMark: TextView
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -141,6 +150,9 @@ class WorksheetActivity : AppCompatActivity() {
 
         binding.toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
         binding.toolbar.setNavigationOnClickListener { finish() }
+        // The overflow ⋮ took the light theme's dark tint, which vanished on
+        // the forest-green bar; white matches the back arrow and the title.
+        binding.toolbar.overflowIcon?.mutate()?.setTint(android.graphics.Color.WHITE)
 
         binding.toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
@@ -156,6 +168,11 @@ class WorksheetActivity : AppCompatActivity() {
             }
         }
 
+        // The home dashboard's material tiles open this screen with a type
+        // already chosen.
+        intent.getStringExtra(EXTRA_TYPE)?.let { name ->
+            WorksheetType.values().firstOrNull { it.name == name }?.let { selectedType = it }
+        }
         bindTypeGrid()
         bindActivityCountRow()
         refreshLessonPicker()
@@ -173,51 +190,53 @@ class WorksheetActivity : AppCompatActivity() {
             pack = (application as OlSaathiApplication).pack
             refreshLessonPicker()
             refreshIntro()
-            binding.textStatus.text = ""
+            binding.form.textStatus.text = ""
             requestPreview()
         }
+        // On this screen the shared language bar sits inside its own card, so
+        // it drops its strip background, and the card goes when the bar does.
+        binding.languageBar.root.background = null
+        (binding.languageBar.root.parent as? View)?.visibility =
+            binding.languageBar.root.visibility
 
-        binding.btnGenerate.setOnClickListener {
-            val lessonId = selectedLesson() ?: return@setOnClickListener
-            if (lessonId.isEmpty()) {
-                binding.textStatus.text =
-                    "A worksheet is built around one lesson's text. Pick a lesson, " +
-                        "or use Generate Flashcards for the teaching phrases."
-                revealResult()
-                return@setOnClickListener
-            }
+        // Every tap is a new seed, so every tap is a new set of questions or
+        // cards from the same material; the set number printed on the sheet
+        // tells two papers apart.
+        binding.form.btnGenerate.setOnClickListener {
+            val material = selectedMaterial() ?: return@setOnClickListener
             produce("Worksheet") {
-                worksheetPdf.generate(lessonId, pack, selectedType, activityCount)
+                worksheetPdf.generate(material, pack, selectedType, questionCount, System.nanoTime())
             }
         }
 
-        binding.btnFlashcards.setOnClickListener {
-            val selected = selectedLesson() ?: return@setOnClickListener
+        binding.form.btnFlashcards.setOnClickListener {
+            val material = selectedMaterial() ?: return@setOnClickListener
             produce("Flashcards") {
-                flashcardPdf.generate(selected.ifEmpty { null }, pack)
+                flashcardPdf.generate(material, pack, questionCount, System.nanoTime())
             }
         }
 
-        binding.btnImportPdf.setOnClickListener {
+        binding.form.btnImportPdf.setOnClickListener {
             startActivity(Intent(this, ImportLessonActivity::class.java))
         }
 
-        binding.btnSave.setOnClickListener {
+        binding.form.btnSave.setOnClickListener {
             currentPdf?.let {
                 pendingSave = it
                 saveLauncher.launch(it.name)
             }
         }
-        binding.btnSave.text = getString(R.string.btn_save_as_pdf)
+        binding.form.btnSave.text = getString(R.string.btn_save_as_pdf)
         binding.btnSavePreview.setOnClickListener {
             currentPdf?.let {
                 pendingSave = it
                 saveLauncher.launch(it.name)
             }
         }
-        binding.btnShare.setOnClickListener { currentPdf?.let { sharePdf(it) } }
-        binding.btnPrint.setOnClickListener { currentPdf?.let { printPdf(it) } }
+        binding.form.btnShare.setOnClickListener { currentPdf?.let { sharePdf(it) } }
+        binding.form.btnPrint.setOnClickListener { currentPdf?.let { printPdf(it) } }
 
+        BottomNavIcons.apply(binding.bottomNav)
         binding.bottomNav.selectedItemId = R.id.nav_worksheet
         binding.bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -236,33 +255,44 @@ class WorksheetActivity : AppCompatActivity() {
 
         // The first adapter-selection fires before the spinner reports a
         // position; posting once covers the initial preview without missing it.
-        binding.spinnerLesson.post { requestPreview() }
+        binding.form.spinnerLesson.post { requestPreview() }
     }
 
     private fun typeTiles(): Map<WorksheetType, TypeTile> = mapOf(
+        WorksheetType.QUESTIONS to TypeTile(
+            binding.form.typeContainerQuestions,
+            binding.form.typeNameQuestions,
+            binding.form.typeHindiQuestions,
+            binding.form.typeCodeQuestions,
+            binding.form.typeSelectedQuestions
+        ),
         WorksheetType.TRACE_AND_CONNECT to TypeTile(
-            binding.typeContainerTraceConnect,
-            binding.typeNameTraceConnect,
-            binding.typeHindiTraceConnect,
-            binding.typeCodeTraceConnect
+            binding.form.typeContainerTraceConnect,
+            binding.form.typeNameTraceConnect,
+            binding.form.typeHindiTraceConnect,
+            binding.form.typeCodeTraceConnect,
+            binding.form.typeSelectedTraceConnect
         ),
         WorksheetType.WORD_FLASH_STRIPS to TypeTile(
-            binding.typeContainerWordStrips,
-            binding.typeNameWordStrips,
-            binding.typeHindiWordStrips,
-            binding.typeCodeWordStrips
+            binding.form.typeContainerWordStrips,
+            binding.form.typeNameWordStrips,
+            binding.form.typeHindiWordStrips,
+            binding.form.typeCodeWordStrips,
+            binding.form.typeSelectedWordStrips
         ),
         WorksheetType.SCRIPT_TRACING to TypeTile(
-            binding.typeContainerScriptTracing,
-            binding.typeNameScriptTracing,
-            binding.typeHindiScriptTracing,
-            binding.typeCodeScriptTracing
+            binding.form.typeContainerScriptTracing,
+            binding.form.typeNameScriptTracing,
+            binding.form.typeHindiScriptTracing,
+            binding.form.typeCodeScriptTracing,
+            binding.form.typeSelectedScriptTracing
         ),
         WorksheetType.CLASSROOM_DIALOGUES to TypeTile(
-            binding.typeContainerDialogues,
-            binding.typeNameDialogues,
-            binding.typeHindiDialogues,
-            binding.typeCodeDialogues
+            binding.form.typeContainerDialogues,
+            binding.form.typeNameDialogues,
+            binding.form.typeHindiDialogues,
+            binding.form.typeCodeDialogues,
+            binding.form.typeSelectedDialogues
         )
     )
 
@@ -292,27 +322,77 @@ class WorksheetActivity : AppCompatActivity() {
 
     private fun syncTypeSelection() {
         typeTiles().forEach { (type, tile) ->
-            tile.container.isSelected = type == selectedType
+            val chosen = type == selectedType
+            tile.container.isSelected = chosen
+            tile.selectedMark.visibility = if (chosen) View.VISIBLE else View.GONE
         }
     }
 
-    /** Bind the 2/3/4 activity-count tiles, defaulting to 3. */
+    /**
+     * The number of questions: four chips, or a number typed in (1 to 40).
+     * The note under them says how many this material can actually make, so
+     * a teacher asking for 20 from a ten-line lesson is told, not surprised.
+     */
     private fun bindActivityCountRow() {
-        val tiles = mapOf(
-            2 to binding.tileCount2,
-            3 to binding.tileCount3,
-            4 to binding.tileCount4
+        val chips = mapOf(
+            5 to binding.form.chipCount5,
+            10 to binding.form.chipCount10,
+            15 to binding.form.chipCount15,
+            20 to binding.form.chipCount20,
         )
-        tiles.forEach { (count, tile) ->
-            tile.text = count.toString()
-            tile.isSelected = count == activityCount
-            tile.setOnClickListener {
-                if (activityCount != count) {
-                    activityCount = count
-                    tiles.forEach { (c, v) -> v.isSelected = c == count }
+        fun sync() {
+            chips.forEach { (n, v) -> v.isSelected = n == questionCount }
+            binding.form.editCount.isSelected = questionCount !in chips.keys
+            refreshCountNote()
+        }
+        chips.forEach { (n, v) ->
+            v.setOnClickListener {
+                if (questionCount != n) {
+                    questionCount = n
+                    binding.form.editCount.setText("")
+                    sync()
                     requestPreview()
                 }
             }
+        }
+        binding.form.editCount.addTextChangedListener(object : android.text.TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, a: Int, b: Int, c: Int) = Unit
+            override fun onTextChanged(s: CharSequence?, a: Int, b: Int, c: Int) = Unit
+            override fun afterTextChanged(s: android.text.Editable?) {
+                val n = s?.toString()?.toIntOrNull() ?: return
+                val clamped = n.coerceIn(1, 40)
+                if (clamped != questionCount) {
+                    questionCount = clamped
+                    sync()
+                    requestPreview()
+                }
+            }
+        })
+        sync()
+    }
+
+    /** "This lesson can make up to N" for the selected material and type. */
+    private fun refreshCountNote() {
+        val material = selectedMaterial() ?: return
+        val statements = material.lines.count { it.kind != "check" }
+        val cap = if (selectedType == WorksheetType.QUESTIONS)
+            app.olsaathi.worksheet.QuestionGenerator.capacity(material.lines) else statements
+        val noun = if (selectedType == WorksheetType.QUESTIONS) "questions" else "activities"
+        // A count this material cannot fill is not offered: the number on
+        // the sheet is always the number chosen.
+        listOf(5 to binding.form.chipCount5, 10 to binding.form.chipCount10,
+            15 to binding.form.chipCount15, 20 to binding.form.chipCount20).forEach { (n, chip) ->
+            chip.isEnabled = n <= cap
+            chip.alpha = if (n <= cap) 1f else 0.35f
+        }
+        val effective = minOf(questionCount, cap)
+        binding.form.btnGenerate.text = "📄   Generate Worksheet  ·  $effective $noun"
+        binding.form.textCountNote.text = when {
+            cap == 0 -> "This material has nothing to make $noun from."
+            questionCount > cap -> "\"${material.title}\" makes at most $cap $noun of this type, so the sheet " +
+                "has $cap. For more, pick a bigger material, such as a whole NCERT chapter."
+            else -> "$questionCount $noun from \"${material.title}\" (it can make up to $cap). " +
+                "Flashcards: ${minOf(questionCount, statements)} cards."
         }
     }
 
@@ -325,30 +405,44 @@ class WorksheetActivity : AppCompatActivity() {
      */
     private fun refreshLessonPicker() {
         val phraseCount = pack.entries().count { it.kind == "phrase" }
-        lessonIds = listOf<String?>(null) + pack.lessonIds()
-
-        val displayNames = lessonIds.map { id ->
-            if (id == null) "Teaching phrases (" + phraseCount + " cards)"
-            else id.replace("-", " ").replaceFirstChar { c -> c.uppercase() }
+        val imported = SheetMaterial.listImported(this, pack.languageCode)
+        materialKeys = listOf("phrases") + pack.lessonIds() + imported.map { it.first }
+        val importedTitles = imported.toMap()
+        val displayNames = materialKeys.map { key ->
+            when {
+                key == "phrases" -> "Teaching phrases ($phraseCount lines)"
+                key.startsWith("imported-") -> (importedTitles[key] ?: "Imported chapter").let { t ->
+                    (if (t.contains(" · Chapter ")) "📘 " else "📄 ") + t
+                }
+                else -> key.replace("-", " ").replaceFirstChar { c -> c.uppercase() }
+            }
         }
-        val previous = binding.spinnerLesson.selectedItemPosition
-        binding.spinnerLesson.adapter =
+        val previousKey = selectedKey()
+        // A chapter just downloaded arrives selected; used once.
+        val wanted = intent.getStringExtra(EXTRA_MATERIAL_KEY)?.also { intent.removeExtra(EXTRA_MATERIAL_KEY) }
+        materialCache = null
+        binding.form.spinnerLesson.adapter =
             ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, displayNames)
-        if (previous in displayNames.indices) {
-            binding.spinnerLesson.setSelection(previous, false)
-        }
-        binding.spinnerLesson.onItemSelectedListener =
+        val restore = materialKeys.indexOf(wanted).takeIf { it >= 0 }
+            ?: materialKeys.indexOf(previousKey).takeIf { it >= 0 }
+            // A lesson, not the phrase deck, is the better first selection.
+            ?: materialKeys.indexOfFirst { it != "phrases" && !it.startsWith("imported-") }.takeIf { it >= 0 }
+            ?: 0
+        binding.form.spinnerLesson.setSelection(restore, false)
+        binding.form.spinnerLesson.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?, view: View?, position: Int, id: Long
                 ) {
                     refreshNipun()
+                    refreshCountNote()
                     requestPreview()
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) = refreshNipun()
             }
         refreshNipun()
+        refreshCountNote()
     }
 
     /**
@@ -359,25 +453,70 @@ class WorksheetActivity : AppCompatActivity() {
      * codes and drops the sentence rather than picking a favourite.
      */
     private fun refreshNipun() {
-        val entries = pack.entries(selectedLesson()).filter { it.nipun.isNotEmpty() }
+        val entries = selectedMaterial()?.lines.orEmpty().filter { it.nipun.isNotEmpty() }
         val codes = entries.map { it.nipun }.distinct()
+        refreshSelectionCounts(codes.size)
         if (codes.isEmpty()) {
-            binding.cardNipun.visibility = View.GONE
+            binding.form.cardNipun.visibility = View.GONE
             return
         }
-        binding.cardNipun.visibility = View.VISIBLE
-        binding.textNipunCode.text = codes.joinToString(", ")
+        binding.form.cardNipun.visibility = View.VISIBLE
+        showNipunChips(codes)
         val outcomes = entries.map { it.nipunOutcome }.distinct().filter { it.isNotEmpty() }
-        binding.textNipunOutcome.text =
+        binding.form.textNipunOutcome.text =
             if (outcomes.size == 1) outcomes.first()
             else "This lesson spans " + codes.size + " outcomes."
+    }
+
+    /** One label chip per NIPUN code. Labels, so they are not tappable. */
+    private fun showNipunChips(codes: List<String>) {
+        val group = binding.form.chipGroupNipun
+        group.removeAllViews()
+        codes.forEach { code ->
+            group.addView(com.google.android.material.chip.Chip(this).apply {
+                text = code
+                isClickable = false
+                isCheckable = false
+                textSize = 12f
+                typeface = androidx.core.content.res.ResourcesCompat.getFont(this@WorksheetActivity, R.font.plus_jakarta_sans_700)
+                setTextColor(0xFF1E4B38.toInt())
+                chipBackgroundColor = android.content.res.ColorStateList.valueOf(0xFFEDF6F0.toInt())
+                chipStrokeColor = android.content.res.ColorStateList.valueOf(0xFFCBE5D4.toInt())
+                chipStrokeWidth = resources.displayMetrics.density
+                chipMinHeight = 28 * resources.displayMetrics.density
+                shapeAppearanceModel = shapeAppearanceModel.withCornerSize(8 * resources.displayMetrics.density)
+                setEnsureMinTouchTargetSize(false)
+            })
+        }
+    }
+
+    /**
+     * The counts under the lesson picker and on the flashcard button.
+     *
+     * Where the design mockup printed fixed numbers ("10 Cards Deck"), these
+     * are counted from the loaded pack with the same filters the generators
+     * use, so the button cannot promise more cards than the sheet holds.
+     */
+    private fun refreshSelectionCounts(outcomeCount: Int) {
+        val material = selectedMaterial() ?: return
+        val statements = material.lines.count { it.kind != "check" }
+        val checks = material.lines.count { it.kind == "check" }
+        val outcomes = if (outcomeCount == 1) "1 NIPUN outcome" else "$outcomeCount NIPUN outcomes"
+        binding.form.textLessonSubtitle.text = "$statements lines" +
+            (if (checks > 0) " · $checks questions" else "") +
+            (if (outcomeCount > 0) " · $outcomes" else "")
+        val cards = minOf(questionCount, statements)
+        binding.form.btnFlashcards.text = "🎴   " + getString(R.string.btn_generate_flashcards) +
+            "  ·  " + cards + if (cards == 1) " card" else " cards"
     }
 
     /** Name the language in the intro rather than claiming Santali forever. */
     private fun refreshIntro() {
         val name = (application as OlSaathiApplication)
             .currentLanguageOption()?.english
-        binding.textWorksheetIntro.text =
+        binding.form.textIntroKicker.text =
+            "✨ BILINGUAL CLASSROOM KIT  •  HINDI + " + (name ?: "TARGET").uppercase()
+        binding.form.textWorksheetIntro.text =
             if (name != null) getString(R.string.worksheet_intro_format, name)
             else getString(R.string.worksheet_intro_default)
     }
@@ -391,16 +530,10 @@ class WorksheetActivity : AppCompatActivity() {
      * request.
      */
     private fun requestPreview() {
-        val lessonId = selectedLesson() ?: return
-        if (lessonId.isEmpty()) {
-            // The phrase deck produces no worksheet. Showing a mock of a sheet
-            // that cannot exist would be the pane lying, so it is hidden.
-            renderedFor = null
-            binding.previewSection.visibility = View.GONE
-            binding.textPreviewStatus.text = getString(R.string.preview_lesson_required)
-            return
-        }
-        val key = WorksheetPreviewKey(lessonId, selectedType, activityCount)
+        val material = selectedMaterial() ?: return
+        refreshSelectionCounts(material.lines.map { it.nipun }.filter { it.isNotEmpty() }.distinct().size)
+        refreshCountNote()
+        val key = WorksheetPreviewKey(material.key, selectedType, questionCount)
         if (key == renderedFor) return
 
         // A new selection means the page on screen is no longer the file that
@@ -411,12 +544,15 @@ class WorksheetActivity : AppCompatActivity() {
         val generation = renderGeneration.incrementAndGet()
         pdfExecutor.execute {
             try {
-                val pdf = worksheetPdf.generate(lessonId, pack, selectedType, activityCount)
+                // One possible set, the same while the selection is unchanged;
+                // Generate makes a new one each time and shows it here.
+                val pdf = worksheetPdf.generate(material, pack, selectedType, questionCount, key.hashCode().toLong())
                 if (pdf == null || !pdf.exists()) {
-                    showPreviewError(getString(R.string.preview_lesson_required))
+                    showPreviewError("This material has nothing to make this sheet from.")
                     return@execute
                 }
                 cleanupPreviewCache(keep = pdf.name)
+                val pages = worksheetPdf.lastResult?.pages ?: 1
                 val bitmap = renderFirstPage(pdf)
                 runOnUiThread {
                     if (renderGeneration.get() != generation) {
@@ -426,7 +562,7 @@ class WorksheetActivity : AppCompatActivity() {
                     renderedFor = key
                     showPreviewBitmap(
                         bitmap,
-                        "Page 1 · " + pdf.name + " (" + (pdf.length() / 1024) + " KB)"
+                        "Preview, page 1 of $pages · tap Generate for a new set"
                     )
                 }
             } catch (e: Exception) {
@@ -534,44 +670,62 @@ class WorksheetActivity : AppCompatActivity() {
      * never block the UI thread.
      */
     private fun produce(what: String, build: () -> File?) {
-        binding.textStatus.text = "Generating " + what.lowercase() + "..."
-        binding.btnGenerate.isEnabled = false
-        binding.btnFlashcards.isEnabled = false
-        binding.btnSave.visibility = View.GONE
-        binding.btnShare.visibility = View.GONE
-        binding.btnPrint.visibility = View.GONE
+        binding.form.textStatus.text = "Generating " + what.lowercase() + "..."
+        binding.form.btnGenerate.isEnabled = false
+        binding.form.btnFlashcards.isEnabled = false
+        binding.form.btnSave.visibility = View.GONE
+        binding.form.btnShare.visibility = View.GONE
+        binding.form.btnPrint.visibility = View.GONE
         pdfExecutor.execute {
             try {
                 val pdf = build()
+                val line = if (pdf != null && pdf.exists()) resultLine(what, pdf) else null
                 if (pdf != null && pdf.exists()) {
                     cleanupPreviewCache(keep = pdf.name)
                 }
-                runOnUiThread { onProduced(what, pdf) }
+                runOnUiThread { onProduced(what, pdf, line) }
             } catch (e: Exception) {
                 runOnUiThread {
-                    binding.textStatus.text =
+                    binding.form.textStatus.text =
                         "Error: " + (e.message ?: e.javaClass.simpleName)
-                    binding.btnGenerate.isEnabled = true
-                    binding.btnFlashcards.isEnabled = true
+                    binding.form.btnGenerate.isEnabled = true
+                    binding.form.btnFlashcards.isEnabled = true
                 }
             }
         }
     }
 
-    private fun onProduced(what: String, pdf: File?) {
+    private fun onProduced(what: String, pdf: File?, line: String?) {
         if (pdf != null && pdf.exists()) {
             currentPdf = pdf
-            binding.textStatus.text =
-                what + ": " + pdf.name + " (" + (pdf.length() / 1024) + " KB)"
-            binding.btnSave.visibility = View.VISIBLE
-            binding.btnShare.visibility = View.VISIBLE
-            binding.btnPrint.visibility = View.VISIBLE
+            binding.form.textStatus.text = line ?: resultLine(what, pdf)
+            binding.form.btnSave.visibility = View.VISIBLE
+            binding.form.btnShare.visibility = View.VISIBLE
+            binding.form.btnPrint.visibility = View.VISIBLE
         } else {
-            binding.textStatus.text = "Nothing to print for this selection."
+            binding.form.textStatus.text = "Nothing to print for this selection."
         }
-        binding.btnGenerate.isEnabled = true
-        binding.btnFlashcards.isEnabled = true
+        binding.form.btnGenerate.isEnabled = true
+        binding.form.btnFlashcards.isEnabled = true
         if (pdf != null && pdf.exists()) showGenerated(pdf) else revealResult()
+    }
+
+    /** What was generated, and anything short of what was asked for. */
+    private fun resultLine(what: String, pdf: File): String {
+        val kb = pdf.length() / 1024
+        if (what == "Worksheet") {
+            val r = worksheetPdf.lastResult ?: return "Worksheet ready ($kb KB)."
+            val noun = if (selectedType == WorksheetType.QUESTIONS) "questions" else "activities"
+            val short = if (r.items < r.requested)
+                " You asked for ${r.requested}; this material can make ${r.capacity}." else ""
+            return "Worksheet, set ${r.setNo}: ${r.items} $noun on ${r.pages} " +
+                (if (r.pages == 1) "page" else "pages") + ", with answer key where it applies ($kb KB).$short"
+        }
+        val r = flashcardPdf.lastResult ?: return "Flashcards ready ($kb KB)."
+        val short = if (r.cards < r.requested)
+            " You asked for ${r.requested}; this material has ${r.capacity} lines." else ""
+        return "Flashcards, set ${r.setNo}: ${r.cards} cards on ${r.pages} " +
+            (if (r.pages == 1) "page" else "pages") + ", each with a new NIPUN classroom task ($kb KB).$short"
     }
 
     /**
@@ -602,8 +756,8 @@ class WorksheetActivity : AppCompatActivity() {
      * pressed, and a teacher who sees nothing change assumes nothing happened.
      */
     private fun revealResult() {
-        binding.textStatus.post {
-            val target = if (binding.btnPrint.visibility == View.VISIBLE) binding.btnPrint else binding.textStatus
+        binding.form.textStatus.post {
+            val target = if (binding.form.btnPrint.visibility == View.VISIBLE) binding.form.btnPrint else binding.form.textStatus
             val r = android.graphics.Rect(0, 0, target.width, target.height)
             target.requestRectangleOnScreen(r, false)
         }
@@ -616,16 +770,42 @@ class WorksheetActivity : AppCompatActivity() {
      */
     private fun cleanupPreviewCache(keep: String) {
         val dir = File(cacheDir, "worksheets")
+        val saving = currentPdf?.name
         dir.listFiles()?.forEach { f ->
-            if (f.name.startsWith("worksheet_") && f.name != keep) f.delete()
+            if (f.name.startsWith("worksheet_") && f.name != keep && f.name != saving) f.delete()
         }
     }
 
-    /** The chosen lesson id, "" for the phrase deck, or null if unusable. */
-    private fun selectedLesson(): String? {
-        val idx = binding.spinnerLesson.selectedItemPosition
-        if (idx < 0 || idx >= lessonIds.size) return null
-        return lessonIds[idx] ?: ""
+    /** The selected material's key, or null before the picker is filled. */
+    private fun selectedKey(): String? {
+        val idx = binding.form.spinnerLesson.selectedItemPosition
+        return materialKeys.getOrNull(idx)
+    }
+
+    /** The selected lesson, phrase deck or imported chapter, as lines. */
+    private fun selectedMaterial(): SheetMaterial? {
+        val key = selectedKey() ?: return null
+        val cacheKey = pack.languageCode + "/" + key
+        materialCache?.let { if (it.first == cacheKey) return it.second }
+        val m = when {
+            key == "phrases" -> SheetMaterial.fromPack(pack, "")
+            key.startsWith("imported-") -> SheetMaterial.loadImported(this, key, pack)
+            else -> SheetMaterial.fromPack(pack, key)
+        } ?: return null
+        materialCache = cacheKey to m
+        return m
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // A chapter imported since this screen was built joins the list.
+        val keysBefore = materialKeys
+        val now = listOf("phrases") + pack.lessonIds() +
+            SheetMaterial.listImported(this, pack.languageCode).map { it.first }
+        if (keysBefore.isNotEmpty() && now != keysBefore) {
+            refreshLessonPicker()
+            requestPreview()
+        }
     }
 
     private fun sharePdf(file: File) {
@@ -674,6 +854,14 @@ class WorksheetActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Toast.makeText(this, "Could not print: ${e.message}", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    companion object {
+        /** A [WorksheetType] name to preselect. */
+        const val EXTRA_TYPE = "worksheet_type"
+
+        /** A material key to preselect, such as a chapter just downloaded. */
+        const val EXTRA_MATERIAL_KEY = "material_key"
     }
 
     override fun onDestroy() {

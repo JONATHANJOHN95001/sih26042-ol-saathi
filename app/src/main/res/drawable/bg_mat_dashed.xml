@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- "Import a lesson PDF": dashed like a chalk outline, so it reads as a
+     different kind of action from the two Generate buttons above it. -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="#1F1E4B38">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF" />
+            <stroke android:width="2dp" android:color="#471E4B38" android:dashWidth="8dp" android:dashGap="5dp" />
+            <corners android:radius="16dp" />
+        </shape>
+    </item>
+</ripple>
